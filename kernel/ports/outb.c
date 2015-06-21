@@ -1,7 +1,6 @@
 #include "stdint.h"
 #include "outb.h"
 
-<<<<<<< HEAD
 /*
 LFOS, a simple operating system.
 Copyright (C) 2015 LFUnion.
@@ -20,9 +19,7 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-=======
 // Sends the port a value
->>>>>>> 5e3761e9e541a3728459f05afd899d1bea34f1b0
 void outb(uint16_t port, uint8_t value)
 {
     asm volatile ("outb %0, %1" : : "a"(value), "Nd"(port));
