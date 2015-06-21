@@ -1,4 +1,4 @@
-#include "vga/vga.h"
+#include "includes/vga.h"
 
 void kmain(void) {
     kclear();
