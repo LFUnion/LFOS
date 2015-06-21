@@ -1,4 +1,4 @@
-; This file is copied from http://osdev.org/
+; This is the simple bootloader of LFOS.
 
 MBALIGN  equ 1<<0
 MEMINFO  equ 1<<1
@@ -12,7 +12,6 @@ align 4
     dd FLAGS
     dd CHECKSUM
     
-section .bootstrap_stack, nobits
 align 4
 stack_bottom:
 times 16384 db 0
