@@ -11,6 +11,9 @@ it under the terms of the GNU General Public License as published by
 the Free Software Foundation, either version 3 of the License, or
 (at your option) any later version. See http://www.gnu.org/licenses/.
 
+### Version
+This is a screenshot of the version:
+
 ![Image](http://lfunion.bplaced.net/githubimages/lfos.png)
 
 ### How can I contribute?
