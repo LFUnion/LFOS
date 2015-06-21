@@ -11,6 +11,10 @@ build:
 	echo "Assembling bootloader ..."
 	mkdir build
 	nasm -felf32 -o build/bootloader.o boot/bootloader.asm
+	echo "Compiling outb"
+	$(GCC) -c ports/outb.c -o build/outb.o $(GCC_FLAGS)
+	echo "Compiling inb"
+	$(GCC) -c ports/inb.c -o build/inb.o $(GCC_FLAGS)
 	echo "Compiling VGA driver ..."
 	$(GCC) -c vga/vga.c -o build/vga.o $(GCC_FLAGS)
 	echo "Compiling kernel ..."

@@ -1,0 +1,8 @@
+Cleaning ...
+make[1]: Verzeichnis „/home/fabian/devel/Git/LFOS/kernel“ wird betreten
+rm -rf build/
+make[1]: Verzeichnis „/home/fabian/devel/Git/LFOS/kernel“ wird verlassen
+Assembling bootloader ...
+Compiling outb
+Compiling inb
+Makefile:9: die Regel für Ziel „build“ scheiterte
