@@ -1,5 +1,6 @@
 #include "includes/vga.h"
 
+// Display head
 void kmain(void) {
     kclear();
     klog("Welcome to LFOS!");
