@@ -1,6 +1,7 @@
 #include "stdint.h"
 #include "inb.h"
 
+<<<<<<< HEAD
 /*
 LFOS, a simple operating system.
 Copyright (C) 2015 LFUnion.
@@ -19,6 +20,9 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
+=======
+// Receives a value from a port
+>>>>>>> 5e3761e9e541a3728459f05afd899d1bea34f1b0
 uint8_t inb(uint16_t port)
 {
     uint8_t value;
