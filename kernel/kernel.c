@@ -22,11 +22,6 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 // Display head
 void kmain(void) {
     clear();
-    printf("[..] Loading IDT");
-    //load_idt();
-    printf("[OK] IDT loaded");
-    printf("");
-    printf("");
     printw("Welcome to LFOS!");
     printw("(C) 2015 by LFUnion");
     printf("");
