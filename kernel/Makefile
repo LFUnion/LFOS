@@ -21,10 +21,10 @@ build:
 	echo "Compiling kernel ..."
 	$(GCC) -c kernel.c -o build/kernel.o $(GCC_INCLUDES) $(GCC_FLAGS)
 	echo "Linking ..."
-	$(GCC) -T linker.ld -o build/fsos.bin -ffreestanding -O2 -nostdlib build/bootloader.o build/vga.o build/kernel.o -lgcc
+	$(GCC) -T linker.ld -o build/lfos.bin -ffreestanding -O2 -nostdlib build/bootloader.o build/vga.o build/kernel.o -lgcc
 	
 clean:
 	rm -rf build/
 	
 test:
-	qemu-system-i386 -kernel build/fsos.bin
+	qemu-system-i386 -kernel build/lfos.bin
