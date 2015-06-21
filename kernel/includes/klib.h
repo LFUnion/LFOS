@@ -1,5 +1,4 @@
 #include "vga.h"
-#include "klib.h"
 
 /*
 LFOS, a simple operating system.
@@ -19,14 +18,12 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-// Display head
-void kmain(void) {
-    clear();
-    printw("Welcome to LFOS!");
-    printw("(C) 2015 by LFUnion");
-    printf("");
-    printf("Compiled");
-    printf(__DATE__);
-    printf("at");
-    printf(__TIME__);
+void printf(const char text[]) {
+	klog(text);
+}
+void clear() {
+	kclear();
+}
+void printw(const char text[]) {
+	klogi(text);
 }
