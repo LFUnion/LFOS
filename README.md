@@ -4,7 +4,7 @@
 ![Image](http://lfunion.bplaced.net/SmartImage/image.php?category=Forks&description=0)
 
 LFOS, a simple operating system.
-Copyright (C) 2015 meles5.
+Copyright (C) 2015 LFUnion.
 
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
