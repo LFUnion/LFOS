@@ -35,7 +35,7 @@ string "mpfr". (Don't forget to update the SHA-checksums)
 `yaourt -S i686-elf-gcc`
 
 
-We'll accept push requests if they're good. We need developers, so if you 
+We'll accept usefull push requests. We need developers, so if you 
 want to contribute, contact us at <lfunion@web.de>.
 
 ## Documentation
@@ -45,13 +45,15 @@ This is the documentation for all files and functions in the `kernel/` folder.
 This folder contains the bootloader for LFOS.
 
 ### `includes/`
-In this folder are the **basic** librarys. To use more powerful librarys, have a look into the `lib/` folder.\
+In this folder are the **Kernel** header. They won´t be usable in 
+userspace. Use the clib for userspace applications.
 
-### `lib/`
-This is the place for all librarys, that are not needed to run the kernel itself.
+### `clib/`
+This is the place of the c library.
 
 ### `ports/`
-The basic port communication system.
+The basic hardware port communication system.
 
 ### `vga/`
-This folder contains the VGA driver. Maybe we change the location to `drivers/vga`.
+This folder contains the VGA driver. We might change the location to 
+`drivers/vga`.
