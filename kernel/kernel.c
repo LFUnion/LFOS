@@ -1,5 +1,4 @@
-// Include the IO library, alternatively you can import the VGA driver (includes/vga.h)
-#include "lib/io.h"
+#include "vga.h"
 
 /*
 LFOS, a simple operating system.
@@ -21,12 +20,12 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 // Display head
 void kmain(void) {
-    clear();
-    print("Welcome to LFOS!");
-    print("(C) 2015 by LFUnion");
-    print("");
-    print("Compiled");
-    print(__DATE__);
-    print("at");
-    print(__TIME__);
+    kclear();
+    klog("Welcome to LFOS!");
+    klog("(C) 2015 by LFUnion");
+    klog("");
+    klog("Compiled");
+    klog(__DATE__);
+    klog("at");
+    klog(__TIME__);
 }
