@@ -31,5 +31,4 @@ string "mpfr". (Don't forget to update the SHA-checksums)
 
 
 We'll accept push requests if they're good. We need developers, so if you 
-want to
-contribute, contact us (lfunion@web.de).
+want to contribute, contact us <lfunion@web.de>.
