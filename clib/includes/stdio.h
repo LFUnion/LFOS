@@ -1,8 +1,5 @@
 #include <stdint.h>
-#include "../includes/vga.h"
-
-// This file is the basic library if you want to program.
-// It uses the VGA driver.
+#include "../../kernel/includes/vga.h"
 
 /*
 LFOS, a simple operating system.
@@ -22,7 +19,7 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-void print(const char text[]) {
+void printf(const char text[]) {
 	klog(text);
 }
 void clear() {
