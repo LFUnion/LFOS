@@ -24,7 +24,7 @@ void add_idc_gate(int i, unsigned int base_addr, unsigned int selector, int flag
     idt[i] |= ((base_addr >> 24) & 0xffLL) << 64; // base_addr high
 }
 
-void load_idc()
+void load_idt()
 {
     asm volatile("lidt %0" : : "m" (idt_ptr));
 }

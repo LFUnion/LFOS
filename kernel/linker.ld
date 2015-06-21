@@ -4,7 +4,7 @@ SECTIONS
 {
     . = 0x10000;
 
-    .text : {
+    .text ALIGN(4096)  :   {
         *(multiboot)
         *(.text)
     }

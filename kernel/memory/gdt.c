@@ -9,7 +9,7 @@
 
 #define NUM_OF_GDT_ENTRYS 256
 
-void reload_segments();
+void reload_segments()__attribute__((cdecl));
 
 static uint64_t gdt[NUM_OF_GDT_ENTRYS];
 
