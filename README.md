@@ -11,7 +11,7 @@ it under the terms of the GNU General Public License as published by
 the Free Software Foundation, either version 3 of the License, or
 (at your option) any later version. See http://www.gnu.org/licenses/.
 
-![Image](http://lfunion.bplaced.net/githubimages/lfunion.png)
+![Image](http://lfunion.bplaced.net/githubimages/lfos.png)
 
 ### How can I contribute?
 You have to install software to compile LFOS. Here are the steps for Arch Linux:
