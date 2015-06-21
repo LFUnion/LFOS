@@ -1,10 +1,3 @@
-
-/* 
- * This is an in-development feature.
- * In most cases, you are *NOT* able to compile this.
- */
-
-
 #include "stdint.h"
 #include "idt.h"
 
@@ -22,7 +15,8 @@ struct {
 
 void add_idc_gate(int i, unsigned int base_addr, unsigned int selector, int flags)
 {
-    idt[i] = size & 0xffffLL;
+    // idt[i] = 64 & 0xffffLL; // Only uncomment if *REALLY* needed
+    
     idt[i] |= (base_addr & 0xffffffLL) << 16; // base_addr low
     idt[i] |= (selector & 0xffLL) << 32;
     idt[i] |= ((0 >> 16) & 0xfLL) << 40;
