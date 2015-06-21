@@ -25,3 +25,6 @@ void printf(const char text[]) {
 void clear() {
 	kclear();
 }
+void printw(const char text[]) {
+	klogi(text);
+}

@@ -23,11 +23,18 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 int row = 0;
 int column = 0;
 
-// Prints a char
+// Prints a char (grey)
 void kprintc(uint8_t chr, uint8_t clr, uint8_t x, uint8_t y) {
     uint16_t* offset = (uint16_t*)0xB8000;
     offset += y * 80 + x;
     *offset = ((uint16_t)clr) << 8 | chr;
+}
+
+// Prints a char (yellow)
+void kprintci(uint8_t chr, uint8_t clr, uint8_t x, uint8_t y) {
+    uint16_t* offset = (uint16_t*)0xB8000;
+    offset += y * 80 + x;
+    *offset = ((uint16_t)clr) << 9 | chr;
 }
 
 // Prints raw text
@@ -61,6 +68,29 @@ void klog(const char text[]) {
             }
         } else {
             kprintc(text[i], 0x07, column, row);
+            column++;
+        }
+    }
+    column = 0;
+    row++;
+    if(row > TERM_ROWS) {
+        row = 0;
+    }
+}
+
+// Prints a highlighted message to the terminal
+void klogi(const char text[]) {
+    int i;
+    
+    for(i = 0; text[i] != '\0'; i++) {
+        if(text[i] == '\n') {
+            row++;
+            column = 0;
+            if(row > TERM_ROWS) {
+                row = 0;
+            }
+        } else {
+            kprintci(text[i], 0x07, column, row);
             column++;
         }
     }
