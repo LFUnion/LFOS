@@ -1,3 +1,9 @@
+
+/* 
+ * This is an in-development feature.
+ * In most cases, you are *NOT* able to compile this.
+ */
+
 #include "stdint.h"
 #include "gdt.h"
 

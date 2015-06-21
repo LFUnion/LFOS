@@ -24,6 +24,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 void kprintc(uint8_t chr, uint8_t clr, uint8_t x, uint8_t y);
 void kprint_raw(const char text[]);
 void klog(const char text[]);
+void klogi(const char text[]);
 void kclear();
 
 #endif

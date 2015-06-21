@@ -13,9 +13,11 @@ build:
 	mkdir build
 	nasm -felf32 -o build/bootloader.o boot/bootloader.asm
 	#echo "Assembling segments"
-	#nasm -felf32 -o build/segments.o interrupts/segments.asm
+	#nasm -felf32 -o build/segments.o memory/segments.asm
 	#echo "Compiling GDT"
-	#$(GCC) -c interrupts/gdt.c -o build/gdt.o $(GCC_INCLUDES) $(GCC_FLAGS)
+	#$(GCC) -c memory/gdt.c -o build/gdt.o $(GCC_INCLUDES) $(GCC_FLAGS)
+	#echo "Compiling IDT"
+	#$(GCC) -c interrupts/idt.c -o build/idt.o $(GCC_INCLUDES) $(GCC_FLAGS)
 	echo "Compiling outb"
 	$(GCC) -c ports/outb.c -o build/outb.o $(GCC_INCLUDES) $(GCC_FLAGS)
 	echo "Compiling inb"
