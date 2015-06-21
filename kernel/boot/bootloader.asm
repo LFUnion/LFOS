@@ -1,3 +1,5 @@
+; This file is copied from http://osdev.org/
+
 MBALIGN  equ 1<<0
 MEMINFO  equ 1<<1
 FLAGS    equ MBALIGN | MEMINFO
