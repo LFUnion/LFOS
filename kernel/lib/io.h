@@ -1,5 +1,8 @@
-// Include the IO library, alternatively you can import the VGA driver (includes/vga.h)
-#include "lib/io.h"
+#include <stdint.h>
+#include "../includes/vga.h"
+
+// This file is the basic library if you want to program.
+// It uses the VGA driver.
 
 /*
 LFOS, a simple operating system.
@@ -19,14 +22,9 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-// Display head
-void kmain(void) {
-    clear();
-    print("Welcome to LFOS!");
-    print("(C) 2015 by LFUnion");
-    print("");
-    print("Compiled");
-    print(__DATE__);
-    print("at");
-    print(__TIME__);
+void print(const char text[]) {
+	klog(text);
+}
+void clear() {
+	kclear();
 }
