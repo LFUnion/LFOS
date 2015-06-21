@@ -1,9 +1,4 @@
-<<<<<<< HEAD
 #include "vga.h"
-=======
-// Include the IO library, alternatively you can import the VGA driver (includes/vga.h)
-#include "../clib/includes/stdio.h"
->>>>>>> 70e153d30670ab6dc5021a51042d0139f211ce9f
 
 /*
 LFOS, a simple operating system.
@@ -25,7 +20,6 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 // Display head
 void kmain(void) {
-<<<<<<< HEAD
     kclear();
     klog("Welcome to LFOS!");
     klog("(C) 2015 by LFUnion");
@@ -34,14 +28,4 @@ void kmain(void) {
     klog(__DATE__);
     klog("at");
     klog(__TIME__);
-=======
-    clear();
-    printf("Welcome to LFOS!");
-    printf("(C) 2015 by LFUnion");
-    printf("");
-    printf("Compiled");
-    printf(__DATE__);
-    printf("at");
-    printf(__TIME__);
->>>>>>> 70e153d30670ab6dc5021a51042d0139f211ce9f
 }
