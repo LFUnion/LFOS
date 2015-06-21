@@ -1,7 +1,7 @@
 # LFOS
-![Image](http://lenuxproject.org/SmartImage/image.php?category=License&description=GPL3&color=083)
-![Image](http://lenuxproject.org/SmartImage/image.php?category=Stars&description=0&color=C93)
-![Image](http://lenuxproject.org/SmartImage/image.php?category=Forks&description=0)
+![Image](http://lfunion.bplaced.net/SmartImage/image.php?category=License&description=GPL3&color=083)
+![Image](http://lfunion.bplaced.net/SmartImage/image.php?category=Stars&description=0&color=C93)
+![Image](http://lfunion.bplaced.net/SmartImage/image.php?category=Forks&description=0)
 
 LFOS, a simple operating system.
 Copyright (C) 2015 meles5.
