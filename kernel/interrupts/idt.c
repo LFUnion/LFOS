@@ -3,17 +3,10 @@
 
 #define NUM_OF_IDT_ENTRYS 256
 
+
 static uint64_t idt[NUM_OF_IDT_ENTRYS];
 
-struct {
-    uint16_t limit;
-    void* ptr;
-}__attribute__((packed)) idt_ptr = {
-    .limit = NUM_OF_IDT_ENTRYS * 8 - 1,
-    .ptr = idt,
-};
-
-void add_idc_gate(int i, unsigned int base_addr, unsigned int selector, int flags)
+void add_idt_gate(int i, unsigned int base_addr, unsigned int selector, int flags)
 {
     // idt[i] = 64 & 0xffffLL; // Only uncomment if *REALLY* needed
     
@@ -26,5 +19,13 @@ void add_idc_gate(int i, unsigned int base_addr, unsigned int selector, int flag
 
 void load_idt()
 {
-    asm volatile("lidt %0" : : "m" (idt_ptr));
+    struct {
+        uint16_t limit;
+        uint32_t ptr;
+    }__attribute__((packed)) idt_ptr;
+    
+    idt_ptr.limit = NUM_OF_IDT_ENTRYS * 8 - 1;
+    idt_ptr.ptr = (uint32_t) idt;
+    
+    asm("lidt %0" : : "m"(idt_ptr));
 }
