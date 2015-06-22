@@ -3,7 +3,7 @@
 .PHONY: clean
 
 GCC = i686-elf-gcc
-GCC_INCLUDES = -I./includes/ -I./klib/includes/
+GCC_INCLUDES = -I./includes/
 GCC_FLAGS = -O2 -ffreestanding -std=gnu99 -Wall -Wextra
 
 build:
