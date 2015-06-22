@@ -1,4 +1,5 @@
 #include "klib.h"
+#include "cpu.h"
 
 #include "idt.h"
 
@@ -34,4 +35,8 @@ void kmain(void) {
     printf(__DATE__);
     printf("at");
     printf(__TIME__);
+    printf("");
+    printf("[..] Halting CPU");
+    cpu_halt();
+    printw("[!!] COULD NOT HALT CPU");
 }
