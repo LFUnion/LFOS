@@ -11,7 +11,8 @@ align 4
     dd MAGIC
     dd FLAGS
     dd CHECKSUM
-    
+
+section .bootstrap_stack, nobits
 align 4
 stack_bottom:
 times 16384 db 0
