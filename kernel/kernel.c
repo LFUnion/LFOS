@@ -1,5 +1,6 @@
 #include "klib.h"
-//#include "idt.h"
+
+#include "idt.h"
 
 /*
 LFOS, a simple operating system.
@@ -23,6 +24,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 void kmain(void) {
     clear();
     printf("[..] Loading IDT");
+    load_idt();
     printf("[OK] IDT loaded");
     printf("");
     printw("Welcome to LFOS!");

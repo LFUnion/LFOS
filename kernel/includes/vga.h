@@ -27,4 +27,4 @@ void klog(const char text[]);
 void klogi(const char text[]);
 void kclear();
 
-#endif
+#endif /* VGA_H */

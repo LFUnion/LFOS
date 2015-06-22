@@ -9,17 +9,9 @@
 
 #define NUM_OF_GDT_ENTRYS 256
 
-void reload_segments()__attribute__((cdecl));
+extern void reload_segments()__attribute__((cdecl));
 
 static uint64_t gdt[NUM_OF_GDT_ENTRYS];
-
-struct {
-    uint16_t size;
-    void* ptr;
-}__attribute__((packed)) gdt_ptr = {
-    .size = NUM_OF_GDT_ENTRYS * 8 - 1,
-    .ptr = gdt,
-};
 
 void add_gdt_entry(int i, unsigned int base_addr, unsigned int size, int flags)
 {
@@ -33,6 +25,14 @@ void add_gdt_entry(int i, unsigned int base_addr, unsigned int size, int flags)
 
 void load_gdt()
 {
-    asm volatile("lgdt %0" : : "m" (gdt_ptr));
+    struct {
+        uint16_t size;
+        uint32_t ptr;
+    }__attribute__((packed)) gdt_ptr;
+    
+    gdt_ptr.size = NUM_OF_GDT_ENTRYS * 8 - 1;
+    gdt_ptr.ptr = (uint32_t) gdt;
+    
+    asm ("lgdt %0" : : "m" (gdt_ptr));
     reload_segments();
 }

@@ -1,3 +1,6 @@
+#ifndef KLIB_H
+#define KLIB_H
+
 #include "vga.h"
 
 /*
@@ -27,3 +30,5 @@ void clear() {
 void printw(const char text[]) {
 	klogi(text);
 }
+
+#endif /* KLIB_H */
