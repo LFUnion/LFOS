@@ -11,6 +11,7 @@ build:
 	make clean
 	echo "Assembling bootloader ..."
 	mkdir build
+	mkdir build/klib
 	nasm -felf32 -o build/bootloader.o boot/bootloader.asm
 	echo "Assembling segments"
 	nasm -felf32 -o build/segments.o memory/segments.asm
@@ -24,10 +25,12 @@ build:
 	$(GCC) -c ports/inb.c -o build/inb.o $(GCC_INCLUDES) $(GCC_FLAGS)
 	echo "Compiling VGA driver ..."
 	$(GCC) -c vga/vga.c -o build/vga.o $(GCC_INCLUDES) $(GCC_FLAGS)
+	echo "Compiling KIO"
+	$(GCC) -c klib/kio.c -o build/klib/kio.o $(GCC_INCLUDES) $(GCC_FLAGS)
 	echo "Compiling kernel ..."
 	$(GCC) -c kernel.c -o build/kernel.o $(GCC_INCLUDES) $(GCC_FLAGS)
 	echo "Linking ..."
-	$(GCC) -T linker.ld -o build/lfos.bin -ffreestanding -O2 -nostdlib -Wall build/vga.o build/outb.o build/inb.o build/segments.o build/gdt.o build/idt.o build/kernel.o build/bootloader.o -lgcc
+	$(GCC) -T linker.ld -o build/lfos.bin -ffreestanding -O2 -nostdlib -Wall build/vga.o build/klib/kio.o build/outb.o build/inb.o build/segments.o build/gdt.o build/idt.o build/kernel.o build/bootloader.o -lgcc
 	
 clean:
 	rm -rf build/

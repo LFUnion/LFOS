@@ -1,7 +1,5 @@
-#ifndef KLIB_H
-#define KLIB_H
-
 #include "vga.h"
+#include "kio.h"
 
 /*
 LFOS, a simple operating system.
@@ -21,6 +19,18 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-#include "kio.h"
+void printf(const char text[]) {
+        klog(text);
+}
+void clear() {
+        kclear();
+}
+void printw(const char text[]) {
+        klogi(text);
+}
 
-#endif /* KLIB_H */
+void printd(const int digit) {
+    char string[1];
+    string[0] = digit + '0';
+    printf(string);
+}
