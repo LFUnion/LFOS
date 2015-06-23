@@ -1,5 +1,7 @@
 #include "klib.h"
+
 #include "cpu.h"
+#include "keyboard.h"
 
 #include "gdt.h"
 #include "idt.h"
@@ -25,9 +27,18 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 // Display head
 void kmain(void) {
     clear();
+    
     printf("[..] Loading IDT");
     load_idt();
     printf("[OK] IDT loaded");
+    
+    printf("[..] Detecting keyboards");
+    if(kbd_detect() == 1) {
+        printf("[OK] Keyboard detected");
+    } else {
+        printw("[!!] No keyboard detected");
+    }
+    
     printf("");
     printw("Welcome to LFOS!");
     printw("(C) 2015 by LFUnion");

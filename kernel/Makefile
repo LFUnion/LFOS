@@ -28,12 +28,14 @@ build:
 	$(GCC) -c cpu/cpu.c -o build/cpu.o $(GCC_INCLUDES) $(GCC_FLAGS)
 	echo "Compiling VGA driver ..."
 	$(GCC) -c drivers/vga/vga.c -o build/drivers/vga.o $(GCC_INCLUDES) $(GCC_FLAGS)
+	echo "Compiling keyboard driver ..."
+	$(GCC) -c drivers/keyboard/keyboard.c -o build/drivers/keyboard.o $(GCC_INCLUDES) $(GCC_FLAGS)
 	echo "Compiling KIO"
 	$(GCC) -c klib/kio.c -o build/klib/kio.o $(GCC_INCLUDES) $(GCC_FLAGS)
 	echo "Compiling kernel ..."
 	$(GCC) -c kernel.c -o build/kernel.o $(GCC_INCLUDES) $(GCC_FLAGS)
 	echo "Linking ..."
-	$(GCC) -T linker.ld -o build/lfos.bin -ffreestanding -O2 -nostdlib -Wall build/drivers/vga.o build/klib/kio.o build/outb.o build/inb.o build/segments.o build/gdt.o build/idt.o build/cpu.o build/kernel.o build/bootloader.o -lgcc
+	$(GCC) -T linker.ld -o build/lfos.bin -ffreestanding -O2 -nostdlib -Wall build/drivers/vga.o build/drivers/keyboard.o build/klib/kio.o build/outb.o build/inb.o build/segments.o build/gdt.o build/idt.o build/cpu.o build/kernel.o build/bootloader.o -lgcc
 	
 clean:
 	rm -rf build/
