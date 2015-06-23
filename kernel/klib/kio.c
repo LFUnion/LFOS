@@ -19,13 +19,13 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-void printf(const char text[]) {
+void printf(const char text[], ...) {
         klog(text);
 }
 void clear() {
         kclear();
 }
-void printw(const char text[]) {
+void printw(const char text[], ...) {
         klogi(text);
 }
 
