@@ -1,30 +1,23 @@
-[BITS 32]
-
 GLOBAL load_gdt_asm
-GLOBAL reload_selector
+GLOBAL reload_gdt
+GLOBAL reload_segments
 
-SECTION .text
-
-gdtr DW 0
-     DD 0
-
-load_gdt_asm:
-    xor eax, eax
-    mov ax, ds
-    shl eax, 4
-    add eax, 'GDT'
-    mov [gdtr + 2], eax
-    mov eax, 'GDT_end'
-    sub eax, 'GDT'
-    mov [gdtr], ax
-    lgdt [gdtr]
-    jmp 0x08:reload_selector
- 
-reload_selector:
+reload_gdt:
+    ;cli
+    ;hlt
+    jmp 0x8:reload_segments
+    
+reload_segments:
     mov ax, 0x10
     mov ds, ax
     mov es, ax
     mov fs, ax
     mov gs, ax
     mov ss, ax
+    ret
+    
+load_gdt_asm:
+    mov eax, [esp + 4]
+    lgdt [eax]
+    call reload_gdt
     ret

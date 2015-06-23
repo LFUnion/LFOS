@@ -11,7 +11,7 @@
 
 #define NUM_OF_GDT_ENTRYS 256
 
-extern void load_gdt_asm()__attribute__((cdecl));
+extern void load_gdt_asm(void* desc)__attribute__((cdecl));
 
 static uint64_t gdt[NUM_OF_GDT_ENTRYS];
 
@@ -37,5 +37,5 @@ void load_gdt()
     gdt_ptr.size = NUM_OF_GDT_ENTRYS * 8 - 1;
     gdt_ptr.ptr = (uint32_t) gdt;
     
-    load_gdt_asm();
+    load_gdt_asm(&gdt);
 }

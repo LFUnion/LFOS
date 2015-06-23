@@ -1,6 +1,7 @@
 #include "klib.h"
 #include "cpu.h"
 
+#include "gdt.h"
 #include "idt.h"
 
 /*
