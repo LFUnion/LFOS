@@ -5,11 +5,13 @@
  */
 
 #include "stdint.h"
+
+#include "cpu.h"
 #include "gdt.h"
 
 #define NUM_OF_GDT_ENTRYS 256
 
-extern void reload_segments()__attribute__((cdecl));
+extern void load_gdt_asm()__attribute__((cdecl));
 
 static uint64_t gdt[NUM_OF_GDT_ENTRYS];
 
@@ -25,6 +27,8 @@ void add_gdt_entry(int i, unsigned int base_addr, unsigned int size, int flags)
 
 void load_gdt()
 {
+    cpu_cli();
+    
     struct {
         uint16_t size;
         uint32_t ptr;
@@ -33,6 +37,5 @@ void load_gdt()
     gdt_ptr.size = NUM_OF_GDT_ENTRYS * 8 - 1;
     gdt_ptr.ptr = (uint32_t) gdt;
     
-    asm ("lgdt %0" : : "m" (gdt_ptr));
-    reload_segments();
+    load_gdt_asm();
 }
