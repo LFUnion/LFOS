@@ -35,7 +35,7 @@ string "mpfr". (Don't forget to update the SHA-checksums)
 `yaourt -S i686-elf-gcc`
 
 
-We'll accept usefull push requests. We need developers, so if you 
+We'll accept useful push requests. We need developers, so if you 
 want to contribute, contact us at <lfunion@web.de>.
 
 ## Documentation
