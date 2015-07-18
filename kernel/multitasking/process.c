@@ -11,6 +11,11 @@ void wait(int time)
     uint8_t start = rtc_second;
     uint8_t dest = start + time;
     
+    if (dest >= 60)
+    {
+        dest -= 60;
+    }
+    
     while (dest != rtc_second)
     {
         rtc_refresh();
