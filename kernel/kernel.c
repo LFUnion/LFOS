@@ -7,6 +7,8 @@
 #include "gdt.h"
 #include "idt.h"
 
+#include "process.h"
+
 /*
 LFOS, a simple operating system.
 Copyright (C) 2015 LFUnion.
@@ -25,9 +27,7 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-extern uint8_t rtc_second;
-
-// Display head
+/* Kernel entry point, called from boot/bootloader.asm */
 void kmain(void) {
     clear();
     
@@ -41,6 +41,7 @@ void kmain(void) {
     } else {
         printw("[!!] No keyboard detected");
     }
+    
     printf("[..] Refreshing system time");
     rtc_refresh();
     printf("[OK] Time set");
@@ -54,6 +55,9 @@ void kmain(void) {
     printf("at");
     printf(__TIME__);
     printf("");
+    printf("[..] Sleeping 5 seconds");
+    wait(5);
+    printf("[OK] Process woke up");
     printf("[..] Halting CPU");
     cpu_halt();
     printw("[!!] COULD NOT HALT CPU");
