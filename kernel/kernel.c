@@ -2,6 +2,7 @@
 
 #include "cpu.h"
 #include "keyboard.h"
+#include "rtc.h"
 
 #include "gdt.h"
 #include "idt.h"
@@ -24,6 +25,8 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
+extern uint8_t rtc_second;
+
 // Display head
 void kmain(void) {
     clear();
@@ -38,6 +41,9 @@ void kmain(void) {
     } else {
         printw("[!!] No keyboard detected");
     }
+    printf("[..] Refreshing system time");
+    rtc_refresh();
+    printf("[OK] Time set");
     
     printf("");
     printw("Welcome to LFOS!");

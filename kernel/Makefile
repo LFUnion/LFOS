@@ -26,6 +26,8 @@ build:
 	$(GCC) -c ports/inb.c -o build/inb.o $(GCC_INCLUDES) $(GCC_FLAGS)
 	echo "Compiling cpu"
 	$(GCC) -c cpu/cpu.c -o build/cpu.o $(GCC_INCLUDES) $(GCC_FLAGS)
+	echo "Compiling RTC driver"
+	$(GCC) -c drivers/rtc/rtc.c -o build/drivers/rtc.o $(GCC_INCLUDES) $(GCC_FLAGS)
 	echo "Compiling VGA driver ..."
 	$(GCC) -c drivers/vga/vga.c -o build/drivers/vga.o $(GCC_INCLUDES) $(GCC_FLAGS)
 	echo "Compiling keyboard driver ..."
@@ -35,7 +37,7 @@ build:
 	echo "Compiling kernel ..."
 	$(GCC) -c kernel.c -o build/kernel.o $(GCC_INCLUDES) $(GCC_FLAGS)
 	echo "Linking ..."
-	$(GCC) -T linker.ld -o build/lfos.bin -ffreestanding -O2 -nostdlib -Wall build/drivers/vga.o build/drivers/keyboard.o build/klib/kio.o build/outb.o build/inb.o build/segments.o build/gdt.o build/idt.o build/cpu.o build/kernel.o build/bootloader.o -lgcc
+	$(GCC) -T linker.ld -o build/lfos.bin -ffreestanding -O2 -nostdlib -Wall build/drivers/vga.o build/drivers/keyboard.o build/drivers/rtc.o build/klib/kio.o build/outb.o build/inb.o build/segments.o build/gdt.o build/idt.o build/cpu.o build/kernel.o build/bootloader.o -lgcc
 	
 clean:
 	rm -rf build/
