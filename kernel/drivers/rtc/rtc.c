@@ -44,7 +44,7 @@ void rtc_refresh()
     rtc_minute = read_register(reg_min);
     rtc_hour   = read_register(reg_hor);
         
-    while (read_update_flag())
+    while(read_update_flag())
     {
         rtc_second = read_register(reg_sec);
         rtc_minute = read_register(reg_min);
