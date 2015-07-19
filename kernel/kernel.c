@@ -35,6 +35,10 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 void kmain(void) {
     clear();
     
+    printf("[..] Loading GDT");
+    load_gdt();
+    printw("[!!] GDT loaded, but not flushed");
+    
     printf("[..] Loading IDT");
     load_idt();
     printf("[OK] IDT loaded");
