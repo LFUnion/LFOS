@@ -34,12 +34,14 @@ build:
 	$(GCC) -c drivers/keyboard/keyboard.c -o build/drivers/keyboard.o $(GCC_INCLUDES) $(GCC_FLAGS)
 	echo "Compiling KIO"
 	$(GCC) -c klib/kio.c -o build/klib/kio.o $(GCC_INCLUDES) $(GCC_FLAGS)
+	echo "Compiling ktime"
+	$(GCC) -c klib/ktime.c -o build/klib/ktime.o $(GCC_INCLUDES) $(GCC_FLAGS)
 	echo "Compiling process"
 	$(GCC) -c multitasking/process.c -o build/process.o $(GCC_INCLUDES) $(GCC_FLAGS)
 	echo "Compiling kernel ..."
 	$(GCC) -c kernel.c -o build/kernel.o $(GCC_INCLUDES) $(GCC_FLAGS)
 	echo "Linking ..."
-	$(GCC) -T linker.ld -o build/lfos.bin -ffreestanding -O2 -nostdlib -Wall build/drivers/vga.o build/drivers/keyboard.o build/drivers/rtc.o build/klib/kio.o build/outb.o build/inb.o build/segments.o build/gdt.o build/idt.o build/cpu.o build/process.o build/kernel.o build/bootloader.o -lgcc
+	$(GCC) -T linker.ld -o build/lfos.bin -ffreestanding -O2 -nostdlib -Wall build/drivers/vga.o build/drivers/keyboard.o build/drivers/rtc.o build/klib/kio.o build/klib/ktime.o build/outb.o build/inb.o build/segments.o build/gdt.o build/idt.o build/cpu.o build/process.o build/kernel.o build/bootloader.o -lgcc
 	
 clean:
 	rm -rf build/

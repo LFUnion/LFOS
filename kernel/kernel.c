@@ -47,6 +47,13 @@ void kmain(void) {
     printf("[OK] Time set");
     
     printf("");
+    printf("-- TIME HEADER START --");
+    printd(get_second());
+    printd(get_minute());
+    printd(get_hour());
+    printf("--  TIME HEADER END  --");
+    
+    printf("");
     printw("Welcome to LFOS!");
     printw("(C) 2015 by LFUnion");
     printf("");
