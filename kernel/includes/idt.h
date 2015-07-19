@@ -1,7 +1,9 @@
 #ifndef IDT_H
 #define IDT_H
 
-void add_idt_gate(int i, unsigned int base_addr, unsigned int selector, int flags);
+#include "stdint.h"
+
+void add_idt_gate(int i, uint32_t base_addr, uint32_t selector, uint16_t flags);
 void load_idt();
 
 #endif /* IDT_H */

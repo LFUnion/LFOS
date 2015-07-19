@@ -16,10 +16,14 @@ build:
 	nasm -felf32 -o build/bootloader.o boot/bootloader.asm
 	echo "Assembling segments"
 	nasm -felf32 -o build/segments.o memory/segments.asm
+	echo "Assembling exception handlers"
+	nasm -felf32 -o build/exceptions.o interrupts/exceptions.asm
 	echo "Compiling GDT"
 	$(GCC) -c memory/gdt.c -o build/gdt.o $(GCC_INCLUDES) $(GCC_FLAGS)
 	echo "Compiling IDT"
 	$(GCC) -c interrupts/idt.c -o build/idt.o $(GCC_INCLUDES) $(GCC_FLAGS)
+	echo "Compiling C common exception handler"
+	$(GCC) -c interrupts/exceptionhandler.c -o build/exceptionhandler.o $(GCC_INCLUDES) $(GCC_FLAGS)
 	echo "Compiling outb"
 	$(GCC) -c ports/outb.c -o build/outb.o $(GCC_INCLUDES) $(GCC_FLAGS)
 	echo "Compiling inb"

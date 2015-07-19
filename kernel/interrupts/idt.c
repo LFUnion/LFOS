@@ -6,7 +6,7 @@
 
 static uint64_t idt[NUM_OF_IDT_ENTRYS];
 
-void add_idt_gate(int i, unsigned int base_addr, unsigned int selector, int flags)
+void add_idt_gate(int i, uint32_t base_addr, uint32_t selector, uint16_t flags)
 {
     // idt[i] = 64 & 0xffffLL; // Only uncomment if *REALLY* needed
     
