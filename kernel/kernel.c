@@ -1,13 +1,17 @@
+/* Kernel C library */
 #include "klib.h"
 
+/* Drivers */
 #include "cpu.h"
 #include "keyboard.h"
 #include "rtc.h"
+#include "serial.h"
 
+/* Descriptor tables */
 #include "gdt.h"
 #include "idt.h"
 
-#include "process.h"
+#include "stdint.h"
 
 /*
 LFOS, a simple operating system.
@@ -45,6 +49,10 @@ void kmain(void) {
     printf("[..] Refreshing system time");
     rtc_refresh();
     printf("[OK] Time set");
+    
+    printf("[..] Initializing serial COM1");
+    serial_init();
+    printf("[OK] COM1 ready");
     
     printf("");
     printf("-- TIME HEADER START --");
