@@ -32,9 +32,22 @@ static inline uint8_t read_register(uint8_t reg)
     return inb(data_addr);
 }
 
+static inline uint8_t read_update_flag()
+{
+    outb(command_addr, 0x0A);
+    return (inb(data_addr) & 0x80);
+}
+
 void rtc_refresh()
 {
     rtc_second = read_register(reg_sec);
     rtc_minute = read_register(reg_min);
     rtc_hour   = read_register(reg_hor);
+        
+    while (read_update_flag())
+    {
+        rtc_second = read_register(reg_sec);
+        rtc_minute = read_register(reg_min);
+        rtc_hour   = read_register(reg_hor);
+    }
 }
