@@ -1,4 +1,4 @@
-9#!/bin/bash
+#!/bin/bash
 
 # This script is not relevant to you if you are´nt the buildbot, but
 # feel free to explore it!
