@@ -12,7 +12,7 @@ the Free Software Foundation, either version 3 of the License, or
 (at your option) any later version. See http://www.gnu.org/licenses/.
 
 ### Build
-You can find hourly builds at https://github.com/lfunion/lfos-hourly.
+You can find daily builds at https://github.com/lfunion/lfos-hourly.
 
 ### Version
 This is a screenshot of the version:
