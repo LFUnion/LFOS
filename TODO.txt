@@ -1,13 +1,10 @@
--| TODO list               | Marks                    |
--| (Highest priority first)| F = stone3311, L = meles5|
--|-------------------------|--------------------------|
--
--1. Implement itoa() L
--2. Make GDT work F
--3. Make IDT work F
--4. Expand keyboard driver L
--5. Implement a scheduler LF
--6. MORE COMMENTS!!! F
--
----- Done: ---
--- Implement a serial driver F
+| TODO list               | Marks                    |
+| (Highest priority first)| F = stone3311, L = meles5|
+|-------------------------|--------------------------|
+
+1. Implement itoa() meles5
+2. Make GDT work stone3311
+3. Make IDT work stone3311
+4. Expand keyboard driver meles5
+5. Implement a scheduler lfunion
+6. MORE COMMENTS! stone3311
