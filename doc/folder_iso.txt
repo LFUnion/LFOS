@@ -1,0 +1,12 @@
+You can find up-to-date documentation at "https://github.com/LFUnion/LFOS/wiki".
+
+iso/
+    In the iso/ folder are several files and folders required for creating a bootable disk image of LFOS.
+
+    Folders:
+
+        isoroot/boot/grub/: Grub configuration files
+
+    Files:
+
+        Makefile: The Makefile building the disk image

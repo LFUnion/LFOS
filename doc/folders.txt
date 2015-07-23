@@ -1,0 +1,6 @@
+You can find up-to-date documentation at "https://github.com/LFUnion/LFOS/wiki".
+
+Folders
+    kernel/
+    clib/
+    iso/

@@ -1,0 +1,22 @@
+You can find up-to-date documentation at "https://github.com/LFUnion/LFOS/wiki".
+
+kernel/
+
+    In the kernel folder are the main parts of kernelspace code. Some folders, which will be explained in other pages, are also located in there.
+
+    Folders:
+
+        boot: Bootloader code
+        cpu: CPU related functions
+        drivers: All drivers
+        includes: Headers for everything in kernelspace except klib
+        interrupts: IDT, ISRs and Handlers
+        klib: Kernel space C library
+        memory: GDT
+        ports: Hardware I/O and communication
+
+    Files:
+
+        Makefile: Self explaining
+        linker.ld: Linker script
+        kernel.c: Kernel entry point
