@@ -17,7 +17,7 @@ def mktxt(content):
 
 def mkmd(content):
     finished = ""
-    finished += "## Not implemented yet:\n\n | To implement                  | Responsible user          |\n | ----------------------------- | ------------------------- |"
+    finished += "## Not implemented yet:\n\n| To implement                  | Responsible user          |\n| ----------------------------- | ------------------------- |"
     finished += "\n"
 
     lUrl = """<img alt="meles5" title="meles5" class="avatar" src="https://avatars1.githubusercontent.com/u/10196097?v=3&s=460" height="20" width="20">"""
@@ -36,7 +36,7 @@ def mkmd(content):
             elif line[1] == "lfunion" or line [1] == "lfunion\n":
                 imgUrl = lfUrl
 
-            finished += " | " + line[0] + " | " + imgUrl + " |\n"
+            finished += "| " + line[0] + " | " + imgUrl + " |\n"
             
 
     return finished
