@@ -44,6 +44,8 @@ build:
 	$(GCC) -c klib/kcom.c -o build/klib/kcom.o $(GCC_INCLUDES) $(GCC_FLAGS)
 	echo "Compiling ktime"
 	$(GCC) -c klib/ktime.c -o build/klib/ktime.o $(GCC_INCLUDES) $(GCC_FLAGS)
+	echo "Compiling kstring"
+	$(GCC) -c klib/kstring.c -o build/klib/kstring.o $(GCC_INCLUDES) $(GCC_FLAGS)
 	echo "Compiling process"
 	$(GCC) -c multitasking/process.c -o build/process.o $(GCC_INCLUDES) $(GCC_FLAGS)
 	echo "Compiling kernel ..."
