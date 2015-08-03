@@ -15,7 +15,6 @@ SECTIONS
         *(.rodata)
     }
     .bss ALIGN(4096) : {
-        *(.bootstrap_stack)
         *(.bss)
     }
 }

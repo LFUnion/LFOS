@@ -12,16 +12,10 @@ align 4
     dd FLAGS
     dd CHECKSUM
 
-section .bootstrap_stack, nobits
-align 4
-stack_bottom:
-times 16384 db 0
-stack_top:
 
 section .text
 global _start
 _start:
-    mov esp, stack_top
     extern kmain
     call kmain
     cli
