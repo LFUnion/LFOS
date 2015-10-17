@@ -56,6 +56,10 @@ void kmain(void) {
     
     printf("[..] Initializing serial COM1");
     serial_init();
+    send("P");
+    send("I");
+    send("N");
+    send("G")
     printf("[OK] COM1 ready");
     
     printf("");
