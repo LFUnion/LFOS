@@ -59,7 +59,7 @@ void kmain(void) {
     send("P");
     send("I");
     send("N");
-    send("G")
+    send("G");
     printf("[OK] COM1 ready");
     
     printf("");
