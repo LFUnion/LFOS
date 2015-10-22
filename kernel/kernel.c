@@ -56,12 +56,19 @@ void kmain(void) {
     
     printf("[..] Initializing serial COM1");
     serial_init();
+    printf("[OK] COM1 ready");
+
+    printf("[..] Sending ping on COM1");
     send(0x50); // P
     send(0x49); // I
     send(0x4E); // N
     send(0x47); // G
-    printf("[OK] COM1 ready");
-    
+    send(0x0A); // New line
+    print("[OK] Sent ping on COM1");
+
+    printw("[##] Send anything on COM1 to continue");
+    recv();
+
     printf("");
     printf("-- TIME HEADER START --");
     printd(get_second());
