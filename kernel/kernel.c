@@ -64,7 +64,7 @@ void kmain(void) {
     send(0x4E); // N
     send(0x47); // G
     send(0x0A); // New line
-    print("[OK] Sent ping on COM1");
+    printf("[OK] Sent ping on COM1");
 
     printw("[##] Send anything on COM1 to continue");
     recv();
