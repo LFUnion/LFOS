@@ -35,5 +35,8 @@
 # Build folder
 build/
 
+# Built ISOs
+*.iso
+
 # GEdit / Kate backup files
 *~
