@@ -69,6 +69,12 @@ void kmain(void) {
     printd(get_hour());
     printf("--  TIME HEADER END  --");
     
+    char string[1];
+    string[0] = charFromDigit(8);
+    printf(string);
+    const char** xxx = stringFromInt(324234);
+    printf(*xxx);
+
     printf("");
     printw("Welcome to LFOS!");
     printw("(C) 2015 by LFUnion");

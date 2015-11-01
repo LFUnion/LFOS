@@ -24,6 +24,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #include "kio.h"
 #include "ktime.h"
 #include "kstring.h"
+#include "kcasts.h"
 #include "kcom.h"
 #include "process.h"
 
