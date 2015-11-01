@@ -1,6 +1,7 @@
 #include <stdint.h>
 #include "vga.h"
 #include "portio.h"
+
 #define TERM_ROWS 24
 
 /*
@@ -72,6 +73,7 @@ void klog(const char text[]) {
             column++;
         }
     }
+
     column = 0;
     row++;
     if(row > TERM_ROWS) {

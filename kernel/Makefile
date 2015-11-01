@@ -42,6 +42,8 @@ build:
 	$(GCC) -c klib/kio.c -o build/klib/kio.o $(GCC_INCLUDES) $(GCC_FLAGS)
 	echo "Compiling kcom"
 	$(GCC) -c klib/kcom.c -o build/klib/kcom.o $(GCC_INCLUDES) $(GCC_FLAGS)
+	echo "Compiling kcasts"
+	$(GCC) -c klib/kcasts.c -o build/klib/kcasts.o $(GCC_INCLUDES) $(GCC_FLAGS)
 	echo "Compiling ktime"
 	$(GCC) -c klib/ktime.c -o build/klib/ktime.o $(GCC_INCLUDES) $(GCC_FLAGS)
 	echo "Compiling kstring"
@@ -51,7 +53,7 @@ build:
 	echo "Compiling kernel ..."
 	$(GCC) -c kernel.c -o build/kernel.o $(GCC_INCLUDES) $(GCC_FLAGS)
 	echo "Linking ..."
-	$(GCC) -T linker.ld -o build/lfos.bin -ffreestanding -O2 -nostdlib -Wall build/drivers/vga.o build/drivers/serial.o build/drivers/keyboard.o build/drivers/rtc.o build/klib/kio.o build/klib/kcom.o build/klib/ktime.o build/outb.o build/inb.o build/segments.o build/gdt.o build/idt.o build/cpu.o build/process.o build/kernel.o build/bootloader.o -lgcc
+	$(GCC) -T linker.ld -o build/lfos.bin -ffreestanding -O2 -nostdlib -Wall build/bootloader.o build/kernel.o build/drivers/vga.o build/drivers/serial.o build/drivers/keyboard.o build/drivers/rtc.o build/klib/kio.o build/klib/kcom.o build/klib/kcasts.o build/klib/ktime.o build/outb.o build/inb.o build/segments.o build/gdt.o build/idt.o build/cpu.o build/process.o -lgcc
 	
 clean:
 	rm -rf build/
