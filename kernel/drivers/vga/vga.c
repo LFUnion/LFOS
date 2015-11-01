@@ -107,4 +107,5 @@ void kclear() {
     for(int i = 0; i < 25; i++) {
         klog("                                                                                ");
     }
+    row = 0; 
 }

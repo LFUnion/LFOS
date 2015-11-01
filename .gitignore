@@ -34,3 +34,6 @@
 
 # Build folder
 build/
+
+# GEdit / Kate backup files
+*~
