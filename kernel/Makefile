@@ -57,4 +57,4 @@ clean:
 	rm -rf build/
 	
 test:
-	qemu-system-i386 -kernel build/lfos.bin
+	qemu-system-i386 -serial stdio -kernel build/lfos.bin
