@@ -5,7 +5,7 @@ int hexToInt(uint8_t input) {
     return retval;
 }
 
-const char** stringFromInt(int input) {
+const char * stringFromInt(int input) {
 
     int input_bak = input;
     static int input_l = 0;

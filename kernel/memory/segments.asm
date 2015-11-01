@@ -12,7 +12,7 @@ load_gdt_asm:
     mov fs, ax
     mov gs, ax
     mov ss, ax
-    jmp 0x8:flush_gdt
+    ;jmp 0x8:flush_gdt
     ret
 
 flush_gdt:
