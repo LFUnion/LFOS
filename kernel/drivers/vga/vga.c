@@ -74,8 +74,13 @@ void klog(const char text[]) {
         }
     }
 
-    column = 0;
     row++;
+    column = 0;
+
+    for(int i = 0; i <= 79; i++) {
+        kprintc(' ', 0x07, i, row);
+    }
+
     if(row > TERM_ROWS) {
         row = 0;
     }
@@ -99,6 +104,11 @@ void klogi(const char text[]) {
     }
     column = 0;
     row++;
+
+    for(int i = 0; i <= 79; i++) {
+        kprintc(' ', 0x07, i, row);
+    }
+
     if(row > TERM_ROWS) {
         row = 0;
     }
