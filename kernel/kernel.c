@@ -78,10 +78,8 @@ void kmain(void) {
     printf("at");
     printf(__TIME__);
     printf("");
-    printf("[..] Sleeping 5 seconds");
-    wait(5);
-    printf("[OK] Process woke up");
-    printf("[..] Halting CPU");
-    cpu_halt();
-    printw("[!!] COULD NOT HALT CPU");
+    printf("[--] Send any character to COM1 to restart");
+    recv();
+    cpu_reset();
+    printw("[!!] COULD NOT RESET CPU");
 }
