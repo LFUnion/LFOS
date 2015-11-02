@@ -31,6 +31,8 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
+void print_help();
+
 /* Kernel entry point, called from boot/bootloader.asm */
 void kmain(void) {
     clear();
@@ -78,8 +80,38 @@ void kmain(void) {
     printf("at");
     printf(__TIME__);
     printf("");
-    printf("[--] Send any character to COM1 to restart");
-    recv();
-    cpu_reset();
-    printw("[!!] COULD NOT RESET CPU");
+
+    print_help();
+    while (1) {
+
+	char resp = serial_readc();
+        char line[3] = "> ";
+        line[2] = resp;
+	printf(line);
+
+	if (resp == 'r') {
+	    printf("[..] Rebooting");
+	    cpu_reset();
+	    printw("COULD NOT RESET CPU");
+	} else if (resp == 'h') {
+            printw("[!!] Halting CPU");
+	    cpu_halt();
+	    printw("COULD NOT HALT CPU");
+	} else if (resp == 'c') {
+	    clear();
+	} else if (resp == '?') {
+	    print_help();
+	} else {
+	    printf("Unknown command");
+	}
+    }
+}
+
+void print_help() {
+    printf(">>>> Serial kernel debug interface v0.1");
+    printf(">>>> Commands:");
+    printf(">>>> 'r': Restart");
+    printf(">>>> 'h': Halt");
+    printf(">>>> 'c': Clear screen");
+    printf(">>>> '?': Show this help");
 }
