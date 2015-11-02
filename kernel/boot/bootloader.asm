@@ -16,7 +16,8 @@ dd CHECKSUM
 ; Start "function"
 global _start
 _start:
-    extern kmain
+    mov esp, stack_end ; Stack setup
+    extern kmain ; Defined in kernel/kernel.c
     call kmain
     cli
     
@@ -24,3 +25,10 @@ _start:
     hlt
     jmp .hang
     
+
+
+section .bss
+
+stack_begin:
+    resb 4096 ; 4kB stack
+stack_end:
