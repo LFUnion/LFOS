@@ -9,7 +9,7 @@ int hexToInt(uint8_t input) {
 const char * stringFromInt(int input) {
 
     int input_bak = input;
-    static int input_l = 0;
+    int input_l = 0;
     while(input){
            input_l++;
        input /= 10;
@@ -17,7 +17,7 @@ const char * stringFromInt(int input) {
 
     input = input_bak;
     char tmp[input_l];
-    static int i;
+    int i;
     while(input){
         tmp[i] = charFromDigit(input % 10);
 	i++;
