@@ -40,3 +40,6 @@ build/
 
 # GEdit / Kate backup files
 *~
+
+# Local notes
+notes/*.local
