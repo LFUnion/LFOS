@@ -106,6 +106,11 @@ void kmain(void) {
 	    clear();
 	} else if (resp == '?') {
 	    print_help();
+	} else if (resp == 'k') {
+	    kbd_flush_buffer();
+	    while (1) {
+		printf(stringFromInt(hexToInt(kbd_pull_key())));
+	    }
 	} else {
 	    printf("Unknown command");
 	}
@@ -115,6 +120,7 @@ void kmain(void) {
 void print_help() {
     printf(">>>> Serial kernel debug interface v0.1");
     printf(">>>> Commands:");
+    printf(">>>> 'k': Keyboard test");
     printf(">>>> 'r': Restart");
     printf(">>>> 'h': Halt");
     printf(">>>> 'c': Clear screen");
