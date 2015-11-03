@@ -1,5 +1,7 @@
-#include "vga.h"
 #include "kio.h"
+
+#include "vga.h"
+#include "keyboard.h"
 
 /*
 LFOS, a simple operating system.
@@ -21,6 +23,33 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 void printf(const char text[], ...) {
     klog(text);
+}
+
+char * scanf() {
+    char tmp[150];
+    char str[1];
+    char inp = ' ';
+    int i = 0;
+
+    do {
+	kbd_flush_buffer();
+	inp = kbd_pull_char();
+        str[0] = inp;
+        kprint_raw(str);
+	if (inp != '\n') {
+	    tmp[i] = inp;
+	}
+
+	i++;
+    } while (inp != '\n');
+
+    char* ret = (char*)malloc(strlen(tmp) * sizeof(char));
+    
+    for (int i = 0; i < strlen(tmp); i++) {
+	ret[i] = tmp[i];
+    }
+
+    return ret;
 }
 
 void printw(const char text[], ...) {
