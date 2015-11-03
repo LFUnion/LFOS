@@ -27,5 +27,6 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #include "kcasts.h"
 #include "kcom.h"
 #include "process.h"
+#include "memmanager.h"
 
 #endif /* KLIB_H */

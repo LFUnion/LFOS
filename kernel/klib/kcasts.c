@@ -1,4 +1,5 @@
 #include "kcasts.h"
+#include "klib.h"
 
 int hexToInt(uint8_t input) {
     int retval = input;
@@ -25,7 +26,9 @@ const char * stringFromInt(int input) {
     
     // Simple array reversing
     i = 0;
-    char ret[input_l];
+    char* ret;
+    ret = (char*)malloc(input_l * sizeof(char));
+    
     for (int l = input_l-1; l > -1; l--) {
 	ret[i] = tmp[l];
 

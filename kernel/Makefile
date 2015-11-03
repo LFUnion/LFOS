@@ -24,6 +24,8 @@ build:
 	$(GCC) -c interrupts/idt.c -o build/idt.o $(GCC_INCLUDES) $(GCC_FLAGS)
 	echo "Compiling C common exception handler"
 	$(GCC) -c interrupts/exceptionhandler.c -o build/exceptionhandler.o $(GCC_INCLUDES) $(GCC_FLAGS)
+	echo "Compiling memory manager"
+	$(GCC) -c memory/memmanager.c -o build/memmanager.o $(GCC_INCLUDES) $(GCC_FLAGS)
 	echo "Compiling outb"
 	$(GCC) -c ports/outb.c -o build/outb.o $(GCC_INCLUDES) $(GCC_FLAGS)
 	echo "Compiling inb"
@@ -53,7 +55,7 @@ build:
 	echo "Compiling kernel ..."
 	$(GCC) -c kernel.c -o build/kernel.o $(GCC_INCLUDES) $(GCC_FLAGS)
 	echo "Linking ..."
-	$(GCC) -T linker.ld -o build/lfos.bin -ffreestanding -O2 -nostdlib -Wall build/bootloader.o build/kernel.o build/drivers/vga.o build/drivers/serial.o build/drivers/keyboard.o build/drivers/rtc.o build/klib/kio.o build/klib/kcom.o build/klib/kcasts.o build/klib/kstring.o build/klib/ktime.o build/outb.o build/inb.o build/segments.o build/gdt.o build/idt.o build/cpu.o build/process.o -lgcc
+	$(GCC) -T linker.ld -o build/lfos.bin -ffreestanding -O2 -nostdlib -Wall build/bootloader.o build/kernel.o build/drivers/vga.o build/drivers/serial.o build/drivers/keyboard.o build/drivers/rtc.o build/klib/kio.o build/klib/kcom.o build/klib/kcasts.o build/klib/kstring.o build/klib/ktime.o build/memmanager.o build/outb.o build/inb.o build/segments.o build/gdt.o build/idt.o build/cpu.o build/process.o -lgcc
 	
 clean:
 	rm -rf build/
