@@ -27,7 +27,7 @@ uint8_t kbd_send(uint8_t command) {
 
 uint8_t kbd_pull_key() {
     while (((inb(0x64) >> 0)  & 0x01) == 0) {} // Wait until there is something in the buffer
-    return inb(inb(0x60)); // Read the buffer
+    return inb(0x60); // Read the buffer
 }
 
 int kbd_reset() {
