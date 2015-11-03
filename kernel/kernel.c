@@ -89,28 +89,24 @@ void kmain(void) {
     print_help();
     while (1) {
 
-	char resp = serial_readc();
+	kbd_flush_buffer();
+	char resp = kbd_pull_char();
         char line[3] = "> ";
         line[2] = resp;
 	printf(line);
 
-	if (resp == 'r') {
+	if (resp == 'R') {
 	    printf("[..] Rebooting");
 	    cpu_reset();
 	    printw("COULD NOT RESET CPU");
-	} else if (resp == 'h') {
+	} else if (resp == 'H') {
             printw("[!!] Halting CPU");
 	    cpu_halt();
 	    printw("COULD NOT HALT CPU");
-	} else if (resp == 'c') {
+	} else if (resp == 'C') {
 	    clear();
-	} else if (resp == '?') {
+	} else if (resp == '-') {
 	    print_help();
-	} else if (resp == 'k') {
-	    kbd_flush_buffer();
-	    while (1) {
-		printf(stringFromInt(hexToInt(kbd_pull_key()))); UNCOMMENT BEFORE PUSH
-	    }
 	} else {
 	    printf("Unknown command");
 	}
@@ -118,11 +114,10 @@ void kmain(void) {
 }
 
 void print_help() {
-    printf(">>>> Serial kernel debug interface v0.1");
+    printf(">>>> Kernel debug interface v0.2");
     printf(">>>> Commands:");
-    printf(">>>> 'k': Keyboard test");
-    printf(">>>> 'r': Restart");
-    printf(">>>> 'h': Halt");
-    printf(">>>> 'c': Clear screen");
-    printf(">>>> '?': Show this help");
+    printf(">>>> 'R': Restart");
+    printf(">>>> 'H': Halt");
+    printf(">>>> 'C': Clear screen");
+    printf(">>>> '=': Show this help");
 }
