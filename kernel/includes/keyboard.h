@@ -13,5 +13,6 @@ int kbd_init();
 int kbd_detect();
 
 uint8_t kbd_pull_key();
+char kbd_pull_char();
 
 #endif /* KEYBOARD_H */

@@ -109,7 +109,7 @@ void kmain(void) {
 	} else if (resp == 'k') {
 	    kbd_flush_buffer();
 	    while (1) {
-		printf(stringFromInt(hexToInt(kbd_pull_key())));
+		printf(stringFromInt(hexToInt(kbd_pull_key()))); UNCOMMENT BEFORE PUSH
 	    }
 	} else {
 	    printf("Unknown command");

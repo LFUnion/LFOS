@@ -66,3 +66,99 @@ int kbd_detect() {
     }
 }
 
+char kbd_pull_char() {
+    uint8_t scancode = kbd_pull_key();
+
+    if	      (scancode == 0x02) {
+	return '1';
+    } else if (scancode == 0x03) {
+	return '2';
+    } else if (scancode == 0x04) {
+	return '3';
+    } else if (scancode == 0x05) {
+	return '4';
+    } else if (scancode == 0x06) {
+	return '5';
+    } else if (scancode == 0x07) {
+	return '6';
+    } else if (scancode == 0x08) {
+	return '7';
+    } else if (scancode == 0x09) {
+	return '8';
+    } else if (scancode == 0x0A) {
+	return '9';
+    } else if (scancode == 0x0B) {
+	return '0';
+    } else if (scancode == 0x0C) {
+	return '-';
+    } else if (scancode == 0x0D) {
+	return '=';
+    } else if (scancode == 0x0F) {
+	return '\t';
+    } else if (scancode == 0x10) {
+	return 'Q';
+    } else if (scancode == 0x11) {
+	return 'W';
+    } else if (scancode == 0x12) {
+	return 'E';
+    } else if (scancode == 0x13) {
+	return 'R';
+    } else if (scancode == 0x14) {
+	return 'T';
+    } else if (scancode == 0x15) {
+	return 'Y';
+    } else if (scancode == 0x16) {
+	return 'U';
+    } else if (scancode == 0x17) {
+	return 'I';
+    } else if (scancode == 0x18) {
+	return 'O';
+    } else if (scancode == 0x19) {
+	return 'P';
+    } else if (scancode == 0x1A) {
+	return '[';
+    } else if (scancode == 0x1B) {
+	return ']';
+    } else if (scancode == 0x1C) {
+	return '\n';
+    } else if (scancode == 0x1E) {
+	return 'A';
+    } else if (scancode == 0x1F) {
+	return 'S';
+    } else if (scancode == 0x20) {
+	return 'D';
+    } else if (scancode == 0x21) {
+	return 'F';
+    } else if (scancode == 0x22) {
+	return 'G';
+    } else if (scancode == 0x23) {
+	return 'H';
+    } else if (scancode == 0x24) {
+	return 'J';
+    } else if (scancode == 0x25) {
+	return 'K';
+    } else if (scancode == 0x26) {
+	return 'L';
+    } else if (scancode == 0x27) {
+	return ';';
+    } else if (scancode == 0x2C) {
+	return 'Z';
+    } else if (scancode == 0x2D) {
+	return 'X';
+    } else if (scancode == 0x2E) {
+	return 'C';
+    } else if (scancode == 0x2F) {
+	return 'V';
+    } else if (scancode == 0x30) {
+	return 'B';
+    } else if (scancode == 0x31) {
+	return 'N';
+    } else if (scancode == 0x32) {
+	return 'M';
+    } else if (scancode == 0x39) {
+	return ' ';
+    } else {
+	return (char)0;
+    }
+}
+
