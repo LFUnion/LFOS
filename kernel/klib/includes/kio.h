@@ -2,8 +2,9 @@
 #define KIO_H
 
 void printf(const char text[], ...);
-void clear();
 void printw(const char text[], ...);
+void print_raw(char text[]);
 void printd(const int digit);
+void clear();
 
 #endif /* KIO_H */

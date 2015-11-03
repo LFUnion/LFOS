@@ -44,6 +44,15 @@ void kprint_raw(const char text[]) {
     int i;
     
     for(i = 0; text[i] != '\0'; i++) {
+
+	if(column >= 80) {
+	    row++;
+            column = 0;
+            if(row > TERM_ROWS) {
+                row = 0;
+            }
+	}
+
         if(text[i] == '\n') {
             row++;
             column = 0;
@@ -62,6 +71,15 @@ void klog(const char text[]) {
     int i;
     
     for(i = 0; text[i] != '\0'; i++) {
+
+	if(column >= 80) {
+	    row++;
+            column = 0;
+            if(row > TERM_ROWS) {
+                row = 0;
+            }
+	}
+
         if(text[i] == '\n') {
             row++;
             column = 0;

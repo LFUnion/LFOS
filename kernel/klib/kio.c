@@ -20,17 +20,23 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
 void printf(const char text[], ...) {
-        klog(text);
+    klog(text);
 }
-void clear() {
-        kclear();
-}
+
 void printw(const char text[], ...) {
-        klogi(text);
+    klogi(text);
+}
+
+void print_raw(char text[]) {
+    kprint_raw(text);
 }
 
 void printd(const int digit) {
     char string[1];
     string[0] = digit + '0';
     printf(string);
+}
+
+void clear() {
+   kclear();
 }
