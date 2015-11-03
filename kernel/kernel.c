@@ -45,11 +45,11 @@ void kmain(void) {
     load_idt();
     printf("[OK] IDT loaded");
     
-    printf("[..] Detecting keyboards");
-    if(kbd_detect() == 1) {
-        printf("[OK] Keyboard detected");
+    printf("[..] Initializing keyboard");
+    if(kbd_detect() == 1 && kbd_init() == 1) {
+        printf("[OK] Keyboard initialized");
     } else {
-        printw("[!!] No keyboard detected");
+        printw("[!!] Could not initialize keyboard");
     }
     
     printf("[..] Refreshing system time");
@@ -80,6 +80,11 @@ void kmain(void) {
     printf("at");
     printf(__TIME__);
     printf("");
+
+    printw("[##] Press any key to continue");
+    kbd_flush_buffer();
+    kbd_pull_key();
+    clear();
 
     print_help();
     while (1) {

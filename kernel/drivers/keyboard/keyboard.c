@@ -1,9 +1,7 @@
-#include "stdint.h"
-#include "klib.h"
 #include "keyboard.h"
-#include "portio.h"
 
-// Keyboard controller port: 0x60
+// PS/2 controller port: 0x64
+// Keyboard port: 	 0x60
 
 uint8_t kbd_send(uint8_t command) {
     int resend = 1;
@@ -27,20 +25,30 @@ uint8_t kbd_send(uint8_t command) {
     return 0;
 }
 
-//uint8_t kbd_sread(uint8_t) {}
+uint8_t kbd_pull_key() {
+    while (((inb(0x64) >> 0)  & 0x01) == 0) {} // Wait until there is something in the buffer
+    return inb(0x60); // Read the buffer
+}
 
 int kbd_reset() {
     uint8_t resp = kbd_send(0xFF); // Sending reset command
-    if(resp == 0xAA) { // 0xAA = Self test passed
+    if(resp == 0xFA) { // 0xFA = Reset done
         return 1;
     } else {
         return 0;
     }
 }
+
+int kbd_flush_buffer() {
+    outb(0x64, 0xAD); // Disable PS/2 (1)
+    inb(0x60);        // Flush   buffer
+    outb(0x64, 0xAE); // Enable  PS/2 (1)
+    return 1;
+}
+
 int kbd_init() {
-    uint8_t resp = kbd_send(0xAA); // Perform selftest
-    if(resp != 0x55) {
-        return 0; // Return 0 if selftest failed
+    if(kbd_reset() == 0) {
+	return 0; // Reset failed
     }
     kbd_send(0xF6); // Load defaults
     return 1;
