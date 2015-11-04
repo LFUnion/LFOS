@@ -26,27 +26,30 @@ void printf(const char text[], ...) {
 }
 
 char * scanf() {
-    char tmp[150];
-    char str[1];
+    char* tmp = (char*)malloc(150 * sizeof(char));
     char inp = ' ';
     int i = 0;
 
     do {
 	kbd_flush_buffer();
 	inp = kbd_pull_char();
-        str[0] = inp;
-        kprint_raw(str);
-	if (inp != '\n') {
-	    tmp[i] = inp;
-	}
+	
+	if (inp != 0) {
+	    char* str = (char*)malloc(sizeof(char));
+            str[0] = inp;
+            kprint_raw(str);
+	    if (inp != '\n') {
+	        tmp[i] = inp;
+	    }
 
-	i++;
+	    i++;
+	}
     } while (inp != '\n');
 
     char* ret = (char*)malloc(strlen(tmp) * sizeof(char));
     
-    for (int i = 0; i < strlen(tmp); i++) {
-	ret[i] = tmp[i];
+    for (int ii = 0; ii < strlen(tmp); ii++) {
+	ret[ii] = tmp[ii];
     }
 
     return ret;
