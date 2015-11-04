@@ -78,9 +78,9 @@ void kmain(void) {
     printw("Welcome to LFOS!");
     printw("(C) 2015 by LFUnion");
     printf("");
-    printf("Compiled");
-    printf(__DATE__);
-    printf("at");
+    print_raw("Compiled ");
+    print_raw(__DATE__);
+    print_raw(" at ");
     printf(__TIME__);
     printf("");
 
