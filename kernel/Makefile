@@ -3,7 +3,7 @@
 .PHONY: clean
 
 GCC = i686-elf-gcc
-GCC_INCLUDES = -I./includes/ -I./klib/includes/
+GCC_INCLUDES = -I./includes/ -I./klib/includes/ -I./kshell/includes/
 GCC_FLAGS = -O2 -ffreestanding -std=gnu99 -Wall -Wextra
 
 build:
@@ -13,6 +13,7 @@ build:
 	mkdir build
 	mkdir build/klib
 	mkdir build/drivers
+	mkdir build/kshell
 	nasm -felf32 -o build/bootloader.o boot/bootloader.asm
 	echo "Assembling segments"
 	nasm -felf32 -o build/segments.o memory/segments.asm
@@ -50,12 +51,14 @@ build:
 	$(GCC) -c klib/ktime.c -o build/klib/ktime.o $(GCC_INCLUDES) $(GCC_FLAGS)
 	echo "Compiling kstring"
 	$(GCC) -c klib/kstring.c -o build/klib/kstring.o $(GCC_INCLUDES) $(GCC_FLAGS)
+	echo "Compiling kshell"
+	$(GCC) -c kshell/kshell.c -o build/kshell/kshell.o $(GCC_INCLUDES) $(GCC_FLAGS)
 	echo "Compiling process"
 	$(GCC) -c multitasking/process.c -o build/process.o $(GCC_INCLUDES) $(GCC_FLAGS)
 	echo "Compiling kernel ..."
 	$(GCC) -c kernel.c -o build/kernel.o $(GCC_INCLUDES) $(GCC_FLAGS)
 	echo "Linking ..."
-	$(GCC) -T linker.ld -o build/lfos.bin -ffreestanding -O2 -nostdlib -Wall build/bootloader.o build/kernel.o build/drivers/vga.o build/drivers/serial.o build/drivers/keyboard.o build/drivers/rtc.o build/klib/kio.o build/klib/kcom.o build/klib/kcasts.o build/klib/kstring.o build/klib/ktime.o build/memmanager.o build/outb.o build/inb.o build/segments.o build/gdt.o build/idt.o build/cpu.o build/process.o -lgcc
+	$(GCC) -T linker.ld -o build/lfos.bin -ffreestanding -O2 -nostdlib -Wall build/bootloader.o build/kernel.o build/drivers/vga.o build/drivers/serial.o build/drivers/keyboard.o build/drivers/rtc.o build/klib/kio.o build/klib/kcom.o build/klib/kcasts.o build/klib/kstring.o build/klib/ktime.o build/kshell/kshell.o build/memmanager.o build/outb.o build/inb.o build/segments.o build/gdt.o build/idt.o build/cpu.o build/process.o -lgcc
 	
 clean:
 	rm -rf build/

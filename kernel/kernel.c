@@ -1,6 +1,9 @@
 /* Kernel C library */
 #include "klib.h"
 
+/* Kernel shell */
+#include "kshell.h"
+
 /* Drivers */
 #include "cpu.h"
 #include "keyboard.h"
@@ -105,10 +108,10 @@ void kmain(void) {
 	    printw("COULD NOT HALT CPU");
 	} else if (resp == 'C') {
 	    clear();
+	} else if (resp == 'S') {
+	    kshell_main();
 	} else if (resp == '-') {
 	    print_help();
-	} else {
-	    printf("Unknown command");
 	}
     }
 }
@@ -119,5 +122,6 @@ void print_help() {
     printf(">>>> 'R': Restart");
     printf(">>>> 'H': Halt");
     printf(">>>> 'C': Clear screen");
+    printf(">>>> 'S': Start the (experimental) shell");
     printf(">>>> '=': Show this help");
 }

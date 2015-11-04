@@ -4,6 +4,7 @@
 #include "stddef.h"
 
 void* memcpy(void* str1_ptr, void* str2_ptr, size_t n);
-int strlen(char* string);
+int strlen(const char* string);
+int strcmp (const char* s1, const char* s2);
 
 #endif /* KSTRING_H */
