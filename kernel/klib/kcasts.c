@@ -17,7 +17,7 @@ const char * stringFromInt(int input) {
 
     input = input_bak;
     char tmp[input_l];
-    int i;
+    int i = 0;
     while(input){
         tmp[i] = charFromDigit(input % 10);
 	i++;
