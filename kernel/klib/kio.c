@@ -63,7 +63,7 @@ void print_raw(char text[]) {
     kprint_raw(text);
 }
 
-void printd(const int digit) {
+void __attribute__ ((deprecated)) printd(const int digit) {
     char string[1];
     string[0] = digit + '0';
     printf(string);
