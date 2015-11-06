@@ -41,9 +41,11 @@ void print_help();
 void kmain(void) {
     clear();
     
-    printf("[..] Loading GDT");
-    load_gdt();
-    printw("[!!] GDT loaded, but not flushed");
+
+    // I just realised: GRUB is loading the GDT for us ...
+    //printf("[..] Loading GDT");
+    //load_gdt();
+    //printw("[!!] GDT loaded, but not flushed");
     
     printf("[..] Loading IDT");
     load_idt();
