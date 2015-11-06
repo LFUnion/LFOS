@@ -22,10 +22,10 @@ void load_idt()
     struct {
         uint16_t limit;
         uint32_t ptr;
-    }__attribute__((packed)) idt_ptr {
-        .limit = NUM_OF_IDT_ENTRYS * 8 - 1;
-        .ptr = (uint32_t) idt;
-    }
+    }__attribute__((packed)) idt_ptr = {
+        .limit = NUM_OF_IDT_ENTRYS * 8 - 1,
+        .ptr = (uint32_t) idt,
+    };
     
     asm("lidt %0" : : "m"(idt_ptr));
 }

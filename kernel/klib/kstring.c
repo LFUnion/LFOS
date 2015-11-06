@@ -13,6 +13,17 @@ void* memcpy(void* str1_ptr, void* str2_ptr, size_t n) {
     return str2_ptr;
 }
 
+void* memset(void* ptr, int value, size_t n) {
+    void* orig_ptr = ptr;
+    int* int_ptr = (int*)ptr;
+    while ((void*)int_ptr < orig_ptr + n * sizeof(value)) {
+	*int_ptr = value;
+	int_ptr++;
+	serial_writec((char)value);
+    }
+    return orig_ptr;
+}
+
 int strlen(const char* string) {
     int len = 0;
     for (int i = 0; string[i] != '\0'; i++) {

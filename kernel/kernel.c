@@ -73,9 +73,6 @@ void kmain(void) {
     send(0x4E); // N
     send(0x47); // G
     printf("[OK] COM1 ready");
-    
-    int test = 5 / 0;
-    printf(stringFromInt(test));
 
     printf("");
     printf("-- TIME HEADER START --");
