@@ -9,6 +9,7 @@
 #include "keyboard.h"
 #include "rtc.h"
 #include "serial.h"
+#include "beeper.h"
 
 /* Descriptor tables */
 #include "gdt.h"
