@@ -19,7 +19,6 @@ void* memset(void* ptr, int value, size_t n) {
     while ((void*)int_ptr < orig_ptr + n * sizeof(value)) {
 	*int_ptr = value;
 	int_ptr++;
-	serial_writec((char)value);
     }
     return orig_ptr;
 }

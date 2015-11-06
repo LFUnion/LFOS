@@ -5,6 +5,7 @@ extern c_handler
 ; Division by zero error
 exc0:
     cli
+    hlt
     push byte 0
     push byte 0
     jmp exc_handler

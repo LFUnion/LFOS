@@ -1,5 +1,6 @@
 #include "stdint.h"
 #include "idt.h"
+#include "klib.h"
 
 #define NUM_OF_IDT_ENTRYS 256
 
@@ -15,6 +16,10 @@ void add_idt_gate(int i, uint32_t base_addr, uint32_t selector, uint16_t flags)
     idt[i] |= ((0 >> 16) & 0xfLL) << 40;
     idt[i] |= ((flags >> 8 )& 0xffLL) << 48;
     idt[i] |= ((base_addr >> 24) & 0xffLL) << 64; // base_addr high
+}
+
+void init_idt() {
+    memset(&idt, 0, NUM_OF_IDT_ENTRYS * sizeof(uint64_t));
 }
 
 void load_idt()

@@ -51,6 +51,7 @@ void kmain(void) {
     //printw("[!!] GDT loaded, but not flushed");
     
     printf("[..] Loading IDT");
+    init_idt();
     register_exception_handlers();
     load_idt();
     printf("[OK] IDT loaded");
