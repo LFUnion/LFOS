@@ -15,6 +15,9 @@
 #include "gdt.h"
 #include "idt.h"
 
+/* Misc */
+#include "exceptionhandler.h"
+
 #include "stdint.h"
 
 /*
@@ -48,6 +51,7 @@ void kmain(void) {
     //printw("[!!] GDT loaded, but not flushed");
     
     printf("[..] Loading IDT");
+    register_exception_handlers();
     load_idt();
     printf("[OK] IDT loaded");
     
@@ -70,6 +74,9 @@ void kmain(void) {
     send(0x47); // G
     printf("[OK] COM1 ready");
     
+    int test = 5 / 0;
+    printf(stringFromInt(test));
+
     printf("");
     printf("-- TIME HEADER START --");
     printd(get_second());
