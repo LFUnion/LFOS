@@ -1,3 +1,6 @@
+/* Kernel Header */
+#include "kernel.h"
+
 /* Kernel C library */
 #include "klib.h"
 
@@ -123,6 +126,18 @@ void kmain(void) {
 	    print_help();
 	}
     }
+}
+
+void abort(char* msg) {
+    clear();
+    printw("LFOS kernel panic");
+    printw("-----------------\n");
+    printw("Reason: abort() has been called");
+    print_raw("Message: ");
+    printf(msg);
+    printf("\n");
+    printw("Your system has been shut down to prevent eventual damage");
+    cpu_halt();
 }
 
 void print_help() {
