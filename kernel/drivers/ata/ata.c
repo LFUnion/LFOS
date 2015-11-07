@@ -48,10 +48,11 @@ uint8_t ata_identify(int drive) {
 
     if (ret != 0) { // Drive exists
 	while(ata_read_status(7)) {} // Wait for BSY to clear
-	if (!ata_read_port(4) && ata_read_port(5)) {
+	if (!ata_read_port(4) && !ata_read_port(5)) {
 	    while(!ata_read_status(3) && !ata_read_status(0)) {} // Wait for BSY or ERR to set
 	    if(!ata_read_status(0)) {
 		for (int i=1; i<=256; i++) {ata_read_port(0);}
+		return ret;
 	    } else { // Not ATA
 		return 0;
 	    }
@@ -92,7 +93,7 @@ void ata_send_command(uint8_t command, int drive) {
 }
 
 
-
+/* These functions have to get called externally */
 
 void ata_init() {
     if(ata_read_status_byte() == 0xFF) { // Floating bus
