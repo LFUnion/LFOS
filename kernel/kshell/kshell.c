@@ -1,4 +1,5 @@
 #include "kshell.h"
+#include "kernel.h"
 
 void kshell_main(void) {
     int loop = 1;
@@ -20,6 +21,7 @@ void kshell_main(void) {
 	    printf("LFOS Kernel shell v0.1 experimental");
 	    printf("-----------------------------------");
 	    printf("REBOOT: 	Reboots the computer");
+	    printf("ABORT:	Triggers an instant kernel panic");
 	    printf("HALT:   	Halts the CPU");
 	    printf("CLEAR:  	Clears the screen");
 	    printf("SETUNAME:	Sets the user name");
@@ -28,6 +30,8 @@ void kshell_main(void) {
 	    printf("");
 	} else if (strcmp(inp, "REBOOT")) {
 	    cpu_reset();
+	} else if (strcmp(inp, "ABORT")) {
+	    abort("Issued 'ABORT' in kshell_main");
 	} else if (strcmp(inp, "CLEAR")) {
 	    clear();
 	} else if (strcmp(inp, "SETUNAME")) {
