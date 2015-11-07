@@ -123,6 +123,9 @@ void kmain(void) {
 	    clear();
 	} else if (resp == 'S') {
 	    kshell_main();
+	} else if (resp == 'A') {
+	    ata_init();
+	    printf("ATA: Initialized");
 	} else if (resp == '-') {
 	    print_help();
 	}
@@ -148,5 +151,6 @@ void print_help() {
     printf(">>>> 'H': Halt");
     printf(">>>> 'C': Clear screen");
     printf(">>>> 'S': Start the (experimental) shell");
+    printf(">>>> 'A': Enable the ATA subsystem");
     printf(">>>> '=': Show this help");
 }
