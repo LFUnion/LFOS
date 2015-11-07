@@ -69,3 +69,8 @@ clean:
 	
 test:
 	qemu-system-i386 -serial stdio -kernel build/lfos.bin
+
+testATA:
+	dd if=/dev/zero of=build/hdd.img count=4096
+	qemu-system-i386 -kernel build/lfos.bin -serial stdio -drive file=build/hdd.img,if=ide
+	

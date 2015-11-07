@@ -117,19 +117,67 @@ void ata_init() {
 }
 
 
-uint16_t ata_read_sector(int drive, int sector) {
-     
+uint16_t* ata_read_sector(int drive, uint32_t sector) {
+    ata_write_port(6, 0xE0 | (drive << 4) | ((sector >> 24) & 0x0F));
+    ata_write_port(1, 0x00);
+    ata_write_port(2, 0x01);
+    ata_write_port(3, (unsigned char) sector);
+    ata_write_port(4, (unsigned char) (sector >> 8));
+    ata_write_port(5, (unsigned char) (sector >> 16));
+    ata_write_port(7, 0x20);
+    
+    uint16_t* buffer = (uint16_t*)malloc(1 * 256 * sizeof(uint16_t));
+
+    for(int i=1;i<=4;i++) {ata_read_status_byte();} // 400 ns delay, so the drive can respond
+
+    int array_pos = 0;
+    while(ata_read_status(3)) {
+	for(int i=1;i<=256;i++) {
+	    uint16_t value;
+	    uint16_t port = 0x1F0;
+	    asm volatile ( "inw %1, %0" : "=a"(value) : "Nd"(port) );
+	    buffer[array_pos] = value;
+	    array_pos++;
+	}
+	for(int i=1;i<=4;i++) {ata_read_status_byte();} // 400 ns delay, so the drive can respond
+    }
+
+    return buffer;
 }
 
-void ata_write_sector(int drive, int sector, int data) {
-
+void ata_write_sector(int drive, uint32_t sector, uint16_t* data) {
+    
 }
 
 
-uint16_t* ata_read_sectors(int drive, int base, int count) {
+uint16_t* ata_read_sectors(int drive, uint32_t base, int count) {
+    ata_write_port(6, 0xE0 | (drive << 4) | ((base >> 24) & 0x0F));
+    ata_write_port(1, 0x00);
+    ata_write_port(2, (uint8_t) count);
+    ata_write_port(3, (unsigned char) base);
+    ata_write_port(4, (unsigned char) (base >> 8));
+    ata_write_port(5, (unsigned char) (base >> 16));
+    ata_write_port(7, 0x20);
+    
+    uint16_t* buffer = (uint16_t*)malloc(count * 256 * sizeof(uint16_t));
 
+    for(int i=1;i<=4;i++) {ata_read_status_byte();} // 400 ns delay, so the drive can respond
+
+    int array_pos = 0;
+    while(ata_read_status(3)) {
+	for(int i=1;i<=count*256;i++) {
+	    uint16_t value;
+	    uint16_t port = 0x1F0;
+	    asm volatile ( "inw %1, %0" : "=a"(value) : "Nd"(port) );
+	    buffer[array_pos] = value;
+	    array_pos++;
+	}
+	for(int i=1;i<=4;i++) {ata_read_status_byte();} // 400 ns delay, so the drive can respond
+    }
+
+    return buffer;
 }
 
-void ata_write_sectors(int drive, int base, int count, int* data) {
+void ata_write_sectors(int drive, uint32_t base, int count, uint16_t data[]) {
 
 }

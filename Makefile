@@ -6,6 +6,9 @@ build:
 test:
 	cd kernel; make test
 
+testATA:
+	cd kernel; make testATA
+
 mkiso:
 	cd iso; make
 

@@ -30,10 +30,10 @@ void 	ata_send_command(uint8_t command, int drive);
 
 void 	ata_init();
 
-uint16_t ata_read_sector(int drive, int sector);
-void	ata_write_sector(int drive, int sector, int data);
+uint16_t* ata_read_sector(int drive, uint32_t sector);
+void	ata_write_sector(int drive, uint32_t sector, uint16_t* data);
 
-uint16_t* ata_read_sectors(int drive, int base, int count);
-void 	 ata_write_sectors(int drive, int base, int count, int* data);
+uint16_t* ata_read_sectors(int drive, uint32_t base, int count);
+void 	 ata_write_sectors(int drive, uint32_t base, int count, uint16_t* data);
 
 #endif /* ATA_H */
