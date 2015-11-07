@@ -37,6 +37,8 @@ build:
 	$(GCC) -c drivers/rtc/rtc.c -o build/drivers/rtc.o $(GCC_INCLUDES) $(GCC_FLAGS)
 	echo "Compiling VGA driver ..."
 	$(GCC) -c drivers/vga/vga.c -o build/drivers/vga.o $(GCC_INCLUDES) $(GCC_FLAGS)
+	echo "Compiling ATA driver"
+	$(GCC) -c drivers/ata/ata.c -o build/drivers/ata.o $(GCC_INCLUDES) $(GCC_FLAGS)
 	echo "Compiling serial driver"
 	$(GCC) -c drivers/serial/serial.c -o build/drivers/serial.o $(GCC_INCLUDES) $(GCC_FLAGS)
 	echo "Compiling keyboard driver ..."
@@ -60,7 +62,7 @@ build:
 	echo "Compiling kernel ..."
 	$(GCC) -c kernel.c -o build/kernel.o $(GCC_INCLUDES) $(GCC_FLAGS)
 	echo "Linking ..."
-	$(GCC) -T linker.ld -o build/lfos.bin -ffreestanding -O2 -nostdlib -Wall build/bootloader.o build/kernel.o build/drivers/vga.o build/drivers/serial.o build/drivers/keyboard.o build/drivers/beeper.o build/drivers/rtc.o build/klib/kio.o build/klib/kcom.o build/klib/kcasts.o build/klib/kstring.o build/klib/ktime.o build/kshell/kshell.o build/memmanager.o build/outb.o build/inb.o build/segments.o build/gdt.o build/idt.o build/exceptionhandler.o build/exceptions.o build/cpu.o build/process.o -lgcc
+	$(GCC) -T linker.ld -o build/lfos.bin -ffreestanding -O2 -nostdlib -Wall build/bootloader.o build/kernel.o build/drivers/vga.o build/drivers/ata.o build/drivers/serial.o build/drivers/keyboard.o build/drivers/beeper.o build/drivers/rtc.o build/klib/kio.o build/klib/kcom.o build/klib/kcasts.o build/klib/kstring.o build/klib/ktime.o build/kshell/kshell.o build/memmanager.o build/outb.o build/inb.o build/segments.o build/gdt.o build/idt.o build/exceptionhandler.o build/exceptions.o build/cpu.o build/process.o -lgcc
 	
 clean:
 	rm -rf build/

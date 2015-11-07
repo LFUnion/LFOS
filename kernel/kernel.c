@@ -13,6 +13,7 @@
 #include "rtc.h"
 #include "serial.h"
 #include "beeper.h"
+#include "ata.h"
 
 /* Descriptor tables */
 #include "gdt.h"
