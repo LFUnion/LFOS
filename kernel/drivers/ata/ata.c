@@ -60,6 +60,7 @@ uint8_t ata_identify(int drive) {
 	    return 0;// Not ATA
 	}
     }
+    return ret;
 }
 
 void ata_reset() {
@@ -146,7 +147,27 @@ uint16_t* ata_read_sector(int drive, uint32_t sector) {
 }
 
 void ata_write_sector(int drive, uint32_t sector, uint16_t* data) {
-    
+    ata_write_port(6, 0xE0 | (drive << 4) | ((sector >> 24) & 0x0F));
+    ata_write_port(1, 0x00);
+    ata_write_port(2, 0x01);
+    ata_write_port(3, (unsigned char) sector);
+    ata_write_port(4, (unsigned char) (sector >> 8));
+    ata_write_port(5, (unsigned char) (sector >> 16));
+    ata_write_port(7, 0x30);
+
+    for(int i=1;i<=4;i++) {ata_read_status_byte();} // 400 ns delay, so the drive can respond
+
+    int array_pos = 0;
+    while(ata_read_status(3)) {
+	for(int i=1;i<=256;i++) {
+	    uint16_t value = data[array_pos];
+	    uint16_t port = 0x1F0;
+	    asm volatile ( "outw %0, %1" : : "a"(value) , "Nd"(port) );
+	    array_pos++;
+	}
+	ata_write_port(7, 0xE7);
+	for(int i=1;i<=4;i++) {ata_read_status_byte();} // 400 ns delay, so the drive can respond
+    }
 }
 
 
@@ -165,7 +186,7 @@ uint16_t* ata_read_sectors(int drive, uint32_t base, int count) {
 
     int array_pos = 0;
     while(ata_read_status(3)) {
-	for(int i=1;i<=count*256;i++) {
+	for(int i=1;i<=256;i++) {
 	    uint16_t value;
 	    uint16_t port = 0x1F0;
 	    asm volatile ( "inw %1, %0" : "=a"(value) : "Nd"(port) );
@@ -178,6 +199,26 @@ uint16_t* ata_read_sectors(int drive, uint32_t base, int count) {
     return buffer;
 }
 
-void ata_write_sectors(int drive, uint32_t base, int count, uint16_t data[]) {
+void ata_write_sectors(int drive, uint32_t base, int count, uint16_t* data) {
+    ata_write_port(6, 0xE0 | (drive << 4) | ((base >> 24) & 0x0F));
+    ata_write_port(1, 0x00);
+    ata_write_port(2, (uint8_t)count);
+    ata_write_port(3, (unsigned char) base);
+    ata_write_port(4, (unsigned char) (base >> 8));
+    ata_write_port(5, (unsigned char) (base >> 16));
+    ata_write_port(7, 0x30);
 
+    for(int i=1;i<=4;i++) {ata_read_status_byte();} // 400 ns delay, so the drive can respond
+
+    int array_pos = 0;
+    while(ata_read_status(3)) {
+	for(int i=1;i<=256;i++) {
+	    uint16_t value = data[array_pos];
+	    uint16_t port = 0x1F0;
+	    asm volatile ( "outw %0, %1" : : "a"(value) , "Nd"(port) );
+	    array_pos++;
+	}
+	ata_write_port(7, 0xE7);
+	for(int i=1;i<=4;i++) {ata_read_status_byte();} // 400 ns delay, so the drive can respond
+    }
 }
