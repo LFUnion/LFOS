@@ -1,9 +1,16 @@
 #!/bin/bash
 
+#
+#
+# Please note: This script no longer gets executed.
+# The buildsystem has been moved to our jenkins server.
+#
+#
+
 # This script is not relevant to you if you are´nt the buildbot, but
 # feel free to explore it!
 
-# OUT_DIR and SOURCE_DIR are defined by a 
+# OUT_DIR and SOURCE_DIR are defined by a
 # loader script on the buildserver. This script
 # also cleans the directorys after the build.
 
