@@ -73,6 +73,14 @@ void ufs_set_sector(int disk, int fid) {
 }
 
 
+void ufs_del_sector(int disk, int fid) {
+    uint16_t* sb = ufs_get_super(disk);
+    for (int i = 2; i <= 255; i++) {
+	if (sb[i] == (uint16_t)fid) {sb[i] = 0; break;}
+    }
+}
+
+
 uint16_t* ufs_get_data(int disk, uint32_t sector) {
     uint16_t* raw = ata_read_sector(disk, sector);
     uint16_t* data = (uint16_t*)malloc(216 * sizeof(uint16_t));

@@ -14,6 +14,7 @@ void		ufs_set_super(int disk, uint16_t* data);
 
 uint32_t	ufs_get_sector(int disk, int fid);
 void 		ufs_set_sector(int disk, int fid);
+void		ufs_del_sector(int disk, int fid);
 
 uint16_t*	ufs_get_data(int disk, uint32_t sector);
 void 		ufs_set_data(int disk, uint32_t sector, uint16_t* data);
