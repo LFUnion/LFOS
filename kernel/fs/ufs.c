@@ -78,6 +78,7 @@ void ufs_del_sector(int disk, int fid) {
     for (int i = 2; i <= 255; i++) {
 	if (sb[i] == (uint16_t)fid) {sb[i] = 0; break;}
     }
+    ufs_set_super(disk, sb);
 }
 
 
@@ -155,6 +156,11 @@ char* ufs_mkfilename(const char* filename) {
 	ret[i] = filename[i];
     }
     return ret;
+}
+
+void ufs_del_file(int disk, const char* filename) {
+    int fid = ufs_get_fid(disk, ufs_mkfilename(filename));
+    ufs_del_sector(disk, fid);
 }
 
 void ufs_write(int disk, const char* filename, const char* data) {
