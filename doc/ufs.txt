@@ -1,0 +1,24 @@
+uFS logical structure
+
+Disk: ATA/IDE
+Sectors of 256 * uint16_t, Blocksize of 512
+
+SECTOR 0:
+0 - 0x70B1 - Magic number
+1 - 0x0001 - Version
+2 - 0x???? - FID of file 0
+3 - 0x???? - FID of file 1
+. - 
+255 0x???? - FID of file 253
+
+SECTOR 1:
+0 - 0x1108 - Magic number
+1 - 0x???? - First character of filename
+.
+40 - 0x???? - Last character of filename
+41 - 0x???? - Data begin
+.
+255 - 0x???? - Data end
+
+SECTOR x:
+like sector 1
