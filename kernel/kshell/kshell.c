@@ -24,6 +24,10 @@ void kshell_main(void) {
 	    printf("ABORT:	Triggers an instant kernel panic");
 	    printf("HALT:   	Halts the CPU");
 	    printf("CLEAR:  	Clears the screen");
+	    printf("LS:		List all files");
+	    printf("RM:		Removes a file");
+	    printf("CAT:	Prints the contents of a file");
+	    printf("EDIT:	Edit a file");
 	    printf("SETUNAME:	Sets the user name");
 	    printf("SETHNAME:	Sets the hostname");
 	    printf("EXIT:	Returns to the debugging interface");
@@ -40,6 +44,24 @@ void kshell_main(void) {
 	} else if (strcmp(inp, "SETHNAME")) {
 	    print_raw("New hostname: ");
 	    hostname = scanf();
+	} else if (strcmp(inp, "LS")) {
+	    
+	} else if (strcmp(inp, "RM")) {
+	    print_raw("Filename > ");
+	    const char* fn = scanf();
+	    ufs_del_file(0, fn);
+	} else if (strcmp(inp, "CAT")) {
+	    print_raw("Filename > ");
+	    const char* fn = scanf();
+	    printf(read(fn));
+	} else if (strcmp(inp, "EDIT")) {
+	    print_raw("Filename > ");
+	    const char* fn = scanf();
+	    print_raw("Contents > ");
+	    const char* ct = scanf();
+	    const char* final = (const char*)malloc(216 * sizeof(uint16_t));
+	    final = ct;
+	    write(fn, final);
 	} else if (strcmp(inp, "EXIT")) {
 	    loop = 0;
 	    break;
