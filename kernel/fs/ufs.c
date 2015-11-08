@@ -141,6 +141,14 @@ int ufs_sector2fid(int disk, uint32_t sector) {
 }
 
 
+char* ufs_mkfilename(const char* filename) {
+    char* ret = (char*)malloc(40 * sizeof(char));
+    for(int i = 0; i <= 39 && i <= strlen(filename); i++) {
+	ret[i] = filename[i];
+    }
+    return ret;
+}
+
 void ufs_write(int disk, const char* filename, const char* data) {
     uint16_t* rawdata = (uint16_t*)malloc(216 * sizeof(uint16_t*));
     for(int i = 0; i <= 215; i++) {
@@ -160,12 +168,12 @@ const char* ufs_read(int disk, const char* filename) {
 
 
 void ufs_write_b(int disk, const char* filename, const uint16_t* data) {
-    int fid = ufs_get_fid(disk, filename);
+    int fid = ufs_get_fid(disk, ufs_mkfilename(filename));
     if(fid == -1) { // File does not exist yet
 	fid = ufs_get_last_fid(disk) + 1; // Search for a available FID
 	ufs_set_sector(disk, fid); // Create one
 	uint32_t sector = ufs_get_sector(disk, fid); // Get its sector
-	ufs_set_filename(disk, sector, filename); // Set its filename
+	ufs_set_filename(disk, sector, ufs_mkfilename(filename)); // Set its filename
 	ufs_set_data(disk, sector, (uint16_t*)data);
     } else {
 	uint32_t sector = ufs_get_sector(disk, fid);
@@ -174,7 +182,7 @@ void ufs_write_b(int disk, const char* filename, const uint16_t* data) {
 }
 
 const uint16_t* ufs_read_b(int disk, const char* filename) {
-    int fid = ufs_get_fid(disk, filename);
+    int fid = ufs_get_fid(disk, ufs_mkfilename(filename));
     if(fid == -1) { // File does not exist
 	return NULL;
     } else {

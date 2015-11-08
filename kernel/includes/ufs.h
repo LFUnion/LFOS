@@ -28,6 +28,8 @@ int		ufs_get_fid(int disk, const char* filename);
 int		ufs_sector2fid(int disk, uint32_t sector);
 
 
+char*		ufs_mkfilename(const char* filename);
+
 void 		ufs_write(int disk, const char* filename, const char* data);
 const char* 	ufs_read(int disk, const char* filename);
 
