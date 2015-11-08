@@ -126,6 +126,15 @@ void kmain(void) {
 	} else if (resp == 'A') {
 	    ata_init();
 	    printf("ATA: Initialized");
+	} else if (resp == 'F') {
+	    ufs_init();
+	    ufs_format(0);
+	    uint16_t* data = (uint16_t*)malloc(216 * sizeof(uint16_t));
+	    for (int i=0; i <= 216; i++) {data[i] = 1;}
+
+	    writeb("test.txt", data);
+	    const uint16_t* op = readb("test.txt");
+	    for (int i=0; i <= 216; i++) {print_raw((char*)stringFromInt(op[i]));}
 	} else if (resp == '-') {
 	    print_help();
 	}
@@ -152,5 +161,6 @@ void print_help() {
     printf(">>>> 'C': Clear screen");
     printf(">>>> 'S': Start the (experimental) shell");
     printf(">>>> 'A': Enable the ATA subsystem");
+    printf(">>>> 'F': Automated test of uFS");
     printf(">>>> '=': Show this help");
 }
