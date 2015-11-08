@@ -45,6 +45,8 @@ build:
 	$(GCC) -c drivers/keyboard/keyboard.c -o build/drivers/keyboard.o $(GCC_INCLUDES) $(GCC_FLAGS)
 	echo "Compiling beeper driver"
 	$(GCC) -c drivers/sound/beeper.c -o build/drivers/beeper.o $(GCC_INCLUDES) $(GCC_FLAGS)
+	echo "Compiling uFS"
+	$(GCC) -c fs/ufs.c -o build/ufs.o $(GCC_INCLUDES) $(GCC_FLAGS)
 	echo "Compiling KIO"
 	$(GCC) -c klib/kio.c -o build/klib/kio.o $(GCC_INCLUDES) $(GCC_FLAGS)
 	echo "Compiling kcom"
