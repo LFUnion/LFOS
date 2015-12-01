@@ -48,8 +48,9 @@ void* ncalloc (size_t n, unsigned int size , double value) {
     }
     
     void* return_addr = crnt_addr;
-    crnt_addr += (n*size);
     void* count_addr = crnt_addr;
+    crnt_addr += (n*size);
+
     
     if (size==sizeof(short) && dfvar=='i'){
          func_scalloc(value,(short*)count_addr, n);
