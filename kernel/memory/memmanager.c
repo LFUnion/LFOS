@@ -40,7 +40,7 @@ void* ncalloc (size_t n, unsigned int size , double value) {
         return (void*) 0;
     }
     char dfvar;
-    if (value != 0.0 && value != ((long)value)){
+    if (value != ((long)value)){
         dfvar = 'f'; 
     }
     else {
