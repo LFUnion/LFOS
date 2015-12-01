@@ -38,6 +38,11 @@ build/
 # Built ISOs
 *.iso
 
+# Doxygen output
+doc/html/
+doc/latex/
+doc/man/
+
 # GEdit / Kate backup files
 *~
 
