@@ -80,7 +80,7 @@ void* ncalloc (size_t n, unsigned int size , double value) {
 
 
 void func_scalloc(short value, short* count_ptr, long max){
-    long count =0;
+    unsigned long count =0;
     while (count<max){
         *count_ptr = value;
         ++count_ptr;
@@ -89,7 +89,7 @@ void func_scalloc(short value, short* count_ptr, long max){
 }
 
 void func_icalloc(int value, int* count_ptr, long max){
-    long count =0;
+    unsigned long count =0;
     while (count<max){
         *count_ptr = value;
         ++count_ptr;
@@ -98,7 +98,7 @@ void func_icalloc(int value, int* count_ptr, long max){
 }
 
 void func_lcalloc(long value, long* count_ptr, long max){
-    long count =0;
+    unsigned long count =0;
     while (count<max){
         *count_ptr = value;
         ++count_ptr;
@@ -107,7 +107,7 @@ void func_lcalloc(long value, long* count_ptr, long max){
 }
 
 void func_llcalloc(long long value, long long* count_ptr, long max){
-    long count =0;
+    unsigned long count =0;
     while (count<max){
         *count_ptr = value;
         ++count_ptr;
@@ -116,7 +116,7 @@ void func_llcalloc(long long value, long long* count_ptr, long max){
 }
 
 void func_fcalloc(float value, float* count_ptr, long max){
-    long count =0;
+    unsigned long count =0;
     while (count<max){
         *count_ptr = value;
         ++count_ptr;
@@ -126,7 +126,7 @@ void func_fcalloc(float value, float* count_ptr, long max){
 
 
 void func_dcalloc(double value, double* count_ptr, long max){
-    long count =0;
+    unsigned long count =0;
     while (count<max){
         *count_ptr = value;
         ++count_ptr;
@@ -136,5 +136,14 @@ void func_dcalloc(double value, double* count_ptr, long max){
 
 void* calloc(size_t n, unsigned int size){
     return ncalloc (n, size , 0);
+}
+
+void nfree(void* ptr , size_t n){
+    unsigned long count =0;
+    while (count<n){
+        *ptr = (void*) 0;
+        ++ptr;
+        ++count;
+    }
 }
 
