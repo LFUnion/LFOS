@@ -135,6 +135,6 @@ void func_dcalloc(double value, double* count_ptr, long max){
 }
 
 void* calloc(size_t n, unsigned int size){
-    return ncalloc (size_t n, unsigned int size , 0);
+    return ncalloc (n, size , 0);
 }
 
