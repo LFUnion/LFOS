@@ -14,6 +14,9 @@ the Free Software Foundation, either version 3 of the License, or
 ### Build
 Builds are on the LFUnion jenkins server at https://0d8c8dd1.ngrok.io
 
+### Documentation
+The documentation can be found at http://lfunion.bplaced.net/lfos/doc/html/
+
 ### Version
 This is a screenshot of the version:
 
