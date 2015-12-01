@@ -51,22 +51,22 @@ void* ncalloc (size_t n, unsigned int size , double value) {
     crnt_addr += (n*size);
     void* count_addr = crnt_addr;
     
-    if (size==sizeof(short) && dfvar=="i"){
+    if (size==sizeof(short) && dfvar=='i'){
          func_scalloc(value,(short*)count_addr, n);
     }
-    else if (size==sizeof(int) && dfvar=="i"){
+    else if (size==sizeof(int) && dfvar=='i'){
          func_icalloc(value,(short*)count_addr, n);         
     }
-    else if (size==sizeof(long) && dfvar=="i"){
+    else if (size==sizeof(long) && dfvar=='i'){
          func_lcalloc(value,(short*)count_addr, n);         
     }
-    else if (size==sizeof(long long) && dfvar=="i"){
+    else if (size==sizeof(long long) && dfvar=='i'){
          func_llcalloc(value,(short*)count_addr, n);         
     }
-    else if (size==sizeof(float) && dfvar=="f"){
+    else if (size==sizeof(float) && dfvar=='f'){
          func_fcalloc(value,(short*)count_addr, n);         
     }
-    else if (size==sizeof(double) && dfvar=="f"){
+    else if (size==sizeof(double) && dfvar=='f'){
          func_dcalloc(value,(short*)count_addr, n);         
     }
     else{
