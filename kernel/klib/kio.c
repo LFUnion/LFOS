@@ -1,3 +1,10 @@
+/*!
+ * \file
+ * \brief Kernel Input/Output
+ *
+ * This file contains kernelspace IO functions
+ */
+
 #include "kio.h"
 
 #include "vga.h"
@@ -21,10 +28,22 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
+/*!
+ * \brief Print string
+ *
+ * This function prints the string to the console
+ * @param text The string to print
+ */
 void printf(const char text[], ...) {
     klog(text);
 }
 
+/*!
+ * \brief Read string from Keyboard
+ *
+ * This function pulls chars from the keyboard until enter is pressed
+ * @return The pulled chars
+ */
 char * scanf() {
     char* tmp = (char*)malloc(150 * sizeof(char));
     char inp = ' ';
@@ -55,6 +74,12 @@ char * scanf() {
     return ret;
 }
 
+/*!
+ * \brief Print warning
+ *
+ * This function also prints the string to the console, but the text will appear yellow
+ * @param text The string to print
+ */
 void printw(const char text[], ...) {
     klogi(text);
 }
@@ -63,12 +88,24 @@ void print_raw(char text[]) {
     kprint_raw(text);
 }
 
-void __attribute__ ((deprecated)) printd(const int digit) {
+/*!
+ * \deprecated Use intToChar and printf instead
+ * \brief Print digit
+ *
+ * This function prints a digit to the console
+ * @param digit The digit to print
+ */
+void printd(const int digit) {
     char string[1];
     string[0] = digit + '0';
     printf(string);
 }
 
+/*!
+ * \brief Clear screen
+ *
+ * This function clears the console
+ */
 void clear() {
    kclear();
 }

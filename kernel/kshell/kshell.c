@@ -1,6 +1,17 @@
+/*!
+ * \file
+ * \brief KShell main
+ *
+ * This file contains the main kshell function
+ */
+
 #include "kshell.h"
 #include "kernel.h"
 
+/*!
+ * \brief KShell entry
+ * This function is the entry point for the KShell. It contains the main REP loop.
+ */
 void kshell_main(void) {
     int loop = 1;
     char* username = (char*)malloc(50 * sizeof(char));

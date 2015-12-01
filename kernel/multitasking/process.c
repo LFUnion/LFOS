@@ -1,3 +1,10 @@
+/*!
+ * \file
+ * \brief Process management
+ *
+ * This file contains functions which can get called by processes to manage their execution
+ */
+
 #include "process.h"
 #include "rtc.h"
 
@@ -5,6 +12,13 @@
 
 extern uint8_t rtc_second;
 
+/*!
+ * \brief Wait (time) seconds
+ *
+ * This function will halt the process until (time) seconds elapsed
+ *
+ * @param time The time (in seconds) to wait
+ */
 void wait(int time) 
 {
     rtc_refresh(); // Refresh variables

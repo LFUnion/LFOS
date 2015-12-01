@@ -1,3 +1,10 @@
+/*!
+ * \file
+ * \brief String functions
+ *
+ * This file constains standard string functions in kernelspace
+ */
+
 #include "kstring.h"
 #include "stddef.h"
 
@@ -23,6 +30,14 @@ void* memset(void* ptr, int value, size_t n) {
     return orig_ptr;
 }
 
+/*!
+ * \brief Lenght of a string
+ *
+ * This function returns the lenght of a string
+ *
+ * @param string The string
+ * @return The lenght of the string
+ */
 int strlen(const char* string) {
     int len = 0;
     for (int i = 0; string[i] != '\0'; i++) {
@@ -31,6 +46,15 @@ int strlen(const char* string) {
     return len;
 }
 
+/*!
+ * \brief Compares strings
+ *
+ * This function compares two strings and checks whether they are equal or not
+ *
+ * @param s1 First string
+ * @param s2 Second string
+ * @return 0 if not equal, 1 if equal
+ */
 int strcmp (const char* s1, const char* s2) {
     if (strlen(s1) == strlen(s2)) {
 	

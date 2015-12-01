@@ -1,3 +1,10 @@
+/*!
+ * \file
+ * \brief Outbound ports
+ *
+ * This file contains functions to handle communication with the outbound CPU ports
+ */
+
 #include "stdint.h"
 #include "outb.h"
 
@@ -19,7 +26,12 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-// Sends the port a value
+/*!
+ * \brief Send word
+ *
+ * @param port (16 bit) Adress of the port
+ * @param value (8 bit)  The data to be sent
+ */
 void outb(uint16_t port, uint8_t value)
 {
     asm volatile ("outb %0, %1" : : "a"(value), "Nd"(port));

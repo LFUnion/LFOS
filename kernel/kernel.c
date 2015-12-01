@@ -1,3 +1,10 @@
+/*!
+ * \file
+ * \brief Kernel entry point
+ *
+ * This file contains the kernel entry point function
+ */
+
 /* Kernel Header */
 #include "kernel.h"
 
@@ -43,6 +50,14 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
 void print_help();
+
+/*!
+ * \brief Kernel entry point
+ *
+ * This function gets called after boot/bootloader.asm set up the stack.
+ * It then loads the required drivers, sets the system time, initializes the serial interfaces
+ * and tries to detect a keyboard.
+ */
 
 /* Kernel entry point, called from boot/bootloader.asm */
 void kmain(void) {
@@ -141,6 +156,13 @@ void kmain(void) {
     }
 }
 
+/*!
+ * \brief Triggers a kernel panic
+ *
+ * This function triggers a kernel panic and forces the kernel to halt the CPU immediately.
+ *
+ * @param msg The error message to be displayed
+ */
 void abort(char* msg) {
     clear();
     printw("LFOS kernel panic");
@@ -152,6 +174,12 @@ void abort(char* msg) {
     printw("Your system has been shut down to prevent eventual damage");
     cpu_halt();
 }
+
+/*!
+ * \brief Prints some help
+ *
+ * This function prints out help for the kernel debug interface
+ */
 
 void print_help() {
     printf(">>>> Kernel debug interface v0.2");

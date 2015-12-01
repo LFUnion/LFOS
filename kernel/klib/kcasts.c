@@ -1,11 +1,31 @@
+/*!
+ * \file
+ * \brief Type casts
+ *
+ * This file contains kernelspace type casting functions
+ */
+
 #include "kcasts.h"
 #include "klib.h"
 
+/*!
+ * \deprecated Use the integer cast (int) instead
+ * \brief uint8_t -> int
+ *
+ * This function converts an unsigned integer to a signed integer
+ */
 int hexToInt(uint8_t input) {
     int retval = input;
     return retval;
 }
 
+/*!
+ * \brief int -> string
+ *
+ * This function converts an integer to a string
+ * @param input The integer to get converted
+ * @return The string
+ */
 const char * stringFromInt(int input) {
 
     int input_bak = input;
@@ -38,6 +58,13 @@ const char * stringFromInt(int input) {
     return ret;
 }
 
+/*!
+ * \brief int -> char
+ *
+ * This function converts a digit to a single char
+ * @param digit The digit to get converted
+ * @return The char
+ */
 char charFromDigit(int digit) {
     if (digit == 0) {
 	return '0';
