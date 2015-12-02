@@ -33,11 +33,13 @@ void* malloc (size_t n) {
 
 // new code
 
+int* error_addr = (int*)malloc(sizeof(int));
+*error_addr = -1;
 
 void* ncalloc (size_t n, unsigned int size , double value) {
     
     if (!(size==sizeof(short) || size==sizeof(int) || size==sizeof(long) || size==sizeof(long long) || size==sizeof(double) || size==sizeof(float))){
-        return (void*) 0;
+        return (void*) error_addr;
     }
     char dfvar;
     if (value != ((long)value)){
@@ -49,7 +51,6 @@ void* ncalloc (size_t n, unsigned int size , double value) {
     
     void* return_addr = crnt_addr;
     void* count_addr = crnt_addr;
-    crnt_addr += (n*size);
 
     
     if (size==sizeof(short) && dfvar=='i'){
@@ -71,9 +72,9 @@ void* ncalloc (size_t n, unsigned int size , double value) {
          func_dcalloc(value,(double*)count_addr, n);         
     }
     else{
-        return (void*) 0;
+        return (void*) error_addr;
     }
-    
+    crnt_addr += (n*size);
     
     return return_addr;
 }
