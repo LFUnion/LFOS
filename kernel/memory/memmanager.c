@@ -31,6 +31,7 @@ void* malloc (size_t n) {
     return return_addr;
 }
 
+/*
 // new code
 
 int* error_addr = (int*)malloc(sizeof(int));
@@ -149,3 +150,4 @@ void nfree(void* ptr , size_t n){
     }
 }
 
+*/
