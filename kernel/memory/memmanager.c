@@ -32,15 +32,62 @@ void* malloc (size_t n) {
 }
 
 /*
-// new code
+void func_scalloc(short value, short* count_ptr, unsigned long max){
+    unsigned long count =0;
+    while (count<max){
+        *count_ptr = value;
+        ++count_ptr;
+        ++count;
+    }
+}
+void func_icalloc(int value, int* count_ptr, unsigned long max){
+    unsigned long count =0;
+    while (count<max){
+        *count_ptr = value;
+        ++count_ptr;
+        ++count;
+    }
+}
+void func_lcalloc(long value, long* count_ptr, unsigned long max){
+    unsigned long count =0;
+    while (count<max){
+        *count_ptr = value;
+        ++count_ptr;
+        ++count;
+    }
+}
+void func_llcalloc(long long value, long long* count_ptr, unsigned long max){
+    unsigned long count =0;
+    while (count<max){
+        *count_ptr = value;
+        ++count_ptr;
+        ++count;
+    }
+}
+void func_fcalloc(float value, float* count_ptr, unsigned long max){
+    unsigned long count =0;
+    while (count<max){
+        *count_ptr = value;
+        ++count_ptr;
+        ++count;
+    }
+}
+void func_dcalloc(double value, double* count_ptr, unsigned long max){
+    unsigned long count =0;
+    while (count<max){
+        *count_ptr = value;
+        ++count_ptr;
+        ++count;
+    }
+}
 
-int* error_addr = (int*)malloc(sizeof(int));
-*error_addr = -1;
-
-void* ncalloc (size_t n, unsigned int size , double value) {
+void* ncalloc (unsigned long n, unsigned int size , double value) {
+    
+    static void* error_addr = ((void*)0x03FFFC);
+    //*error_addr = -1;
     
     if (!(size==sizeof(short) || size==sizeof(int) || size==sizeof(long) || size==sizeof(long long) || size==sizeof(double) || size==sizeof(float))){
-        return (void*) error_addr;
+        return  error_addr; // (void*) error_addr
     }
     char dfvar;
     if (value != ((long)value)){
@@ -52,7 +99,6 @@ void* ncalloc (size_t n, unsigned int size , double value) {
     
     void* return_addr = crnt_addr;
     void* count_addr = crnt_addr;
-
     
     if (size==sizeof(short) && dfvar=='i'){
          func_scalloc(value,(short*)count_addr, n);
@@ -73,81 +119,14 @@ void* ncalloc (size_t n, unsigned int size , double value) {
          func_dcalloc(value,(double*)count_addr, n);         
     }
     else{
-        return (void*) error_addr;
+        return  error_addr; // (void*) error_addr
     }
     crnt_addr += (n*size);
     
     return return_addr;
 }
 
-
-
-void func_scalloc(short value, short* count_ptr, long max){
-    unsigned long count =0;
-    while (count<max){
-        *count_ptr = value;
-        ++count_ptr;
-        ++count;
-    }
-}
-
-void func_icalloc(int value, int* count_ptr, long max){
-    unsigned long count =0;
-    while (count<max){
-        *count_ptr = value;
-        ++count_ptr;
-        ++count;
-    }
-}
-
-void func_lcalloc(long value, long* count_ptr, long max){
-    unsigned long count =0;
-    while (count<max){
-        *count_ptr = value;
-        ++count_ptr;
-        ++count;
-    }
-}
-
-void func_llcalloc(long long value, long long* count_ptr, long max){
-    unsigned long count =0;
-    while (count<max){
-        *count_ptr = value;
-        ++count_ptr;
-        ++count;
-    }
-}
-
-void func_fcalloc(float value, float* count_ptr, long max){
-    unsigned long count =0;
-    while (count<max){
-        *count_ptr = value;
-        ++count_ptr;
-        ++count;
-    }
-}
-
-
-void func_dcalloc(double value, double* count_ptr, long max){
-    unsigned long count =0;
-    while (count<max){
-        *count_ptr = value;
-        ++count_ptr;
-        ++count;
-    }
-}
-
-void* calloc(size_t n, unsigned int size){
+void* calloc(unsigned long n, unsigned int size){
     return ncalloc (n, size , 0);
 }
-
-void nfree(void* ptr , size_t n){
-    unsigned long count =0;
-    while (count<n){
-        *ptr = (void*) 0;
-        ++ptr;
-        ++count;
-    }
-}
-
 */
