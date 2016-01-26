@@ -1,9 +1,3 @@
-
-/*
- * This is an in-development feature.
- * In most cases, you are *NOT* able to run this.
- */
-
 #include "gdt.h"
 
 gdt_entry_t gdt_entrys[5];
