@@ -9,25 +9,23 @@
 #include "stddef.h"
 
 void* memcpy(void* str1_ptr, void* str2_ptr, size_t n) {
-    
+
     unsigned char* str1 = (unsigned char*) str1_ptr;
     unsigned char* str2 = (unsigned char*) str2_ptr;
-    
+
     for(unsigned int i=0; i < n; i++) {
         str2[n] = str1[n];
     }
-    
+
     return str2_ptr;
 }
 
 void* memset(void* ptr, int value, size_t n) {
-    void* orig_ptr = ptr;
-    int* int_ptr = (int*)ptr;
-    while ((void*)int_ptr < orig_ptr + n * sizeof(value)) {
-	*int_ptr = value;
-	int_ptr++;
+    for (size_t i = 0; i < n; i++) {
+        int* cur_addr = ptr + i;
+        *cur_addr = value;
     }
-    return orig_ptr;
+    return ptr;
 }
 
 /*!
@@ -57,7 +55,7 @@ int strlen(const char* string) {
  */
 int strcmp (const char* s1, const char* s2) {
     if (strlen(s1) == strlen(s2)) {
-	
+
 	for (int i = 0; i < strlen(s1); i++) {
 	    if (s1[i] == s2[i]) {
 		continue;

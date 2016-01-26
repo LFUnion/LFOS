@@ -69,8 +69,6 @@ void kmain(void) {
 
     printf("[..] Loading IDT");
     init_idt();
-    register_exception_handlers();
-    load_idt();
     printf("[OK] IDT loaded");
 
     printf("[..] Initializing keyboard");
@@ -108,6 +106,9 @@ void kmain(void) {
     print_raw(" at ");
     printf(__TIME__);
     printf("");
+
+    asm __volatile__("int $0x3");
+    asm __volatile__("int $0x4");
 
     wait(1);
     printw("[##] Press any key to continue");
