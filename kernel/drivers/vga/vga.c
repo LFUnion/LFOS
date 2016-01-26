@@ -42,14 +42,14 @@ void kprintci(uint8_t chr, uint8_t clr, uint8_t x, uint8_t y) {
 // Prints raw text
 void kprint_raw(const char text[]) {
     int i;
-    
+
     for(i = 0; text[i] != '\0'; i++) {
 
 	if(column >= 80) {
 	    row++;
             column = 0;
             if(row > TERM_ROWS) {
-                row = 0;
+                scroll();
             }
 	}
 
@@ -57,7 +57,7 @@ void kprint_raw(const char text[]) {
             row++;
             column = 0;
             if(row > TERM_ROWS) {
-                row = 0;
+                scroll();
             }
         } else {
             kprintc(text[i], 0x07, column, row);
@@ -69,7 +69,7 @@ void kprint_raw(const char text[]) {
 // Prints a log message to the terminal
 void klog(const char text[]) {
     int i;
-    
+
     for(i = 0; text[i] != '\0'; i++) {
 
 	if(column >= 80) {
@@ -95,19 +95,15 @@ void klog(const char text[]) {
     row++;
     column = 0;
 
-    for(int i = 0; i <= 79; i++) {
-        kprintc(' ', 0x07, i, row);
-    }
-
     if(row > TERM_ROWS) {
-        row = 0;
+        scroll();
     }
 }
 
 // Prints a highlighted message to the terminal
 void klogi(const char text[]) {
     int i;
-    
+
     for(i = 0; text[i] != '\0'; i++) {
         if(text[i] == '\n') {
             row++;
@@ -123,12 +119,8 @@ void klogi(const char text[]) {
     column = 0;
     row++;
 
-    for(int i = 0; i <= 79; i++) {
-        kprintc(' ', 0x07, i, row);
-    }
-
     if(row > TERM_ROWS) {
-        row = 0;
+        scroll();
     }
 }
 
@@ -137,5 +129,23 @@ void kclear() {
     for(int i = 0; i < 25; i++) {
         klog("                                                                                ");
     }
-    row = 0; 
+    row = 0;
 }
+
+// Scrolls one line down
+void scroll() {
+    for (int i = 0; i < TERM_ROWS * 80; i++) {
+            uint16_t* base = (uint16_t*)0xB8000;
+            base += i;
+            uint16_t* nchar = base + 80;
+            *base = *nchar;
+        }
+
+        for (int i = 0
+             ; i < 80; i++) {
+            kprintc(' ', 0x07, i, 24);
+        }
+
+        row = 24;
+}
+

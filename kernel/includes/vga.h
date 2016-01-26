@@ -26,5 +26,6 @@ void kprint_raw(const char text[]);
 void klog(const char text[]);
 void klogi(const char text[]);
 void kclear();
+void scroll();
 
 #endif /* VGA_H */
