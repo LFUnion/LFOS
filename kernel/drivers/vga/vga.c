@@ -47,10 +47,10 @@ void kprint_raw(const char text[]) {
 
 	if(column >= 80) {
 	    row++;
-            column = 0;
-            if(row > TERM_ROWS) {
-                scroll();
-            }
+        column = 0;
+    if(row > TERM_ROWS) {
+            scroll();
+        }
 	}
 
         if(text[i] == '\n') {
@@ -58,6 +58,8 @@ void kprint_raw(const char text[]) {
             column = 0;
             if(row > TERM_ROWS) {
                 scroll();
+
+
             }
         } else {
             kprintc(text[i], 0x07, column, row);
