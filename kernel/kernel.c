@@ -107,9 +107,6 @@ void kmain(void) {
     printf(__TIME__);
     printf("");
 
-    asm __volatile__("int $0x3");
-    asm __volatile__("int $0x4");
-
     wait(1);
     printw("[##] Press any key to continue");
     kbd_flush_buffer();
