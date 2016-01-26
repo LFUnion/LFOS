@@ -43,3 +43,13 @@ void cpu_cli()
 {
     asm volatile("cli");
 }
+
+/*!
+ * \brief Disable IRQ
+ *
+ * This function will immediately restore all IRQs
+ */
+void cpu_sti()
+{
+    asm volatile("sti");
+}

@@ -62,30 +62,28 @@ void print_help();
 /* Kernel entry point, called from boot/bootloader.asm */
 void kmain(void) {
     clear();
-    
 
-    // I just realised: GRUB is loading the GDT for us ...
-    //printf("[..] Loading GDT");
-    //load_gdt();
-    //printw("[!!] GDT loaded, but not flushed");
-    
+    printf("[..] Loading GDT");
+    load_gdt();
+    printf("[OK] GDT loaded");
+
     printf("[..] Loading IDT");
     init_idt();
     register_exception_handlers();
     load_idt();
     printf("[OK] IDT loaded");
-    
+
     printf("[..] Initializing keyboard");
     if(kbd_detect() == 1 && kbd_init() == 1) {
         printf("[OK] Keyboard initialized");
     } else {
         printw("[!!] Could not initialize keyboard");
     }
-    
+
     printf("[..] Refreshing system time");
     rtc_refresh();
     printf("[OK] Time set");
-    
+
     printf("[..] Initializing serial COM1");
     serial_init();
     send(0x50); // P

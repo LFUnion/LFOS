@@ -1,48 +1,39 @@
 
-/* 
+/*
  * This is an in-development feature.
  * In most cases, you are *NOT* able to run this.
  */
 
-#include "stdint.h"
-#include "klib.h"
-
-#include "cpu.h"
 #include "gdt.h"
 
-#define NUM_OF_GDT_ENTRYS 256
+gdt_entry_t gdt_entrys[5];
+gdt_ptr_t   gdt_ptr2;
 
-extern void load_gdt_asm(void* desc)__attribute__((cdecl));
-static uint64_t gdt[NUM_OF_GDT_ENTRYS];
-
-inline void add_gdt_entry(int i, uint32_t base_addr, uint32_t size, uint16_t flags)
+void add_gdt_entry(int i, uint32_t base, uint32_t limit, uint8_t access, uint8_t gran)
 {
-    gdt[i] = size & 0xffffLL;
-    gdt[i] |= (base_addr & 0xffffffLL) << 16;
-    gdt[i] |= (flags & 0xffLL) << 40;
-    gdt[i] |= ((size >> 16) & 0xfLL) << 48;
-    gdt[i] |= ((flags >> 8 )& 0xffLL) << 52;
-    gdt[i] |= ((base_addr >> 24) & 0xffLL) << 56;
+    gdt_entrys[i].base_low =    (base & 0xFFFF);
+    gdt_entrys[i].base_middle = (base >> 16) & 0xFF;
+    gdt_entrys[i].base_high =   (base >> 24) & 0xFF;
+
+    gdt_entrys[i].limit_low =   (limit & 0xFFFF);
+    gdt_entrys[i].granularity = (limit >> 16) & 0x0F;
+
+    gdt_entrys[i].granularity |= gran & 0xF0;
+    gdt_entrys[i].access =      access;
 }
 
 void load_gdt()
 {
     cpu_cli();
-    
-    add_gdt_entry(0, 0, 0, 0);
-    add_gdt_entry(1, 0, 0x000FFFFF, (((1) << 0x04) | ((1) << 0x07) | ((0) << 0x0C) | ((0) << 0x0D) | ((1) << 0x0E) | ((1) << 0x0F) | (((0) & 0x03) << 0x05) | 0x0A));
-    add_gdt_entry(2, 0, 0x000FFFFF, (((1) << 0x04) | ((1) << 0x07) | ((0) << 0x0C) | ((0) << 0x0D) | ((1) << 0x0E) | ((1) << 0x0F) | (((0) & 0x03) << 0x05) | 0x02));
-    add_gdt_entry(3, 0, 0x000FFFFF, (((1) << 0x04) | ((1) << 0x07) | ((0) << 0x0C) | ((0) << 0x0D) | ((1) << 0x0E) | ((1) << 0x0F) | (((3) & 0x03) << 0x05) | 0x0A));
-    add_gdt_entry(4, 0, 0x000FFFFF, (((1) << 0x04) | ((1) << 0x07) | ((0) << 0x0C) | ((0) << 0x0D) | ((1) << 0x0E) | ((1) << 0x0F) | (((3) & 0x03) << 0x05) | 0x02));
 
-    
-    struct {
-        uint16_t size;
-        void* ptr;
-    }__attribute__((packed)) gdt_ptr = {
-        .size = NUM_OF_GDT_ENTRYS * 8 - 1,
-        .ptr = &gdt,
-    };
-    
-    //load_gdt_asm(&gdt_ptr);
+    gdt_ptr2.limit  = (sizeof(gdt_entry_t) * 5) - 1;
+    gdt_ptr2.base   = (uint32_t)&gdt_entrys;
+
+    add_gdt_entry(0, 0, 0, 0, 0);
+    add_gdt_entry(1, 0, 0xFFFFFFFF, 0x9A, 0xCF);
+    add_gdt_entry(2, 0, 0xFFFFFFFF, 0x92, 0xCF);
+    add_gdt_entry(3, 0, 0xFFFFFFFF, 0xFA, 0xCF);
+    add_gdt_entry(4, 0, 0xFFFFFFFF, 0xF2, 0xCF);
+
+    flush_gdt((uint32_t)&gdt_ptr2);
 }
