@@ -1,10 +1,10 @@
-.SILENT: build
+#.SILENT: build
 .PHONY: build
 .PHONY: clean
 
 GCC = i686-elf-gcc
 GCC_INCLUDES = -I./includes/ -I./klib/includes/ -I./kshell/includes/
-GCC_FLAGS = -O2 -ffreestanding -std=gnu99 -Wall -Wextra
+GCC_FLAGS = -O2 -ffreestanding -std=gnu99 -Wall -Wextra -g
 
 build:
 	echo "Cleaning ..."
@@ -14,11 +14,11 @@ build:
 	mkdir build/klib
 	mkdir build/drivers
 	mkdir build/kshell
-	nasm -felf32 -o build/bootloader.o boot/bootloader.asm
+	nasm -felf32 -o build/bootloader.o boot/bootloader.asm -g
 	echo "Assembling segments"
-	nasm -felf32 -o build/segments.o memory/segments.asm
+	nasm -felf32 -o build/segments.o memory/segments.asm -g
 	echo "Assembling exception handlers"
-	nasm -felf32 -o build/exceptions.o interrupts/exceptions.asm
+	nasm -felf32 -o build/exceptions.o interrupts/exceptions.asm -g
 	echo "Compiling GDT"
 	$(GCC) -c memory/gdt.c -o build/gdt.o $(GCC_INCLUDES) $(GCC_FLAGS)
 	echo "Compiling IDT"
@@ -67,6 +67,9 @@ build:
 	$(GCC) -c kernel.c -o build/kernel.o $(GCC_INCLUDES) $(GCC_FLAGS)
 	echo "Linking ..."
 	$(GCC) -T linker.ld -o build/lfos.bin -ffreestanding -O2 -nostdlib -Wall build/bootloader.o build/kernel.o build/drivers/vga.o build/drivers/ata.o build/drivers/serial.o build/drivers/keyboard.o build/drivers/beeper.o build/drivers/rtc.o build/klib/kio.o build/klib/kcom.o build/klib/kfs.o build/klib/kcasts.o build/klib/kstring.o build/klib/ktime.o build/kshell/kshell.o build/ufs.o build/memmanager.o build/outb.o build/inb.o build/segments.o build/gdt.o build/idt.o build/exceptionhandler.o build/exceptions.o build/cpu.o build/process.o -lgcc
+	echo "Stripping debug symbols from kernel ..."
+	objcopy --only-keep-debug build/lfos.bin build/lfos.sym
+	objcopy --strip-debug build/lfos.bin
 	
 clean:
 	rm -rf build/
@@ -77,4 +80,8 @@ test:
 testATA:
 	dd if=/dev/zero of=build/hdd.img count=4096
 	qemu-system-i386 -kernel build/lfos.bin -serial stdio -drive file=build/hdd.img,if=ide
-	
+
+debug:
+	qemu-system-i386 -serial stdio -kernel build/lfos.bin -s -S &
+	gdb --symbols=build/lfos.sym --eval-command="target remote localhost:1234"
+	killall qemu-system-i386
