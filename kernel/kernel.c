@@ -160,6 +160,12 @@ void kmain(void) {
  * @param msg The error message to be displayed
  */
 void abort(char* msg) {
+    register int eax asm("eax");
+    register int ebx asm("ebx");
+    register int ecx asm("ecx");
+    register int edx asm("edx");
+    register int esp asm("esp");
+
     clear();
     printw("LFOS kernel panic");
     printw("-----------------\n");
@@ -167,7 +173,25 @@ void abort(char* msg) {
     print_raw("Message: ");
     printf(msg);
     printf("\n");
-    printw("Your system has been shut down to prevent eventual damage");
+    printw("Debug information: \n");
+    print_raw("EAX: ");
+    printf(stringFromInt(eax));
+
+
+    print_raw("EBX: ");
+    printf(stringFromInt(ebx));
+
+
+    print_raw("ECX: ");
+    printf(stringFromInt(ecx));
+
+
+    print_raw("EDX: ");
+    printf(stringFromInt(edx));
+
+
+    print_raw("ESP: ");
+    printf(stringFromInt(esp));
     cpu_halt();
 }
 

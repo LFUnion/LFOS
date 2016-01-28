@@ -20,7 +20,7 @@ void add_idt_gate(int i, uint32_t base_addr, uint32_t selector, uint16_t flags)
 
 void init_idt() {
 
-    idt_ptr2.limit = sizeof(idt_entry_t) * NUM_OF_IDT_ENTRYS -1;
+    idt_ptr2.limit = sizeof(idt_entry_t) * 256 -1;
     idt_ptr2.base  = (uint32_t)&idt_entrys;
 
     memset(&idt_entrys, 0, NUM_OF_IDT_ENTRYS * sizeof(uint64_t));
