@@ -9,6 +9,9 @@ test:
 testATA:
 	cd kernel; make testATA
 
+dbochs:
+	bochs -f bochs.conf
+
 mkiso:
 	cd iso; make
 
