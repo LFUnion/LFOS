@@ -1,4 +1,4 @@
-#.SILENT: build
+.SILENT: build
 .PHONY: build
 .PHONY: clean
 
