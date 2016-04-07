@@ -12,7 +12,7 @@ the Free Software Foundation, either version 3 of the License, or
 (at your option) any later version. See http://www.gnu.org/licenses/.
 
 ### Build
-Builds are on the LFUnion jenkins server at https://0d8c8dd1.ngrok.io
+Builds are on the LFUnion jenkins server at https://b0939017.ngrok.io
 
 ### Documentation
 The documentation can be found at http://lfunion.bplaced.net/lfos/doc/html/
