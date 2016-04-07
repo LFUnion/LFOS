@@ -1,7 +1,7 @@
 # LFOS
-![Image](http://lfunion.bplaced.net/SmartImage/image.php?category=License&description=GPL3&color=083)
-![Image](http://lfunion.bplaced.net/SmartImage/image.php?category=Stars&description=0&color=C93)
-![Image](http://lfunion.bplaced.net/SmartImage/image.php?category=Forks&description=0)
+![Image](https://img.shields.io/badge/license-GPL-brightgreen.svg)
+![Image](https://img.shields.io/github/release/LFUnion/lfos.svg)
+![Image](https://b0939017.ngrok.io/job/LFOS/badge/icon)
 
 LFOS, a simple operating system.
 Copyright (C) 2015 LFUnion.
