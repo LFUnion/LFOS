@@ -151,3 +151,12 @@ void scroll() {
         row = 24;
 }
 
+// Switches the cursor on or off
+void vga_update_cursor() {
+	int pos = row*80 + column;
+	outb(0x3D4, 0x0F);
+	outb(0x3D5, (unsigned char)(pos & 0xFF));
+	outb(0x3D4, 0x0E);
+	outb(0x3D5, (unsigned char)((pos >> 8)&0xFF));
+}
+

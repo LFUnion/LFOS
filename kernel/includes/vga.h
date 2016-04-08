@@ -27,5 +27,6 @@ void klog(const char text[]);
 void klogi(const char text[]);
 void kclear();
 void scroll();
+void vga_update_cursor();
 
 #endif /* VGA_H */
