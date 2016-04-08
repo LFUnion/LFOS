@@ -50,6 +50,7 @@ char * scanf() {
     int i = 0;
 
     do {
+	vga_update_cursor();
 	kbd_flush_buffer();
 	inp = kbd_pull_char();
 	
