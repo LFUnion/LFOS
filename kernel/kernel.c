@@ -50,6 +50,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
 void print_help();
+void print_copyright();
 
 /*!
  * \brief Kernel entry point
@@ -99,7 +100,7 @@ void kmain(void) {
 
     printf("");
     printw("Welcome to LFOS!");
-    printw("(C) 2015 by LFUnion");
+    printw("Copyright (C) 2015-2016  LFUnion");
     printf("");
     print_raw("Compiled ");
     print_raw(__DATE__);
@@ -148,6 +149,8 @@ void kmain(void) {
 	    for (int i=0; i <= 216; i++) {print_raw((char*)stringFromInt(op[i]));}
 	} else if (resp == '-') {
 	    print_help();
+	} else if (resp == 'G') {
+		print_copyright();
 	}
     }
 }
@@ -211,4 +214,9 @@ void print_help() {
     printf(">>>> 'A': Enable the ATA subsystem");
     printf(">>>> 'F': Automated test of uFS");
     printf(">>>> '=': Show this help");
+	printf(">>>> 'G': Show the GPLv3 license notice");
+}
+
+void print_copyright() {
+printf("LFOS, a simple operating system.\nCopyright (C) 2015-2016 LFUnion\n\nThis program is free software: you can redistribute it and/or modify\nit under the terms of the GNU General Public License as published by\nthe Free Software Foundation, either version 3 of the License, or\n(at your option) any later version.\n\nThis program is distributed in the hope that it will be useful,\nbut WITHOUT ANY WARRANTY; without even the implied warranty of\nMERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the\nGNU General Public License for more details.\n\nYou should have received a copy of the GNU General Public License\nalong with this program.  If not, see <http://www.gnu.org/licenses/>.");
 }
