@@ -31,17 +31,17 @@ void kshell_main(void) {
 	    printf("");
 	    printf("LFOS Kernel shell v0.1 experimental");
 	    printf("-----------------------------------");
-	    printf("REBOOT: 	Reboots the computer");
-	    printf("ABORT:	Triggers an instant kernel panic");
-	    printf("HALT:   	Halts the CPU");
-	    printf("CLEAR:  	Clears the screen");
-	    printf("LS:		List all files");
-	    printf("RM:		Removes a file");
-	    printf("CAT:	Prints the contents of a file");
-	    printf("EDIT:	Edit a file");
-	    printf("SETUNAME:	Sets the user name");
-	    printf("SETHNAME:	Sets the hostname");
-	    printf("EXIT:	Returns to the debugging interface");
+	    printf("REBOOT:     Reboots the computer");
+	    printf("ABORT:      Triggers an instant kernel panic");
+	    printf("HALT:       Halts the CPU");
+	    printf("CLEAR:      Clears the screen");
+	    printf("LS:         List all files");
+	    printf("RM:         Removes a file");
+	    printf("CAT:        Prints the contents of a file");
+	    printf("EDIT:       Edit a file");
+	    printf("SETUNAME:   Sets the user name");
+	    printf("SETHNAME:   Sets the hostname");
+	    printf("EXIT:       Returns to the debugging interface");
 	    printf("");
 	} else if (strcmp(inp, "REBOOT")) {
 	    cpu_reset();
