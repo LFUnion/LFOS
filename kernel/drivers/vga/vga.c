@@ -24,6 +24,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 int row = 0;
 int column = 0;
+int cursor_enabled = 1;
 
 // Prints a char (grey)
 void kprintc(uint8_t chr, uint8_t clr, uint8_t x, uint8_t y) {
@@ -151,12 +152,34 @@ void scroll() {
         row = 24;
 }
 
-// Switches the cursor on or off
+// Updates the cursor
 void vga_update_cursor() {
-	int pos = row*80 + column;
-	outb(0x3D4, 0x0F);
-	outb(0x3D5, (unsigned char)(pos & 0xFF));
-	outb(0x3D4, 0x0E);
-	outb(0x3D5, (unsigned char)((pos >> 8)&0xFF));
+	vga_set_cursor(column, row);
 }
 
+// Sets the cursor position
+void vga_set_cursor(int x, int y) {
+	if (cursor_enabled) {
+		int pos = y*80 + x;
+		outb(0x3D4, 0x0F);
+		outb(0x3D5, (unsigned char)(pos & 0xFF));
+		outb(0x3D4, 0x0E);
+		outb(0x3D5, (unsigned char)((pos >> 8)&0xFF));
+	}
+}
+
+// Enables the cursor
+void vga_enable_cursor() {
+	if (!cursor_enabled) {
+		cursor_enabled = 1;
+		vga_set_cursor(255, 255);
+	}
+}
+
+// Disables the cursor
+void vga_disable_cursor() {
+	if (cursor_enabled) {		
+		vga_set_cursor(255, 255);
+		cursor_enabled = 0;
+	}
+}

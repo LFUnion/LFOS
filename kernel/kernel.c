@@ -63,6 +63,7 @@ void print_copyright();
 /* Kernel entry point, called from boot/bootloader.asm */
 void kmain(void) {
     clear();
+	vga_disable_cursor();
 
     printf("[..] Loading GDT");
     load_gdt();
