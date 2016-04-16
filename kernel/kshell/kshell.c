@@ -23,7 +23,7 @@ void kshell_main(void) {
 	print_raw(username);
 	print_raw("@");
 	print_raw(hostname);
-	print_raw(" >  ");
+	print_raw(" > ");
 	
 	char* inp = scanf();
 	
