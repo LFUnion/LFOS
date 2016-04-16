@@ -103,7 +103,9 @@ void kmain(void) {
     printw("Welcome to LFOS!");
     printw("Copyright (C) 2015-2016  LFUnion");
     printf("");
-    print_raw("Compiled ");
+    print_raw("You are using LFOS ");
+    print_raw(LFOS_VERSION);
+    print_raw(", compiled ");
     print_raw(__DATE__);
     print_raw(" at ");
     printf(__TIME__);
