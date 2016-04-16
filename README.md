@@ -11,7 +11,13 @@ it under the terms of the GNU General Public License as published by
 the Free Software Foundation, either version 3 of the License, or
 (at your option) any later version. See http://www.gnu.org/licenses/.
 
-### Build
+### Try it!
+You can try LFOS directly in a browser! This is possible due to [copy's 
+emulator](https://github.com/copy/v86) in JavaScript. You can try LFOS 
+here: 
+http://lfunion.bplaced.net/emulator/?profile=lfos
+
+### Builds
 Builds are on the LFUnion jenkins server at https://b0939017.ngrok.io
 
 ### Documentation
