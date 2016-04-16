@@ -64,6 +64,7 @@ void print_copyright();
 void kmain(void) {
     clear();
 	vga_disable_cursor();
+	vga_set_position(0, 0);
 
     printf("[..] Loading GDT");
     load_gdt();

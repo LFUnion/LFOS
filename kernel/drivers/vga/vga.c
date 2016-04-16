@@ -152,6 +152,22 @@ void scroll() {
         row = 24;
 }
 
+// Returns the row
+int vga_get_row() {
+	return row;
+}
+
+// Returns the column
+int vga_get_column() {
+	return column;
+}
+
+// Sets a new position
+void vga_set_position(int new_row, int new_column) {
+	row = new_row;
+	column = new_column;
+}
+
 // Updates the cursor
 void vga_update_cursor() {
 	vga_set_cursor(column, row);
