@@ -93,6 +93,8 @@ char kbd_pull_char() {
 	return '-';
     } else if (scancode == 0x0D) {
 	return '=';
+    } else if (scancode == 0x0E) {
+	return '\b';
     } else if (scancode == 0x0F) {
 	return '\t';
     } else if (scancode == 0x10) {
