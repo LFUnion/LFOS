@@ -57,14 +57,29 @@ char * scanf() {
 	inp = kbd_pull_char();
 	
 	if (inp != 0) {
-	    char* str = (char*)malloc(sizeof(char));
-            str[0] = inp;
-            kprint_raw(str);
-	    if (inp != '\n') {
-	        tmp[i] = inp;
-	    }
+            if (inp != '\b') {
+	        char* str = (char*)malloc(sizeof(char));
+                str[0] = inp;
+                kprint_raw(str);
+	        if (inp != '\n') {
+	            tmp[i] = inp;
+	        }
 
-	    i++;
+	        i++;
+            } else {
+
+                if (i > 0) {
+                    // Clear character in array
+                    i--;
+                    tmp[i] = 0;
+
+                    // Remove character from screen
+                    int new_pos = (vga_get_row() * 80 + vga_get_column()) - 1;
+                    vga_set_position(new_pos / 80, new_pos % 80);
+                    print_raw(" ");
+                    vga_set_position(new_pos / 80, new_pos % 80);
+                }
+            }
 	}
     } while (inp != '\n');
 
