@@ -49,6 +49,8 @@ char * scanf() {
     char inp = ' ';
     int i = 0;
 
+    vga_enable_cursor();
+
     do {
 	vga_update_cursor();
 	kbd_flush_buffer();
@@ -66,6 +68,7 @@ char * scanf() {
 	}
     } while (inp != '\n');
 
+    vga_disable_cursor();
     char* ret = (char*)malloc(strlen(tmp) * sizeof(char));
     
     for (int ii = 0; ii < strlen(tmp); ii++) {
