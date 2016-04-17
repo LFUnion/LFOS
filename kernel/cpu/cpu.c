@@ -6,9 +6,11 @@
  */
 
 #include "stdint.h"
+#include "cpuid.h"
 
 #include "cpu.h"
 #include "portio.h"
+#include "klib.h"
 
 /*!
  * \brief CPU reset
@@ -52,4 +54,43 @@ void cpu_cli()
 void cpu_sti()
 {
     asm volatile("sti");
+}
+
+char* cpu_getVendor() {
+    char* vendor = (char*)malloc(3 * 4 * sizeof(char) + 1);
+    unsigned int* eax = (unsigned int*)malloc(sizeof(unsigned int));
+    unsigned int* ebx = (unsigned int*)malloc(sizeof(unsigned int));
+    unsigned int* ecx = (unsigned int*)malloc(sizeof(unsigned int));
+    unsigned int* edx = (unsigned int*)malloc(sizeof(unsigned int));
+
+    int success = __get_cpuid(0, eax, ebx, ecx, edx);
+    if (success) {
+
+        // CPUID successful
+        for (int index = 0; index < 12; index++) {
+            if (index < 4) {
+                // EBX
+                vendor[index] = (char)(*ebx >> (index*8));
+                //print_raw("1");
+            } else if (index < 8) {
+                // ECXmake
+
+                vendor[index] = (char)(*edx >> ((index-4)*8));
+                //print_raw("2");
+            } else if (index < 12) {
+                // EDX
+                vendor[index] = (char)(*ecx >> ((index-8)*8));
+                //print_raw("3");
+            }
+        }
+        
+        // Null-Terminator
+        vendor[12] = 0;
+
+    } else {
+        // CPUID fails
+        vendor = "-GenericX86-";
+    }
+    
+    return vendor;
 }
