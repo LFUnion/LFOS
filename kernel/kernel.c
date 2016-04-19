@@ -126,8 +126,9 @@ void kmain(void) {
 
 	kbd_flush_buffer();
 	char resp = kbd_pull_char();
-        char line[3] = "> ";
-        line[2] = resp;
+    char line[4] = "> ";
+    line[2] = resp;
+    line[3] = 0;
 	printf(line);
 
 	if (resp == 'R') {
