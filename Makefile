@@ -1,5 +1,8 @@
 .SILENT:build, mkiso
 
+all:
+	make build
+
 build:
 	cd kernel; make
 
