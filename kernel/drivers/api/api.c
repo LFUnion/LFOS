@@ -75,6 +75,7 @@ int	apiloop() {
 	while (1){
 		print_raw("command: ");
 		char * input = scanf();
+		strhighc(input);
 		if (strcmp(input, "HELP")){
 			printhelp();
 			

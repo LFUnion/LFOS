@@ -70,3 +70,70 @@ int strcmp (const char* s1, const char* s2) {
 	return 0;
     }
 }
+
+unsigned char* strlow (const unsigned char* sl){
+		int length = strlen(sl);
+		
+		unsigned char* returnstring = (unsigned char*)malloc(length* sizeof(unsigned char));
+		
+		unsigned char c;
+		for (int i =0; i < length; ++i){
+			c = sl[i];
+			if ( c>64 && c<91){
+				returnstring[i] = c+32;
+
+			}
+			else{
+			returnstring[i] = c;
+			}
+		}
+		
+		return returnstring;
+}
+	
+unsigned char* strhigh (const unsigned char* su){
+		int length = strlen(su);
+		
+		unsigned char* returnstring = (unsigned char*)malloc(length* sizeof(unsigned char));
+		
+		unsigned char c;
+		for (int i =0; i < length; ++i){
+			c = su[i];
+			if ( c>96 && c<123){
+				returnstring[i] = c-32;	
+			}
+			else{
+			returnstring[i] = c;
+			}
+			
+		}
+		return returnstring;	
+	
+}	
+
+void strlowc (unsigned char* sl){
+		int length = strlen(sl);
+				
+		unsigned char c;
+		for (int i =0; i < length; ++i){
+			c = sl[i];
+			if ( c>64 && c<91){
+				sl[i] = c+32;	
+			}
+		}
+}
+	
+void strhighc (unsigned char* su){
+		int length = strlen(su);
+				
+		unsigned char c;
+		for (int i =0; i < length; ++i){
+			c = su[i];
+			if ( c>96 && c<123){
+				su[i] = c-32;	
+			}
+		}
+}
+
+
+

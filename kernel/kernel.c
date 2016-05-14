@@ -69,7 +69,7 @@ void kmain(void) {
     print_raw("[OK] Detected ");
     print_raw(cpu_getVendor());
     printf(" processor");
-
+	
     printf("[..] Loading GDT");
     load_gdt();
     printf("[OK] GDT loaded");
