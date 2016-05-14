@@ -66,10 +66,14 @@ build:
 	$(GCC) -c kshell/kshell.c -o build/kshell/kshell.o $(GCC_INCLUDES) $(GCC_FLAGS)
 	echo "Compiling process"
 	$(GCC) -c multitasking/process.c -o build/process.o $(GCC_INCLUDES) $(GCC_FLAGS)
+	echo "Compiling driver_api"
+	$(GCC) -c drivers/api/driver_api.c -o build/driver_api.o $(GCC_INCLUDES) $(GCC_FLAGS)	
+	echo "Compiling api"
+	$(GCC) -c drivers/api/api.c -o build/api.o $(GCC_INCLUDES) $(GCC_FLAGS)
 	echo "Compiling kernel ..."
 	$(GCC) -c kernel.c -o build/kernel.o $(GCC_INCLUDES) $(GCC_FLAGS)
 	echo "Linking ..."
-	$(GCC) -T linker.ld -o build/lfos.bin -ffreestanding -O2 -nostdlib -Wall build/bootloader.o build/kernel.o build/drivers/vga.o build/drivers/ata.o build/drivers/serial.o build/drivers/keyboard.o build/drivers/beeper.o build/drivers/rtc.o build/drivers/cmos.o build/klib/kio.o build/klib/kcom.o build/klib/kfs.o build/klib/kcasts.o build/klib/kstring.o build/klib/ktime.o build/kshell/kshell.o build/ufs.o build/memmanager.o build/outb.o build/inb.o build/segments.o build/gdt.o build/idt.o build/exceptionhandler.o build/exceptions.o build/cpu.o build/process.o -lgcc -Wl,-Map=build/memory.map
+	$(GCC) -T linker.ld -o build/lfos.bin -ffreestanding -O2 -nostdlib -Wall build/bootloader.o build/kernel.o build/drivers/vga.o build/drivers/ata.o build/drivers/serial.o build/drivers/keyboard.o build/drivers/beeper.o build/drivers/rtc.o build/drivers/cmos.o build/klib/kio.o build/klib/kcom.o build/klib/kfs.o build/klib/kcasts.o build/klib/kstring.o build/klib/ktime.o build/kshell/kshell.o build/ufs.o build/memmanager.o build/outb.o build/inb.o build/segments.o build/gdt.o build/idt.o build/exceptionhandler.o build/exceptions.o build/cpu.o build/process.o build/api.o build/driver_api.o -lgcc -Wl,-Map=build/memory.map
 	echo "Stripping debug symbols from kernel ..."
 	objcopy --only-keep-debug build/lfos.bin build/lfos.sym
 	objcopy --strip-debug build/lfos.bin

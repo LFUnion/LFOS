@@ -27,7 +27,11 @@ int hexToInt(uint8_t input) {
  * @return The string
  */
 const char * stringFromInt(int input) {
-
+	
+	if (input==0){
+			return "0";
+	}
+	
     int input_bak = input;
     int input_l = 0;
     while(input){

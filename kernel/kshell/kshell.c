@@ -73,7 +73,11 @@ void kshell_main(void) {
 	    const char* final = (const char*)malloc(216 * sizeof(uint16_t));
 	    final = ct;
 	    write(fn, final);
-	} else if (strcmp(inp, "EXIT")) {
+	}
+	else if (strcmp(inp, "API")) {
+	    apiloop();
+	}
+	else if (strcmp(inp, "EXIT")) {
 	    loop = 0;
 	    break;
 	} else {
