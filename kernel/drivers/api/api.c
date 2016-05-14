@@ -69,7 +69,7 @@ int	apiloop() {
 	clear();
 	
 	alldriver();
-    printf("Driver API Menu: Version 0.1"");
+    printf("Driver API Menu: Version 0.1");
 	printf("For help: HELP");
 	printf("To exit the API input EXIT\n");
 	while (1){
