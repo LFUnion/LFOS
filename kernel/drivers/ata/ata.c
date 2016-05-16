@@ -196,14 +196,14 @@ uint16_t* ata_read_sectors(int drive, uint32_t base, int count) {
 
     int array_pos = 0;
     while(ata_read_status(3)) {
-	for(int i=1;i<=256;i++) {
-	    uint16_t value;
-	    uint16_t port = 0x1F0;
-	    asm volatile ( "inw %1, %0" : "=a"(value) : "Nd"(port) );
-	    buffer[array_pos] = value;
-	    array_pos++;
-	}
-	for(int i=1;i<=4;i++) {ata_read_status_byte();} // 400 ns delay, so the drive can respond
+        for(int i=1;i<=256;i++) {
+            uint16_t value;
+            uint16_t port = 0x1F0;
+            asm volatile ( "inw %1, %0" : "=a"(value) : "Nd"(port) );
+            buffer[array_pos] = value;
+            array_pos++;
+        }
+        for(int i=1;i<=4;i++) {ata_read_status_byte();} // 400 ns delay, so the drive can respond
     }
 
     return buffer;
@@ -222,56 +222,54 @@ void ata_write_sectors(int drive, uint32_t base, int count, uint16_t* data) {
 
     int array_pos = 0;
     while(ata_read_status(3)) {
-	for(int i=1;i<=256;i++) {
-	    uint16_t value = data[array_pos];
-	    uint16_t port = 0x1F0;
-	    asm volatile ( "outw %0, %1" : : "a"(value) , "Nd"(port) );
-	    array_pos++;
-	}
-	ata_write_port(7, 0xE7);
-	for(int i=1;i<=4;i++) {ata_read_status_byte();} // 400 ns delay, so the drive can respond
+    for(int i=1;i<=256;i++) {
+        uint16_t value = data[array_pos];
+        uint16_t port = 0x1F0;
+        asm volatile ( "outw %0, %1" : : "a"(value) , "Nd"(port) );
+        array_pos++;
+    }
+    
+    ata_write_port(7, 0xE7);
+    for(int i=1;i<=4;i++) {ata_read_status_byte();} // 400 ns delay, so the drive can respond
+    
     }
 }
 
-//api data
+// API data
 
-const struct driver_data_ata ata_api = {
-	.datai.driver_number=ATA,
-	.datai.number_of_functions=15,
-	.datai.driver_priority=1,
-	//.datai.driver_description=(char *)malloc(sizeof(char) *100),
-	.datai.driver_description="ATA Driver: -communication with hard disk",
-	.pfunc[0].func_8_8 = &ata_read_port,
-	.pfunc[1].func_v_8_8 = &ata_write_port
-	
-	}
-	;
+const struct driver_data_ata ata_api = 
+{
+    .datai.driver_number=ATA,
+    .datai.number_of_functions=15,
+    .datai.driver_priority=1,
+    //.datai.driver_description=(char *)malloc(sizeof(char) *100),
+    .datai.driver_description="ATA Driver: -communication with hard disk",
+    .pfunc[0].func_8_8 = &ata_read_port,
+    .pfunc[1].func_v_8_8 = &ata_write_port
+    
+};
 
 
-void ata_send(){
-					
-					print_raw("Number of functions: ");
-					printf(stringFromInt(ata_api.datai.number_of_functions));
-					printf(stringFromInt(ata_api.datai.driver_priority));
-					printf(ata_api.datai.driver_description);
-					
-					
+void ata_send() {
+    print_raw("Number of functions: ");
+    printf(stringFromInt(ata_api.datai.number_of_functions));
+    printf(stringFromInt(ata_api.datai.driver_priority));
+    printf(ata_api.datai.driver_description);
 }
 
-void ata_use(const int func){
-		int count = 0;
-		if (func ==0){
-			printf("Read Ports:");
-			
-			while (count<8){
-				int ret = (*ata_api.pfunc[0].func_8_8) (count);
-				print_raw("ATA-Port ");
-				print_raw(stringFromInt(count));
-				print_raw(": ");
-				printf(stringFromInt(ret));
-				++count;
-			}
-		}
-	
+void ata_use(const int func) {
+    int count = 0;
+    if (func ==0) {
+        printf("Read Ports:");
+        
+        while (count<8) {
+            int ret = (*ata_api.pfunc[0].func_8_8) (count);
+            print_raw("ATA-Port ");
+            print_raw(stringFromInt(count));
+            print_raw(": ");
+            printf(stringFromInt(ret));
+            ++count;
+        }
+    }
 }
 
