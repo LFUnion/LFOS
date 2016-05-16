@@ -103,7 +103,7 @@ void printw(const char text[], ...) {
     klogi(text);
 }
 
-void print_raw(char text[]) {
+void print_raw(const char text[]) {
     kprint_raw(text);
 }
 
