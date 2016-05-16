@@ -6,7 +6,8 @@
 /* General configuration */
 
     /* Memory Management */
-        #define MM_WATERMARK
-
+        //#define MM_WATERMARK
+        #define MM_SEGMENTATION
+        
 
 #endif /* LFOS_CONFIG_H */

@@ -4,6 +4,7 @@
 #include "stddef.h"
 
 #include "watermark.h"
+#include "mm_segmentation.h"
 
 void* malloc (size_t n);
 void  free   (void* ptr);
