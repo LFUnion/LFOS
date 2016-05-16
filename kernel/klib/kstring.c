@@ -39,7 +39,7 @@ void* memset(void* ptr, int value, size_t n) {
 int strlen(const char* string) {
     int len = 0;
     for (int i = 0; string[i] != '\0'; i++) {
-	len++;
+        len++;
     }
     return len;
 }
@@ -56,83 +56,77 @@ int strlen(const char* string) {
 int strcmp (const char* s1, const char* s2) {
     if (strlen(s1) == strlen(s2)) {
 
-	for (int i = 0; i < strlen(s1); i++) {
-	    if (s1[i] == s2[i]) {
-		continue;
-	    } else {
-		return 0;
-	    }
-	}
+    for (int i = 0; i < strlen(s1); i++) {
+        if (s1[i] == s2[i]) {
+            continue;
+        } else {
+            return 0;
+        }
+    }
 
-	return 1;
+    return 1;
 
     } else {
-	return 0;
+        return 0;
     }
 }
 
-unsigned char* strlow (const unsigned char* sl){
-		int length = strlen(sl);
-		
-		unsigned char* returnstring = (unsigned char*)malloc(length* sizeof(unsigned char));
-		
-		unsigned char c;
-		for (int i =0; i < length; ++i){
-			c = sl[i];
-			if ( c>64 && c<91){
-				returnstring[i] = c+32;
+char* strlow (const char* sl) {
+    int length = strlen(sl);
 
-			}
-			else{
-			returnstring[i] = c;
-			}
-		}
-		
-		return returnstring;
-}
-	
-unsigned char* strhigh (const unsigned char* su){
-		int length = strlen(su);
-		
-		unsigned char* returnstring = (unsigned char*)malloc(length* sizeof(unsigned char));
-		
-		unsigned char c;
-		for (int i =0; i < length; ++i){
-			c = su[i];
-			if ( c>96 && c<123){
-				returnstring[i] = c-32;	
-			}
-			else{
-			returnstring[i] = c;
-			}
-			
-		}
-		return returnstring;	
-	
-}	
+    unsigned char* returnstring = (unsigned char*)malloc(length* sizeof(unsigned char));
+        
+    unsigned char c;
+    for (int i =0; i < length; ++i){
+        c = sl[i];
+        if ( c>64 && c<91){
+            returnstring[i] = c+32;
+        } else {
+            returnstring[i] = c;
+        }
+    }
 
-void strlowc (unsigned char* sl){
-		int length = strlen(sl);
-				
-		unsigned char c;
-		for (int i =0; i < length; ++i){
-			c = sl[i];
-			if ( c>64 && c<91){
-				sl[i] = c+32;	
-			}
-		}
+    return returnstring;
 }
-	
-void strhighc (unsigned char* su){
-		int length = strlen(su);
-				
-		unsigned char c;
-		for (int i =0; i < length; ++i){
-			c = su[i];
-			if ( c>96 && c<123){
-				su[i] = c-32;	
-			}
-		}
+
+char* strhigh (const char* su) {
+    int length = strlen(su);
+    char* returnstring = (char*)malloc(length* sizeof(char));
+
+    char c;
+    for (int i =0; i < length; ++i) {
+        c = su[i];
+        if ( c>96 && c<123) {
+            returnstring[i] = c-32;	
+        } else {
+            returnstring[i] = c;
+        }
+    }
+    return returnstring;
+}
+
+void strlowc (char* sl) {
+    int length = strlen(sl);
+
+    char c;
+    for (int i =0; i < length; ++i){
+        c = sl[i];
+        if ( c>64 && c<91){
+            sl[i] = c+32;	
+        }
+    }
+}
+
+void strhighc (char* su){
+    int length = strlen(su);
+
+    char c;
+    for (int i =0; i < length; ++i){
+        c = su[i];
+        if ( c>96 && c<123){
+            su[i] = c-32;	
+        }
+    }
 }
 
 
