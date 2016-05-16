@@ -92,5 +92,10 @@ char* cpu_getVendor() {
         vendor = "-GenericX86-";
     }
     
+    free(eax);
+    free(ebx);
+    free(ecx);
+    free(edx);
+    
     return vendor;
 }
