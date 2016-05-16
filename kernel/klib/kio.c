@@ -82,14 +82,17 @@ char * scanf() {
             }
 	}
     } while (inp != '\n');
+    tmp[i-1] = '\0';
 
     vga_disable_cursor();
-    char* ret = (char*)malloc(strlen(tmp) * sizeof(char));
+    char* ret = (char*)malloc(strlen(tmp)+1 * sizeof(char));
     
     for (int ii = 0; ii < strlen(tmp); ii++) {
-	ret[ii] = tmp[ii];
+        ret[ii] = tmp[ii];
     }
+    ret[strlen(tmp)] = '\0';
 
+    free(tmp);
     return ret;
 }
 
