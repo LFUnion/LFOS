@@ -5,7 +5,7 @@
  * This file contains the dynamic memory management using the watermark method
  */
 
-#include "watermark.h"
+#include "mm_watermark.h"
 
 /*!
  * \brief Adress pointer
