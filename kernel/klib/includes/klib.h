@@ -24,10 +24,10 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #include "kio.h"
 #include "ktime.h"
 #include "kstring.h"
+#include "kmem.h"
 #include "kcasts.h"
 #include "kcom.h"
 #include "kfs.h"
 #include "process.h"
-#include "memmanager.h"
 
 #endif /* KLIB_H */

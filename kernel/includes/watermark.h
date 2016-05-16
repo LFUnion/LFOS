@@ -1,10 +1,11 @@
-#ifndef MEMMANAGER_H
-#define MEMMANAGER_H
+#ifndef WATERMARK_H
+#define WATERMARK_H
 
 #include <stddef.h>
 
-void* malloc (size_t n);
+void* watermark_malloc (size_t n);
 
+/*
 // new code
 
 void* ncalloc (size_t n, unsigned int size , double value);
@@ -17,8 +18,6 @@ void func_fcalloc(float value, float* count_ptr, long max);
 void func_dcalloc(double value, double* count_ptr, long max);
 
 void* calloc(size_t n, unsigned int size);
+*/
 
-
-
-
-#endif /* MEMMANAGER_H */
+#endif /* WATERMARK_H */

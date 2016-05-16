@@ -4,7 +4,7 @@
 
 VERSION = $(shell cat VERSION)
 GCC = i686-elf-gcc
-GCC_INCLUDES = -I./includes/ -I./klib/includes/ -I./kshell/includes/
+GCC_INCLUDES = -I./includes/ -I./klib/includes/ -I./kshell/includes/ -include lfos_config.h
 GCC_FLAGS = -O2 -ffreestanding -std=gnu99 -Wall -Wextra -g -DLFOS_VERSION=\"$(VERSION)\"
 
 build:
@@ -26,8 +26,8 @@ build:
 	$(GCC) -c interrupts/idt.c -o build/idt.o $(GCC_INCLUDES) $(GCC_FLAGS)
 	echo "Compiling C common exception handler"
 	$(GCC) -c interrupts/exceptionhandler.c -o build/exceptionhandler.o $(GCC_INCLUDES) $(GCC_FLAGS)
-	echo "Compiling memory manager"
-	$(GCC) -c memory/memmanager.c -o build/memmanager.o $(GCC_INCLUDES) $(GCC_FLAGS)
+	echo "Compiling watermark memory manager"
+	$(GCC) -c memory/watermark.c -o build/watermark.o $(GCC_INCLUDES) $(GCC_FLAGS)
 	echo "Compiling outb"
 	$(GCC) -c ports/outb.c -o build/outb.o $(GCC_INCLUDES) $(GCC_FLAGS)
 	echo "Compiling inb"
@@ -60,6 +60,8 @@ build:
 	$(GCC) -c klib/ktime.c -o build/klib/ktime.o $(GCC_INCLUDES) $(GCC_FLAGS)
 	echo "Compiling kstring"
 	$(GCC) -c klib/kstring.c -o build/klib/kstring.o $(GCC_INCLUDES) $(GCC_FLAGS)
+	echo "Compiling kmem"
+	$(GCC) -c klib/kmem.c -o build/klib/kmem.o $(GCC_INCLUDES) $(GCC_FLAGS)
 	echo "Compiling KFS"
 	$(GCC) -c klib/kfs.c -o build/klib/kfs.o $(GCC_INCLUDES) $(GCC_FLAGS)
 	echo "Compiling kshell"
@@ -69,7 +71,7 @@ build:
 	echo "Compiling kernel ..."
 	$(GCC) -c kernel.c -o build/kernel.o $(GCC_INCLUDES) $(GCC_FLAGS)
 	echo "Linking ..."
-	$(GCC) -T linker.ld -o build/lfos.bin -ffreestanding -O2 -nostdlib -Wall build/bootloader.o build/kernel.o build/drivers/vga.o build/drivers/ata.o build/drivers/serial.o build/drivers/keyboard.o build/drivers/beeper.o build/drivers/rtc.o build/drivers/cmos.o build/klib/kio.o build/klib/kcom.o build/klib/kfs.o build/klib/kcasts.o build/klib/kstring.o build/klib/ktime.o build/kshell/kshell.o build/ufs.o build/memmanager.o build/outb.o build/inb.o build/segments.o build/gdt.o build/idt.o build/exceptionhandler.o build/exceptions.o build/cpu.o build/process.o -lgcc -Wl,-Map=build/memory.map
+	$(GCC) -T linker.ld -o build/lfos.bin -ffreestanding -O2 -nostdlib -Wall build/bootloader.o build/kernel.o build/drivers/vga.o build/drivers/ata.o build/drivers/serial.o build/drivers/keyboard.o build/drivers/beeper.o build/drivers/rtc.o build/drivers/cmos.o build/klib/kio.o build/klib/kcom.o build/klib/kfs.o build/klib/kcasts.o build/klib/kstring.o build/klib/kmem.o build/klib/ktime.o build/kshell/kshell.o build/ufs.o build/watermark.o build/outb.o build/inb.o build/segments.o build/gdt.o build/idt.o build/exceptionhandler.o build/exceptions.o build/cpu.o build/process.o -lgcc -Wl,-Map=build/memory.map
 	echo "Stripping debug symbols from kernel ..."
 	objcopy --only-keep-debug build/lfos.bin build/lfos.sym
 	objcopy --strip-debug build/lfos.bin
