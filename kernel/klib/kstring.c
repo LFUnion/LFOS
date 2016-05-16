@@ -74,9 +74,9 @@ int strcmp (const char* s1, const char* s2) {
 char* strlow (const char* sl) {
     int length = strlen(sl);
 
-    unsigned char* returnstring = (unsigned char*)malloc(length* sizeof(unsigned char));
+    char* returnstring = (char*)malloc(length* sizeof(char));
         
-    unsigned char c;
+    char c;
     for (int i =0; i < length; ++i){
         c = sl[i];
         if ( c>64 && c<91){
