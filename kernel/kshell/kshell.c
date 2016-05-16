@@ -7,6 +7,7 @@
 
 #include "kshell.h"
 #include "kernel.h"
+#include "api.h"
 
 /*!
  * \brief KShell entry
