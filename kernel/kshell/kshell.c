@@ -16,7 +16,8 @@ void kshell_main(void) {
     int loop = 1;
     char* username = (char*)malloc(50 * sizeof(char));
     char* hostname = (char*)malloc(50 * sizeof(char));
-    username = "USER";
+    
+    username =  "USER";
     hostname = "LOCALHOST";
 
     while (loop) {
@@ -26,7 +27,7 @@ void kshell_main(void) {
 	print_raw(" > ");
 	
 	char* inp = scanf();
-	
+	strhighc(inp);
 	if (strcmp(inp, "HELP")) {
 	    printf("");
 	    printf("LFOS Kernel shell v0.1 experimental");
@@ -73,7 +74,11 @@ void kshell_main(void) {
 	    const char* final = (const char*)malloc(216 * sizeof(uint16_t));
 	    final = ct;
 	    write(fn, final);
-	} else if (strcmp(inp, "EXIT")) {
+	}
+	else if (strcmp(inp, "API")) {
+	    apiloop();
+	}
+	else if (strcmp(inp, "EXIT")) {
 	    loop = 0;
 	    break;
 	} else {
