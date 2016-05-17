@@ -1,21 +1,5 @@
-#ifndef PORTIO_H
-#define PORTIO_H
-
-/*
- * This is the header responsible for port to port
- * communication. It includes the headers "inb.h",
- * responsible for ingoing values, and "outb.h",
- * responsible for outgoing values.
- */
-
-#include "inb.h"
-#include "outb.h"
-
-#include "inw.h"
-#include "outw.h"
-
-
-#endif /* PORTIO_H */
+#ifndef INW_H
+#define INW_H
 
 /*
 LFOS, a simple operating system.
@@ -34,3 +18,11 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
+
+#include <stdint.h>
+
+uint16_t inw(uint16_t port);
+
+
+#endif 
+

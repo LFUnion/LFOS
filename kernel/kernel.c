@@ -62,6 +62,7 @@ void print_copyright();
 
 /* Kernel entry point, called from boot/bootloader.asm */
 void kmain(void) {
+	
     clear();
     vga_disable_cursor();
     vga_set_position(0, 0);
