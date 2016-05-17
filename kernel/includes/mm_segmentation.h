@@ -7,6 +7,7 @@
 typedef struct {
     size_t lenght;  // Lenght of the memory segment
     int free : 1;   // Status of the segment (0=free, 1=used)
+    int last : 1;   // Is this the last descriptor? (0=no, 1=yes)
     uint16_t flags; // Flags (currently unused)
     void* prev;     // Previuos segment descriptor
     void* next;     // Next segment descriptor

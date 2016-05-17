@@ -6,7 +6,7 @@ const segment_descriptor *first_desc = (segment_descriptor*)0x040000; // 4MB
 void* segmentation_malloc(size_t n) {
     
     segment_descriptor *cur_desc = (segment_descriptor*)first_desc;
-    segment_descriptor *prev_desc = (segment_descriptor*)0;
+    segment_descriptor *prev_desc = (segment_descriptor*)40000;
     
     for (unsigned long i=0; i<descriptors_total; i++) {
         
@@ -28,6 +28,10 @@ void segmentation_free(void* ptr) {
     desc->free = 0;
     
     if (prev->free == 0) {
+        if (desc->last) {
+            next = desc;
+            prev->last = 1;
+        }
         prev->next = next;
         next->prev = prev;
         prev->lenght += sizeof(segment_descriptor) + desc->lenght;
@@ -38,7 +42,7 @@ void segmentation_free(void* ptr) {
         descriptors_total--;
     }
     
-    if (next->free == 0) {
+    if (desc->last == 0 && next->free == 0) {
         desc->lenght += sizeof(segment_descriptor) + next->lenght;
         next = next->next;
         ((segment_descriptor*)next->next)->prev = desc;
@@ -49,11 +53,14 @@ void segmentation_free(void* ptr) {
 void* segmentation_new_descriptor(segment_descriptor* desc, segment_descriptor* prev, size_t lenght) {
     desc->lenght = lenght;
     desc->free   = 1;
+    desc->last   = 1;
     desc->flags  = 0;
     desc->prev   = prev;
     desc->next   = (void*)desc + sizeof(segment_descriptor) + lenght;
     
     descriptors_total++;
+    prev->last   = 0;
+    
     return (void*)desc + sizeof(segment_descriptor);
 }
 
@@ -64,6 +71,7 @@ void* segmentation_use_descriptor(segment_descriptor* desc, segment_descriptor* 
         segmentation_new_descriptor(new_desc, desc, (void*)(desc->next)-((void*)new_desc+sizeof(segment_descriptor)));
         
         new_desc->next = desc->next;
+        new_desc->last = 0;
         new_desc->free = 0;
         desc->next = new_desc;
     }
