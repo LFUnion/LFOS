@@ -53,28 +53,34 @@ void kshell_main(void) {
 	    clear();
 	} else if (strcmp(inp, "SETUNAME")) {
 	    print_raw("New username: ");
+        free(username);
 	    username = scanf();
 	} else if (strcmp(inp, "SETHNAME")) {
 	    print_raw("New hostname: ");
+        free(hostname);
 	    hostname = scanf();
 	} else if (strcmp(inp, "LS")) {
 	    
 	} else if (strcmp(inp, "RM")) {
 	    print_raw("Filename > ");
-	    const char* fn = scanf();
+	    char* fn = scanf();
 	    ufs_del_file(0, fn);
+        free(fn);
 	} else if (strcmp(inp, "CAT")) {
 	    print_raw("Filename > ");
-	    const char* fn = scanf();
+	    char* fn = scanf();
 	    printf(read(fn));
+        free(fn);
 	} else if (strcmp(inp, "EDIT")) {
 	    print_raw("Filename > ");
-	    const char* fn = scanf();
+	    char* fn = scanf();
 	    print_raw("Contents > ");
-	    const char* ct = scanf();
-	    const char* final = (const char*)malloc(216 * sizeof(uint16_t));
+	    char* ct = scanf();
+	    char* final = (char*)malloc(216 * sizeof(uint16_t));
 	    final = ct;
 	    write(fn, final);
+        free(fn);
+        free(final);
 	}
 	else if (strcmp(inp, "API")) {
 	    apiloop();
@@ -86,5 +92,6 @@ void kshell_main(void) {
 	    print_raw("Unknown command: ");
 	    printf(inp);
 	}
+	free(inp);
     }
 }
