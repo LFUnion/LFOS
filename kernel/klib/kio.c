@@ -58,8 +58,9 @@ char * scanf() {
 	
 	if (inp != 0) {
             if (inp != '\b') {
-	        char* str = (char*)malloc(sizeof(char));
+	        char* str = (char*)malloc(2*sizeof(char));
                 str[0] = inp;
+                str[1] = '\0';
                 kprint_raw(str);
 	        if (inp != '\n') {
 	            tmp[i] = inp;
