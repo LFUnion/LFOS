@@ -62,6 +62,7 @@ char * scanf() {
                 str[0] = inp;
                 str[1] = '\0';
                 kprint_raw(str);
+                free(str);
 	        if (inp != '\n') {
 	            tmp[i] = inp;
 	        }
