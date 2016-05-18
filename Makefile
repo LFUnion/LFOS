@@ -18,9 +18,6 @@ dbochs:
 mkiso:
 	cd iso; make
 
-todo:
-	python3 tools/todo.py
-
 clean:
 	cd kernel; make clean
 	cd iso; make clean
