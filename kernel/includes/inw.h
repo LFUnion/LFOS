@@ -23,6 +23,4 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 uint16_t inw(uint16_t port);
 
-
-#endif 
-
+#endif

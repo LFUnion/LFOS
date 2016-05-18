@@ -19,11 +19,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 #include "outw.h"
 
- 
 void outw(uint16_t port, uint16_t hex)
 {
-    
     asm volatile ("outw %w0, %w1\n" : : "a"(hex), "d"(port));
 }
-
-

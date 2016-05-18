@@ -11,6 +11,4 @@ Copyright (C) 2016 LFUnion.
 
 void outw(uint16_t port, uint16_t hex);
 
-
-#endif 
-
+#endif
