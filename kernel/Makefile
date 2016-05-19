@@ -96,7 +96,7 @@ test:
 
 testATA:
 	dd if=/dev/zero of=build/hdd.img count=4096
-	qemu-system-i386 -kernel build/lfos.bin -serial stdio -drive file=build/hdd.img,if=ide
+	qemu-system-i386 -smp cpus=2,cores=2 -kernel build/lfos.bin -serial stdio -drive file=build/hdd.img,if=ide
 
 debug:
 	qemu-system-i386 -serial stdio -kernel build/lfos.bin -s -S &

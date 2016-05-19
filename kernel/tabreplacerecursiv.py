@@ -30,6 +30,9 @@ def searchfiles(i):
 	
 	if "tabreplacerecursiv.py" in allfiles:
 		allfiles.remove("tabreplacerecursiv.py")
+	if "Makefile" in allfiles:
+		allfiles.remove("Makefile")
+
 
 	print(allfiles)
 

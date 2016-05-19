@@ -25,20 +25,20 @@ extern uint8_t rtc_hour;
 /* Returns 0 if not currently updating */
 static inline uint8_t read_update_flag()
 {
-	return cmos_read_register(0x0A) & 0x80;
+    return cmos_read_register(0x0A) & 0x80;
 }
 
 /* Refreshes the gloabl variables */
 void rtc_refresh()
 {
-	rtc_second = cmos_read_register(reg_sec);
-	rtc_minute = cmos_read_register(reg_min);
-	rtc_hour   = cmos_read_register(reg_hor);
-		
-	while(read_update_flag())
-	{
-		rtc_second = cmos_read_register(reg_sec);
-		rtc_minute = cmos_read_register(reg_min);
-		rtc_hour   = cmos_read_register(reg_hor);
-	}
+    rtc_second = cmos_read_register(reg_sec);
+    rtc_minute = cmos_read_register(reg_min);
+    rtc_hour   = cmos_read_register(reg_hor);
+        
+    while(read_update_flag())
+    {
+        rtc_second = cmos_read_register(reg_sec);
+        rtc_minute = cmos_read_register(reg_min);
+        rtc_hour   = cmos_read_register(reg_hor);
+    }
 }

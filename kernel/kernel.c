@@ -62,7 +62,7 @@ void print_copyright();
 
 /* Kernel entry point, called from boot/bootloader.asm */
 void kmain(void) {
-	
+    
     clear();
     vga_disable_cursor();
     vga_set_position(0, 0);
@@ -70,7 +70,7 @@ void kmain(void) {
     print_raw("[OK] Detected ");
     print_raw(cpu_getVendor());
     printf(" processor");
-	
+    
     printf("[..] Loading GDT");
     load_gdt();
     printf("[OK] GDT loaded");
@@ -125,42 +125,42 @@ void kmain(void) {
     print_help();
     while (1) {
 
-	kbd_flush_buffer();
-	char resp = kbd_pull_char();
+    kbd_flush_buffer();
+    char resp = kbd_pull_char();
     char line[4] = "> ";
     line[2] = resp;
     line[3] = 0;
-	printf(line);
+    printf(line);
 
-	if (resp == 'R') {
-	    printf("[..] Rebooting");
-	    cpu_reset();
-	    printw("COULD NOT RESET CPU");
-	} else if (resp == 'H') {
+    if (resp == 'R') {
+        printf("[..] Rebooting");
+        cpu_reset();
+        printw("COULD NOT RESET CPU");
+    } else if (resp == 'H') {
             printw("[!!] Halting CPU");
-	    cpu_halt();
-	    printw("COULD NOT HALT CPU");
-	} else if (resp == 'C') {
-	    clear();
-	} else if (resp == 'S') {
-	    kshell_main();
-	} else if (resp == 'A') {
-	    ata_init();
-	    printf("ATA: Initialized");
-	} else if (resp == 'F') {
-	    ufs_init();
-	    ufs_format(0);
-	    uint16_t* data = (uint16_t*)malloc(216 * sizeof(uint16_t));
-	    for (int i=0; i <= 216; i++) {data[i] = 1;}
+        cpu_halt();
+        printw("COULD NOT HALT CPU");
+    } else if (resp == 'C') {
+        clear();
+    } else if (resp == 'S') {
+        kshell_main();
+    } else if (resp == 'A') {
+        ata_init();
+        printf("ATA: Initialized");
+    } else if (resp == 'F') {
+        ufs_init();
+        ufs_format(0);
+        uint16_t* data = (uint16_t*)malloc(216 * sizeof(uint16_t));
+        for (int i=0; i <= 216; i++) {data[i] = 1;}
 
-	    writeb("test.txt", data);
-	    const uint16_t* op = readb("test.txt");
-	    for (int i=0; i <= 216; i++) {print_raw((char*)stringFromInt(op[i]));}
-	} else if (resp == '-') {
-	    print_help();
-	} else if (resp == 'G') {
-		print_copyright();
-	}
+        writeb("test.txt", data);
+        const uint16_t* op = readb("test.txt");
+        for (int i=0; i <= 216; i++) {print_raw((char*)stringFromInt(op[i]));}
+    } else if (resp == '-') {
+        print_help();
+    } else if (resp == 'G') {
+        print_copyright();
+    }
     }
 }
 
@@ -223,7 +223,7 @@ void print_help() {
     printf(">>>> 'A': Enable the ATA subsystem");
     printf(">>>> 'F': Automated test of uFS");
     printf(">>>> '=': Show this help");
-	printf(">>>> 'G': Show the GPLv3 license notice");
+    printf(">>>> 'G': Show the GPLv3 license notice");
 }
 
 void print_copyright() {

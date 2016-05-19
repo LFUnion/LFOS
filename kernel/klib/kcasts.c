@@ -27,11 +27,11 @@ int hexToInt(uint8_t input) {
  * @return The string
  */
 const char * stringFromInt(int input) {
-	
-	if (input==0){
-			return "0";
-	}
-	
+    
+    if (input==0){
+            return "0";
+    }
+    
     int input_bak = input;
     int input_l = 0;
     while(input){
@@ -44,8 +44,8 @@ const char * stringFromInt(int input) {
     int i = 0;
     while(input){
         tmp[i] = charFromDigit(input % 10);
-	i++;
-       	input /= 10;
+    i++;
+           input /= 10;
     }
     
     // Simple array reversing
@@ -54,9 +54,9 @@ const char * stringFromInt(int input) {
     ret = (char*)malloc(input_l * sizeof(char));
     
     for (int l = input_l-1; l > -1; l--) {
-	ret[i] = tmp[l];
+    ret[i] = tmp[l];
 
-	i++;
+    i++;
     }
     
     return ret;

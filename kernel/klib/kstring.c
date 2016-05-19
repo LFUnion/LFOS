@@ -97,7 +97,7 @@ char* strhigh (const char* su) {
     for (int i =0; i < length; ++i) {
         c = su[i];
         if ( c>96 && c<123) {
-            returnstring[i] = c-32;	
+            returnstring[i] = c-32;    
         } else {
             returnstring[i] = c;
         }
@@ -112,7 +112,7 @@ void strlowc (char* sl) {
     for (int i =0; i < length; ++i){
         c = sl[i];
         if ( c>64 && c<91){
-            sl[i] = c+32;	
+            sl[i] = c+32;    
         }
     }
 }
@@ -124,7 +124,7 @@ void strhighc (char* su){
     for (int i =0; i < length; ++i){
         c = su[i];
         if ( c>96 && c<123){
-            su[i] = c-32;	
+            su[i] = c-32;    
         }
     }
 }

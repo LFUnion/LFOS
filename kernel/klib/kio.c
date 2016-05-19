@@ -52,22 +52,22 @@ char * scanf() {
     vga_enable_cursor();
 
     do {
-	vga_update_cursor();
-	kbd_flush_buffer();
-	inp = kbd_pull_char();
-	
-	if (inp != 0) {
+    vga_update_cursor();
+    kbd_flush_buffer();
+    inp = kbd_pull_char();
+    
+    if (inp != 0) {
             if (inp != '\b') {
-	        char* str = (char*)malloc(2*sizeof(char));
+            char* str = (char*)malloc(2*sizeof(char));
                 str[0] = inp;
                 str[1] = '\0';
                 kprint_raw(str);
                 free(str);
-	        if (inp != '\n') {
-	            tmp[i] = inp;
-	        }
+            if (inp != '\n') {
+                tmp[i] = inp;
+            }
 
-	        i++;
+            i++;
             } else {
 
                 if (i > 0) {
@@ -82,7 +82,7 @@ char * scanf() {
                     vga_set_position(new_pos / 80, new_pos % 80);
                 }
             }
-	}
+    }
     } while (inp != '\n');
     tmp[i-1] = '\0';
 
