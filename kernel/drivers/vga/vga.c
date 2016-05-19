@@ -28,128 +28,128 @@ int cursor_enabled = 1;
 
 // Prints a char (grey)
 void kprintc(uint8_t chr, uint8_t clr, uint8_t x, uint8_t y) {
-    uint16_t* offset = (uint16_t*)0xB8000;
-    offset += y * 80 + x;
-    *offset = ((uint16_t)clr) << 8 | chr;
+	uint16_t* offset = (uint16_t*)0xB8000;
+	offset += y * 80 + x;
+	*offset = ((uint16_t)clr) << 8 | chr;
 }
 
 // Prints a char (yellow)
 void kprintci(uint8_t chr, uint8_t clr, uint8_t x, uint8_t y) {
-    uint16_t* offset = (uint16_t*)0xB8000;
-    offset += y * 80 + x;
-    *offset = ((uint16_t)clr) << 9 | chr;
+	uint16_t* offset = (uint16_t*)0xB8000;
+	offset += y * 80 + x;
+	*offset = ((uint16_t)clr) << 9 | chr;
 }
 
 // Prints raw text
 void kprint_raw(const char text[]) {
-    int i;
+	int i;
 
-    for(i = 0; text[i] != '\0'; i++) {
+	for(i = 0; text[i] != '\0'; i++) {
 
 	if(column >= 80) {
-	    row++;
-        column = 0;
-    if(row > TERM_ROWS) {
-            scroll();
-        }
+		row++;
+		column = 0;
+	if(row > TERM_ROWS) {
+			scroll();
+		}
 	}
 
-        if(text[i] == '\n') {
-            row++;
-            column = 0;
-            if(row > TERM_ROWS) {
-                scroll();
+		if(text[i] == '\n') {
+			row++;
+			column = 0;
+			if(row > TERM_ROWS) {
+				scroll();
 
 
-            }
-        } else {
-            kprintc(text[i], 0x07, column, row);
-            column++;
-        }
-    }
+			}
+		} else {
+			kprintc(text[i], 0x07, column, row);
+			column++;
+		}
+	}
 }
 
 // Prints a log message to the terminal
 void klog(const char text[]) {
-    int i;
+	int i;
 
-    for(i = 0; text[i] != '\0'; i++) {
+	for(i = 0; text[i] != '\0'; i++) {
 
 	if(column >= 80) {
-	    row++;
-            column = 0;
-            if(row > TERM_ROWS) {
-                row = 0;
-            }
+		row++;
+			column = 0;
+			if(row > TERM_ROWS) {
+				row = 0;
+			}
 	}
 
-        if(text[i] == '\n') {
-            row++;
-            column = 0;
-            if(row > TERM_ROWS) {
-                row = 0;
-            }
-        } else {
-            kprintc(text[i], 0x07, column, row);
-            column++;
-        }
-    }
+		if(text[i] == '\n') {
+			row++;
+			column = 0;
+			if(row > TERM_ROWS) {
+				row = 0;
+			}
+		} else {
+			kprintc(text[i], 0x07, column, row);
+			column++;
+		}
+	}
 
-    row++;
-    column = 0;
+	row++;
+	column = 0;
 
-    if(row > TERM_ROWS) {
-        scroll();
-    }
+	if(row > TERM_ROWS) {
+		scroll();
+	}
 }
 
 // Prints a highlighted message to the terminal
 void klogi(const char text[]) {
-    int i;
+	int i;
 
-    for(i = 0; text[i] != '\0'; i++) {
-        if(text[i] == '\n') {
-            row++;
-            column = 0;
-            if(row > TERM_ROWS) {
-                row = 0;
-            }
-        } else {
-            kprintci(text[i], 0x07, column, row);
-            column++;
-        }
-    }
-    column = 0;
-    row++;
+	for(i = 0; text[i] != '\0'; i++) {
+		if(text[i] == '\n') {
+			row++;
+			column = 0;
+			if(row > TERM_ROWS) {
+				row = 0;
+			}
+		} else {
+			kprintci(text[i], 0x07, column, row);
+			column++;
+		}
+	}
+	column = 0;
+	row++;
 
-    if(row > TERM_ROWS) {
-        scroll();
-    }
+	if(row > TERM_ROWS) {
+		scroll();
+	}
 }
 
 // Clears out the terminal
 void kclear() {
-    for(int i = 0; i < 25; i++) {
-        klog("                                                                                ");
-    }
-    row = 0;
+	for(int i = 0; i < 25; i++) {
+		klog("																				");
+	}
+	row = 0;
 }
 
 // Scrolls one line down
 void scroll() {
-    for (int i = 0; i < TERM_ROWS * 80; i++) {
-            uint16_t* base = (uint16_t*)0xB8000;
-            base += i;
-            uint16_t* nchar = base + 80;
-            *base = *nchar;
-        }
+	for (int i = 0; i < TERM_ROWS * 80; i++) {
+			uint16_t* base = (uint16_t*)0xB8000;
+			base += i;
+			uint16_t* nchar = base + 80;
+			*base = *nchar;
+		}
 
-        for (int i = 0
-             ; i < 80; i++) {
-            kprintc(' ', 0x07, i, 24);
-        }
+		for (int i = 0
+			 ; i < 80; i++) {
+			kprintc(' ', 0x07, i, 24);
+		}
 
-        row = 24;
+		row = 24;
 }
 
 // Returns the row
