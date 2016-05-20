@@ -18,6 +18,9 @@ dbochs:
 mkiso:
 	cd iso; make
 
+menuconfig:
+	python3 tools/menuconfig.py
+
 clean:
 	cd kernel; make clean
 	cd iso; make clean
