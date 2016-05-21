@@ -16,7 +16,7 @@ def get_config():
     elif chosen == "Watermark memory manager":
          option = "#define MM_WATERMARK"
 
-    return ["option", option]
+    return ["option", {"mmtype":option}]
 
 def get_defaults():
     return ["option", {"mmtype":"#define MM_SEGMENTATION"}]
