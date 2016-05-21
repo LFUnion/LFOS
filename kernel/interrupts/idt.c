@@ -10,7 +10,7 @@ idt_entry_t idt_entrys[NUM_OF_IDT_ENTRYS];
 void add_idt_gate(int i, uint32_t base_addr, uint32_t selector, uint16_t flags)
 {
     idt_entrys[i].base_low = base_addr & 0xFFFF;
-    idt_entrys[i].base_low = (base_addr >> 16) & 0xFFFF;
+    idt_entrys[i].base_high = (base_addr >> 16) & 0xFFFF;
 
     idt_entrys[i].selector = selector;
     idt_entrys[i].zero     = 0;
