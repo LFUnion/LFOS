@@ -8,10 +8,8 @@ def get_config():
     global dialog
     (exitcode, chosen) = dialog.radiolist("Choose a memory manager", choices=choices)
 
-    option = ""
-    if exitcode != "ok":
-         option = ""
-    elif chosen == "Segmenting memory manager":
+    option = "#define MM_SEGMENTATION"
+    if chosen == "Segmenting memory manager":
          option = "#define MM_SEGMENTATION"
     elif chosen == "Watermark memory manager":
          option = "#define MM_WATERMARK"
