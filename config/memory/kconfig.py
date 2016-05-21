@@ -14,3 +14,6 @@ def get_config():
          file = "./config/memory/mmtype.py"
 
     return ["menu", file]
+
+def get_defaults():
+    return ["menu", ["./config/memory/mmtype.py"]]

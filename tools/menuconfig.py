@@ -1,34 +1,53 @@
 import os
 import os.path
 
-def configure():
+
+def read_config(filename, function):
+    with open(filename, "r") as file:
+        try:
+            exec(file.read())
+            values = eval(function)
+            return values
+        except:
+            dialog.msgbox("Broken config file: " + files[-1])
+            os.system("clear")
+            exit(-1)
+
+
+def fill_options(file):
+    options = {}
+    values = read_config(file, "get_defaults()")
+
+    if values[0] == "menu":
+        for filename in values[1]:
+            options.update(fill_options(filename))
+    else:
+        options.update(values[1])
+
+    return options
+
+
+def configure(options):
     files = ["./config/kconfig.py"]
-    options = []
 
     while True:
         if len(files) < 1:
             break
 
-        with open(files[-1], "r") as file:
-            try:
-                exec(file.read())
-                values = eval("get_config()")
-            except:
-                dialog.msgbox("Broken config file: " + files[-1])
-                os.system("clear")
-                exit(-1)
+        values = read_config(files[-1], "get_config()")
 
-            if values[0] == "menu":
-                if values[1] == "back":
-                    files.remove(files[-1])
-                    continue
-
-                files.append(values[1])
-            else:
-                options.append(values[1])
+        if values[0] == "menu":
+            if values[1] == "back":
                 files.remove(files[-1])
+                continue
+
+            files.append(values[1])
+        else:
+            options.update(values[1])
+            files.remove(files[-1])
 
     return options
+
 
 def mainloop():
     try:
@@ -63,10 +82,11 @@ def mainloop():
             exit(0)
 
         if choice == "Configure":
-            options = configure()
+            defaults = fill_options("./config/kconfig.py")
+            options = configure(defaults)
 
             configfile_content = "// Generated configuration file\n#ifndef LFOS_CONFIG_H\n#define LFOS_CONFIG_H\n\n"
-            for option in options:
+            for option in options.values():
                 configfile_content += option + "\n"
             configfile_content += "\n#endif /* LFOS_CONFIG_H */\n"
 

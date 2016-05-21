@@ -14,3 +14,6 @@ def get_config():
          file = "./config/memory/kconfig.py"
 
     return ["menu", file]
+
+def get_defaults():
+    return ["menu", ["./config/memory/kconfig.py"]]

@@ -17,3 +17,6 @@ def get_config():
          option = "#define MM_WATERMARK"
 
     return ["option", option]
+
+def get_defaults():
+    return ["option", {"mmtype":"#define MM_SEGMENTATION"}]
