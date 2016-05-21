@@ -116,7 +116,7 @@ void kmain(void) {
     print_raw(" at ");
     printf(__TIME__);
     printf("");
-    
+
     printw("[##] Press any key to continue");
     kbd_flush_buffer();
     kbd_pull_key();

@@ -7,10 +7,6 @@
 
 void c_handler (registers_t r) {
     clear();
-    printw("KERNEL PANIC");
-    printw("Exception:");
-    print_raw((char*)stringFromInt((int)r.int_no));
-    printw("Halting");
-    cpu_halt();
+    abort("Unhandled exception");
     return;
 }
