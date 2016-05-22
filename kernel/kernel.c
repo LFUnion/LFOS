@@ -28,6 +28,7 @@
 
 /* Misc */
 #include "exceptionhandler.h"
+#include "pic.h"
 
 #include "stdint.h"
 
@@ -78,6 +79,10 @@ void kmain(void) {
     printf("[..] Loading IDT");
     init_idt();
     printf("[OK] IDT loaded");
+    
+    printf("[..] Initializing PIC");
+    pic_init();
+    printf("[OK] PIC initialized");
 
     printf("[..] Initializing keyboard");
     if(kbd_detect() == 1 && kbd_init() == 1) {

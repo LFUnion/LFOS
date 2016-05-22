@@ -26,6 +26,8 @@ build:
 	$(GCC) -c interrupts/idt.c -o build/idt.o $(GCC_INCLUDES) $(GCC_FLAGS)
 	echo "Compiling C common exception handler"
 	$(GCC) -c interrupts/exceptionhandler.c -o build/exceptionhandler.o $(GCC_INCLUDES) $(GCC_FLAGS)
+	echo "Compiling PIC"
+	$(GCC) -c interrupts/pic.c -o build/pic.o $(GCC_INCLUDES) $(GCC_FLAGS)
 	echo "Compiling watermark memory manager"
 	$(GCC) -c memory/mm_watermark.c -o build/mm_watermark.o $(GCC_INCLUDES) $(GCC_FLAGS)
 	echo "Compiling segmentation memory manager"
@@ -82,7 +84,7 @@ build:
 	$(GCC) -c kernel.c -o build/kernel.o $(GCC_INCLUDES) $(GCC_FLAGS)
 	echo "Linking ..."
 	
-	$(GCC) -T linker.ld -o build/lfos.bin -ffreestanding -O2 -nostdlib -Wall build/bootloader.o build/kernel.o build/drivers/vga.o build/drivers/ata.o build/drivers/serial.o build/drivers/keyboard.o build/drivers/beeper.o build/drivers/rtc.o build/drivers/cmos.o build/klib/kio.o build/klib/kcom.o build/klib/kfs.o build/klib/kcasts.o build/klib/kstring.o build/klib/kmem.o build/klib/ktime.o build/kshell/kshell.o build/ufs.o build/mm_watermark.o build/mm_segmentation.o build/outb.o build/inb.o build/segments.o build/gdt.o build/idt.o build/exceptionhandler.o build/exceptions.o build/cpu.o build/process.o build/api.o build/driver_api.o build/inw.o build/outw.o -lgcc -Wl,-Map=build/memory.map
+	$(GCC) -T linker.ld -o build/lfos.bin -ffreestanding -O2 -nostdlib -Wall build/bootloader.o build/kernel.o build/drivers/vga.o build/drivers/ata.o build/drivers/serial.o build/drivers/keyboard.o build/drivers/beeper.o build/drivers/rtc.o build/drivers/cmos.o build/klib/kio.o build/klib/kcom.o build/klib/kfs.o build/klib/kcasts.o build/klib/kstring.o build/klib/kmem.o build/klib/ktime.o build/kshell/kshell.o build/ufs.o build/mm_watermark.o build/mm_segmentation.o build/outb.o build/inb.o build/segments.o build/gdt.o build/idt.o build/exceptionhandler.o build/pic.o build/exceptions.o build/cpu.o build/process.o build/api.o build/driver_api.o build/inw.o build/outw.o -lgcc -Wl,-Map=build/memory.map
 	
 	echo "Stripping debug symbols from kernel ..."
 	objcopy --only-keep-debug build/lfos.bin build/lfos.sym
