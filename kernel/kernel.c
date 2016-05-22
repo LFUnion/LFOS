@@ -210,6 +210,7 @@ void abort(char* msg) {
 
     print_raw("ESP: ");
     printf(stringFromInt(esp));
+    cpu_cli();
     cpu_halt();
 }
 
