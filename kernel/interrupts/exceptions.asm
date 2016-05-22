@@ -5,7 +5,7 @@
     exc%1:
         cli
         push byte 0
-        push byte 0
+        push byte %1
         jmp exc_handler
 %endmacro
 

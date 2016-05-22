@@ -23,6 +23,7 @@ void init_idt() {
     idt_ptr2.limit = sizeof(idt_entry_t) * 256 -1;
     idt_ptr2.base  = (uint32_t)&idt_entrys;
 
+    // Exceptions
     add_idt_gate(0, (uint32_t)exc0, 0x08, 0x8E);
     add_idt_gate(1, (uint32_t)exc1, 0x08, 0x8E);
     add_idt_gate(2, (uint32_t)exc2, 0x08, 0x8E);
@@ -55,6 +56,25 @@ void init_idt() {
     add_idt_gate(29, (uint32_t)exc29, 0x08, 0x8E);
     add_idt_gate(30, (uint32_t)exc30, 0x08, 0x8E);
     add_idt_gate(31, (uint32_t)exc31, 0x08, 0x8E);
-
+    
+    // IRQs
+    add_idt_gate(32, (uint32_t)irq0 , 0x08, 0x8E);
+    add_idt_gate(33, (uint32_t)irq1 , 0x08, 0x8E);
+    add_idt_gate(34, (uint32_t)irq2 , 0x08, 0x8E);
+    add_idt_gate(35, (uint32_t)irq3 , 0x08, 0x8E);
+    add_idt_gate(36, (uint32_t)irq4 , 0x08, 0x8E);
+    add_idt_gate(37, (uint32_t)irq5 , 0x08, 0x8E);
+    add_idt_gate(38, (uint32_t)irq6 , 0x08, 0x8E);
+    add_idt_gate(39, (uint32_t)irq7 , 0x08, 0x8E);
+    add_idt_gate(40, (uint32_t)irq8 , 0x08, 0x8E);
+    add_idt_gate(41, (uint32_t)irq9 , 0x08, 0x8E);
+    add_idt_gate(42, (uint32_t)irq10, 0x08, 0x8E);
+    add_idt_gate(43, (uint32_t)irq11, 0x08, 0x8E);
+    add_idt_gate(44, (uint32_t)irq12, 0x08, 0x8E);
+    add_idt_gate(45, (uint32_t)irq13, 0x08, 0x8E);
+    add_idt_gate(46, (uint32_t)irq14, 0x08, 0x8E);
+    add_idt_gate(47, (uint32_t)irq15, 0x08, 0x8E);
+    
+    
     flush_idt((uint32_t)&idt_ptr2);
 }

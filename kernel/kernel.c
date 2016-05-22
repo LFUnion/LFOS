@@ -82,10 +82,9 @@ void kmain(void) {
     
     printf("[..] Initializing PIC");
     pic_init();
-    pic_mask(0, 0b11111111);
     cpu_sti();
     printf("[OK] PIC initialized");
-
+    
     printf("[..] Initializing keyboard");
     if(kbd_detect() == 1 && kbd_init() == 1) {
         printf("[OK] Keyboard initialized");
