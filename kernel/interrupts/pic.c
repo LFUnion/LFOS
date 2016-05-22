@@ -1,6 +1,5 @@
 #include "pic.h"
 
-#include "stdint.h"
 #include "portio.h"
 
 #define PIC_MASTER_CMD  0x20
@@ -31,4 +30,18 @@ void pic_init() {
     
     outb(PIC_MASTER_DATA, imr_master); // Restore
     outb(PIC_SLAVE_DATA, imr_slave);   //  Interrupt Mask Register
+}
+
+void pic_mask(int pic, uint8_t mask) {
+    
+    if (pic == 0)
+        outb(PIC_MASTER_DATA, mask);
+    else
+        outb(PIC_SLAVE_DATA, mask);
+}
+
+void pic_eoi(int irq) {
+    outb(PIC_MASTER_CMD, 0x20);
+    if (irq > 7)
+        outb(PIC_SLAVE_CMD, 0x20);
 }
