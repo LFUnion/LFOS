@@ -20,14 +20,19 @@ void kshell_main(void) {
     
     username =  "USER";
     hostname = "LOCALHOST";
-
+    
+    //char* inp = (char*) malloc(100 * sizeof(char));
+    
     while (loop) {
     print_raw(username);
     print_raw("@");
     print_raw(hostname);
     print_raw(" > ");
     
-    char* inp = scanf();
+    char* inp = (char*) malloc(100 * sizeof(char));
+    scanf_new_prot(inp, 100 * sizeof(char));
+    
+    //printf(stringFromInt(inp));
     strhighc(inp);
     if (strcmp(inp, "HELP")) {
         printf("");

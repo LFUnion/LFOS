@@ -44,6 +44,8 @@ void printf(const char text[], ...) {
  * This function pulls chars from the keyboard until enter is pressed
  * @return The pulled chars
  */
+
+// bug 
 char * scanf() {
     char* tmp = (char*)malloc(150 * sizeof(char));
     char inp = ' ';
@@ -97,6 +99,61 @@ char * scanf() {
     free(tmp);
     return ret;
 }
+
+
+void scanf_new_prot(char * content, uint16_t size) {
+	
+    char inp = ' ';
+    int i = 0;
+
+    vga_enable_cursor();
+
+    do {
+    vga_update_cursor();
+    kbd_flush_buffer();
+    inp = kbd_pull_char();
+    
+    if (inp != 0) {
+		    if (i>size){
+                printf("Buffer: Overflow");
+                goto tolong;
+		    }
+            if (inp != '\b') {
+                char* str = (char*)malloc(2*sizeof(char));
+                str[0] = inp;
+                str[1] = '\0';
+                kprint_raw(str);
+                free(str);
+            if (inp != '\n') {
+                content[i] = inp;
+            }
+
+            ++i;
+            } 
+            else {
+
+                if (i > 0) {
+                    --i;
+                    content[i] = 0;
+
+                    int new_pos = (vga_get_row() * 80 + vga_get_column()) - 1;
+                    vga_set_position(new_pos / 80, new_pos % 80);
+                    print_raw(" ");
+                    vga_set_position(new_pos / 80, new_pos % 80);
+                }
+            }
+    }
+    } while (inp != '\n');
+    
+    content[i-1] = '\0';
+
+    vga_disable_cursor();
+    
+
+    tolong:
+        ;
+}
+
 
 /*!
  * \brief Print warning
