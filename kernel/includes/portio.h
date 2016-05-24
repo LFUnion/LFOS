@@ -14,6 +14,9 @@
 #include "inw.h"
 #include "outw.h"
 
+#include "indw.h"
+#include "outdw.h"
+
 
 #endif /* PORTIO_H */
 
