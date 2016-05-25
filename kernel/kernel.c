@@ -147,7 +147,8 @@ void kmain(void) {
         cpu_reset();
         printw("COULD NOT RESET CPU");
     } else if (resp == 'H') {
-            printw("[!!] Halting CPU");
+        printw("[!!] Halting CPU");
+        cpu_cli();
         cpu_halt();
         printw("COULD NOT HALT CPU");
     } else if (resp == 'C') {
