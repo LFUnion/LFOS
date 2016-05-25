@@ -19,6 +19,7 @@
 #include "keyboard.h"
 #include "rtc.h"
 #include "serial.h"
+#include "pit.h"
 #include "beeper.h"
 #include "ata.h"
 
@@ -87,6 +88,7 @@ void kmain(void) {
     
     printf("[..] Initializing PIC");
     pic_init();
+    pit_init(1000, 0);
     cpu_sti();
     printf("[OK] PIC initialized");
 
