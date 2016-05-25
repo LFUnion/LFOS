@@ -90,6 +90,10 @@ void kmain(void) {
     cpu_sti();
     printf("[OK] PIC initialized");
 
+    printf("[..] Checking PCI");
+    scan_pci();
+    print_raw("[OK] PCI checked --> Number of PCI devices: ");
+    printf(stringFromInt(get_number_pci()));
     
     printf("[..] Initializing keyboard");
     if(kbd_detect() == 1 && kbd_init() == 1) {
@@ -101,11 +105,6 @@ void kmain(void) {
     printf("[..] Refreshing system time");
     rtc_refresh();
     printf("[OK] Time set");
-
-    printf("[..] Check PCI");
-    scan_pci();
-    print_raw("[OK] PCI checked --> Number of PCI devices: ");
-	printf(stringFromInt(get_number_pci()));
 
     printf("[..] Initializing serial COM1");
     serial_init();

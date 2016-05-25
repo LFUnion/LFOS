@@ -1,4 +1,3 @@
-
 /*
 LFOS, a simple operating system.
 Copyright (C) 2016 LFUnion.
@@ -27,31 +26,29 @@ struct pci_header pci_array[20];
 uint8_t count_pci_device = 0;
 
 void scan_pci(){
-    uint16_t bus;
     uint8_t device, funccounter;
-    bus = 0;
     device = 0;
     
-    // brut force
+    // Brute force
     
-    for (bus; bus<0x100; ++bus){
+    for (uint16_t bus = 0; bus<0x100; ++bus){
         
         for (device=0; device<0x20; ++device){
-		    uint32_t funcnumber= pci_check(bus,device);
-		    for (funccounter = 0; funccounter<funcnumber; ++funccounter){
-			    pci_test(bus,device,funccounter);
-		    }
+            uint32_t funcnumber= pci_check(bus,device);
+            for (funccounter = 0; funccounter<funcnumber; ++funccounter){
+                pci_test(bus,device,funccounter);
+            }
         }
     }
     
 }
 
-inline uint32_t pci_check(uint8_t bus, uint8_t device){
+uint32_t pci_check(uint8_t bus, uint8_t device){
     uint32_t deviceAndVendorID = (bus << 16 | device <<11);
     uint8_t typofheader = in_pci_8(deviceAndVendorID, HEADERREGISTER);
     
     if (typofheader == ISMULTIFUNC){
-		return 1;
+        return 1;
     }
     
     else{
@@ -61,12 +58,11 @@ inline uint32_t pci_check(uint8_t bus, uint8_t device){
 }
 
 
-// functions for global use
+// Functions for global use
 
-uint8_t pci_test(bus, device, functions){
-	
+uint8_t pci_test(uint8_t bus, uint8_t device, uint8_t functions){
+    
     if (!(count_pci_device<maxnumberofpcidevices)){
-        //goto pci_test_label
         return 1;
         
     }
@@ -74,7 +70,6 @@ uint8_t pci_test(bus, device, functions){
     uint32_t deviceAndVendorID = (bus<<16 | device<<11 | functions<<8);
     struct pci_header data;
     if (in_pci_16(deviceAndVendorID, VENDORIDREGISTER) == 0xFFFF){
-        //goto pci_test_label
         return 1;
         
     }
@@ -91,12 +86,9 @@ uint8_t pci_test(bus, device, functions){
     ++count_pci_device;
     
     return 0;
-    //pci_test_label:
     
 }
 
 int8_t get_number_pci(){
-    
     return count_pci_device;
-    
 }

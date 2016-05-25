@@ -20,35 +20,28 @@
 #define HEADERREGISTER 0x0E
 #define BISTREGISTER 0x0F
 
-
 #define ISMULTIFUNC 0x80
 
 
-
-
-
-//Unions and Structur
+// Unions and Structures
 
 struct pci_header{
-	uint32_t PciID;
+    uint32_t PciID;
     uint16_t VendorID;
     uint16_t DeviceID;
-	uint8_t classcode;
-	uint8_t subclass;
-	uint8_t progif;
+    uint8_t classcode;
+    uint8_t subclass;
+    uint8_t progif;
 };
 
-//functions
-
+// Functions
 void scan_pci();
+uint32_t pci_check(uint8_t bus, uint8_t device);
 
-inline uint32_t pci_check(uint8_t bus, uint8_t device);
+// Functions for global use
+uint8_t pci_test(uint8_t bus, uint8_t device, uint8_t functions);
 
-// functions for global use
-
-uint8_t pci_test(bus, device, functions);
-
-// not inline else (linking error)
+// Do not declare inline else (linking error if you do so)
 int8_t get_number_pci();
 
 #endif 
