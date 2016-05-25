@@ -114,25 +114,19 @@ void kmain(void) {
     send(0x47); // G
     printf("[OK] COM1 ready");
 
-    //printf("");
-    printf("-- TIME HEADER START --");
-    //printd(get_second());
-    printd(get_minute());
-    printd(get_hour());
-    printf("--  TIME HEADER END  --");
-
     printf("");
     printw("Welcome to LFOS!");
     printw("Copyright (C) 2015-2016  LFUnion");
-    //printf("");
+    
+    printf("");
     print_raw("You are using LFOS ");
     print_raw(LFOS_VERSION);
     print_raw(", compiled ");
     print_raw(__DATE__);
     print_raw(" at ");
     printf(__TIME__);
-    //printf("");
 
+    printf("");
     printw("[##] Press any key to continue");
     kbd_flush_buffer();
     kbd_pull_key();
