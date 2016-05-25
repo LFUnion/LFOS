@@ -74,7 +74,8 @@ void kmain(void) {
 
     print_raw("[OK] Detected ");
     print_raw(cpu_getVendor());
-    printf(" processor");
+    print_raw(" processor --> Number of Cores: ");
+    printf(stringFromInt(get_number_of_cores()));
     
     printf("[..] Loading GDT");
     load_gdt();
@@ -114,9 +115,9 @@ void kmain(void) {
     send(0x47); // G
     printf("[OK] COM1 ready");
 
-    printf("");
+    //printf("");
     printf("-- TIME HEADER START --");
-    printd(get_second());
+    //printd(get_second());
     printd(get_minute());
     printd(get_hour());
     printf("--  TIME HEADER END  --");
@@ -124,14 +125,14 @@ void kmain(void) {
     printf("");
     printw("Welcome to LFOS!");
     printw("Copyright (C) 2015-2016  LFUnion");
-    printf("");
+    //printf("");
     print_raw("You are using LFOS ");
     print_raw(LFOS_VERSION);
     print_raw(", compiled ");
     print_raw(__DATE__);
     print_raw(" at ");
     printf(__TIME__);
-    printf("");
+    //printf("");
 
     printw("[##] Press any key to continue");
     kbd_flush_buffer();

@@ -99,3 +99,16 @@ char* cpu_getVendor() {
     
     return vendor;
 }
+
+uint8_t get_number_of_cores(){
+    uint32_t data;
+    asm volatile
+    ("cpuid" 
+     : "=a" (data)
+     : "a" (0x04), "c" (0));
+    
+    uint8_t cores = ((data>>26) & 0xFF);
+    ++cores;
+	
+    return cores;
+}
