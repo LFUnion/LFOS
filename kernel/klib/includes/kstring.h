@@ -13,6 +13,7 @@ void strhighc (char* su);
 
 int strlen(const char* string);
 int strcmp (const char* s1, const char* s2);
+char* strcat(char* dst, char* src);
 char* strlow (const char* sl);
 char* strhigh (const char* su);
 

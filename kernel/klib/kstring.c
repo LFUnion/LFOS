@@ -71,6 +71,19 @@ int strcmp (const char* s1, const char* s2) {
     }
 }
 
+char* strcat(char* dst, char* src) {
+    const int len = strlen(dst);
+    int i = len;
+    
+    do {
+        dst[i] = src[i-len];
+        i++;
+    } while (src[i-len] != '\0');
+    
+    dst[i] = '\0';
+    return dst;
+}
+
 char* strlow (const char* sl) {
     int length = strlen(sl);
 
