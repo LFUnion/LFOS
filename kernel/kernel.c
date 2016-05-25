@@ -117,7 +117,7 @@ void kmain(void) {
     printf("");
     printw("Welcome to LFOS!");
     printw("Copyright (C) 2015-2016  LFUnion");
-    
+
     printf("");
     print_raw("You are using LFOS ");
     print_raw(LFOS_VERSION);
