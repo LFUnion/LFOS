@@ -22,6 +22,10 @@
 #include "beeper.h"
 #include "ata.h"
 
+//PCI and PCI Drivers
+#include "pciio.h"
+#include "pci.h"
+
 /* Descriptor tables */
 #include "gdt.h"
 #include "idt.h"
@@ -84,6 +88,7 @@ void kmain(void) {
     pic_init();
     cpu_sti();
     printf("[OK] PIC initialized");
+
     
     printf("[..] Initializing keyboard");
     if(kbd_detect() == 1 && kbd_init() == 1) {
@@ -95,6 +100,11 @@ void kmain(void) {
     printf("[..] Refreshing system time");
     rtc_refresh();
     printf("[OK] Time set");
+
+    printf("[..] Check PCI");
+    scan_pci();
+    print_raw("[OK] PCI checked --> Number of PCI devices: ");
+	printf(stringFromInt(get_number_pci()));
 
     printf("[..] Initializing serial COM1");
     serial_init();
