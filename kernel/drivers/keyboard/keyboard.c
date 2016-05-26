@@ -1,7 +1,18 @@
 #include "keyboard.h"
+#include "driver_api.h"
+
+
+struct driver_data_keyboard{
+    struct driver_data datai;
+    union function_data pfunc[7];
+    
+};    
+
 
 // PS/2 controller port: 0x64
 // Keyboard port:      0x60
+
+
 
 uint8_t kbd_send(uint8_t command) {
     int resend = 1;
@@ -162,5 +173,39 @@ char kbd_pull_char() {
     } else {
     return (char)0;
     }
+
 }
 
+
+// Keyboard API
+
+const struct driver_data_keyboard key_api = 
+{
+    .datai.driver_number=KEYBOARD,
+    .datai.number_of_functions=7,
+    .datai.driver_priority=1,
+    .datai.driver_description="Keyboard Driver: -communication with keyboard\n-scan of input and interpretation",
+    .pfunc[0].func_8_8 = &kbd_send,
+    .pfunc[1].func_8 = &kbd_pull_key,
+    .pfunc[2].func_i = &kbd_reset,
+    .pfunc[3].func_i = &kbd_flush_buffer,
+    .pfunc[4].func_i = &kbd_init,
+    .pfunc[5].func_i = &kbd_detect,
+    .pfunc[6].func_c = &kbd_pull_char
+
+};
+
+void keyboard_send() {
+    print_raw("Number of functions: ");
+    printf(stringFromInt(key_api.datai.number_of_functions));
+    print_raw("Priority: ");
+    printf(stringFromInt(key_api.datai.driver_priority));
+    printf(key_api.datai.driver_description);
+}
+
+
+void keyboard_use(const int func){
+    ;
+    
+    
+}

@@ -245,14 +245,28 @@ const struct driver_data_ata ata_api =
     //.datai.driver_description=(char *)malloc(sizeof(char) *100),
     .datai.driver_description="ATA Driver: -communication with hard disk",
     .pfunc[0].func_8_8 = &ata_read_port,
-    .pfunc[1].func_v_8_8 = &ata_write_port
-    
+    .pfunc[1].func_v_8_8 = &ata_write_port,
+    .pfunc[2].func_8 = &ata_read_status_byte,
+    .pfunc[3].func_i_i = &ata_read_status,
+    .pfunc[4].func_v = &ata_disable_interrupts,
+    .pfunc[5].func_8_i = &ata_identify,
+    .pfunc[6].func_v = &ata_reset,
+    .pfunc[7].func_v_i = &ata_flush_cache,
+    .pfunc[8].func_v_i = &ata_select_drive,
+    .pfunc[9].func_v_8_i = &ata_send_command,
+    .pfunc[10].func_v = &ata_init,
+    .pfunc[11].func_16_i_32 = &ata_read_sector,
+    .pfunc[12].func_v_i_32_16p = &ata_write_sector,
+    .pfunc[13].func_16_i_32_i =ata_read_sectors,
+    .pfunc[14].func_v_i_32_i_16p = &ata_write_sectors
 };
+
 
 
 void ata_send() {
     print_raw("Number of functions: ");
     printf(stringFromInt(ata_api.datai.number_of_functions));
+    print_raw("Priority: ");
     printf(stringFromInt(ata_api.datai.driver_priority));
     printf(ata_api.datai.driver_description);
 }

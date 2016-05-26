@@ -3,6 +3,7 @@
 
 #include <stdint.h>
 #include "klib.h"
+#include "pci.h"
 
 #define ATA 0
 #define KEYBOARD 1
@@ -39,6 +40,7 @@ union function_data{
     void (*func_v_8)           (uint8_t);
     void (*func_v_8_8)         (uint8_t, uint8_t);
     void (*func_v_i)           (int);
+    void (*func_v_i_i)         (int, int);
     void (*func_v_8_i)         (uint8_t, int);
     void (*func_v_i_32_16p)    (int , uint32_t , uint16_t* );
     void (*func_v_i_32_i_16p)  (int , uint32_t , int , uint16_t* );
@@ -48,6 +50,10 @@ union function_data{
     // int functions
     int  (*func_i)             ();
     int  (*func_i_i)           (int);
+
+    // char functions
+    char  (*func_c)             ();
+
 
 };
 
@@ -75,6 +81,10 @@ void ata_use(const int func);
 void keyboard_use(const int func);
 void serial_use(const int func);
 void vga_use(const int func);
+
+struct pci_header* pci_api_data_return(uint8_t number);
+
+
 
 
 #endif 

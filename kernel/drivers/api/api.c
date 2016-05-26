@@ -1,5 +1,24 @@
 #include "api.h"
 
+const char const * pcidevicelist [0x11]={
+"VGA-Compatible Device", "Mass Storage Controller", "Network Controller", "Display Controller",
+
+"Multimedia Device", "Memory Controller", "Bridge Device", "Communications Device",
+
+"System Peripheral", "Input Controller", "Docking Station",
+
+"Co-Processor" , "USB", "Wireless Controller",
+
+"FIFO" , "TAVD Controller", "Encryption/Decryption ",
+
+"Data Acquisition/Signal Processing Controller "
+};
+
+
+const char const * pcidevicelistall [0x11][0x0A][0x05] = {
+
+};
+
 // A simple driver api
 
 void alldriver(){
@@ -29,9 +48,13 @@ void printdata(int input){
         ata_send();
         
     } else if (input == 1){
-
+        printf("KEYBOARD");
+        keyboard_send();
+     
     } else if (input == 2){
-
+        printf("VGA");
+        vga_send();
+     
     } else if (input == 3){
 
     }
@@ -45,8 +68,12 @@ void driverfunctions (int input){
         ata_use(0);
         
     } else if (input == 1){
+        printf("ATA");
+        keyboard_use(0);
     
     } else if (input == 2){
+        printf("ATA");
+        vga_use(0);
     
     } else if (input == 3){
         
@@ -55,6 +82,18 @@ void driverfunctions (int input){
 }
 
 
+void pci_device(){
+    uint8_t max = get_number_pci();
+    for(int c = 0; c<max; ++c){
+        struct pci_header* pci_c = pci_api_data_return(c);
+        readable_pci_device_names(max, max, max);
+    }    
+}
+
+inline void readable_pci_device_names(uint8_t classcode, int8_t subclass, int8_t progif){
+    print_raw("device functions: ");
+    printf(pcidevicelist[classcode]);
+}
 
 
 int apiloop() {
@@ -80,10 +119,10 @@ int apiloop() {
                 driverfunctions (0);
             }
             else if (strcmp(input, "KEYBOARD") || strcmp(input, "KEY")){
-            
+                driverfunctions (1);
             }
             else if (strcmp(input, "VGA")){
-            
+                driverfunctions (2);
             }
             else if (strcmp(input, "SERIAL")){
             
@@ -107,8 +146,12 @@ int apiloop() {
             } else{
                 printf("Not found");
             }
-            
-        } else if (strcmp(input, "EXIT")){
+        }    
+        else if (strcmp(input, "PCI")){
+            pci_device();
+        
+        }
+        else if (strcmp(input, "EXIT")){
             break;
         } else{
             printf("Wrong input");

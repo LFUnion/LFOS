@@ -19,6 +19,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #include "pciio.h"
 #include "pci.h"
 #include <stdint.h>
+#include "driver_api.h"
 
 
 const uint8_t maxnumberofpcidevices = 20;
@@ -91,4 +92,16 @@ uint8_t pci_test(uint8_t bus, uint8_t device, uint8_t functions){
 
 int8_t get_number_pci(){
     return count_pci_device;
+}
+
+
+// first available number is zero (0)
+
+struct pci_header* pci_api_data_return(uint8_t number){
+    
+    // struct pci_header* = pci_array + number;
+    struct pci_header* pci_he = &(pci_array[number]);
+    
+    return pci_he;
+    
 }

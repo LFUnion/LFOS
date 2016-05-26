@@ -1,6 +1,16 @@
 #include <stdint.h>
 #include "vga.h"
 #include "portio.h"
+#include "driver_api.h"
+
+//api_declaration
+struct driver_data_vga{
+    struct driver_data datai;
+    union function_data pfunc[14];
+    
+};    
+
+
 
 #define TERM_ROWS 24
 
@@ -199,3 +209,46 @@ void vga_disable_cursor() {
         cursor_enabled = 0;
     }
 }
+
+
+// API
+
+const struct driver_data_vga vga_api = 
+{
+    .datai.driver_number=VGA,
+    .datai.number_of_functions=15,
+    .datai.driver_priority=1,
+    .datai.driver_description="VGA Driver:\n-push data in the video graphics array of the nothbridge\n-enabled to manipulate the screen",
+    .pfunc[0].func_v_8_8_8_8 = &kprintc,
+    .pfunc[1].func_v_8_8_8_8 = &kprintci,
+    .pfunc[2].func_v_cp = &kprint_raw,
+    .pfunc[3].func_v_cp = &klog,
+    .pfunc[4].func_v_cp = &klogi,
+    .pfunc[5].func_v = &kclear,
+    .pfunc[6].func_v = &scroll,
+    .pfunc[7].func_i = &vga_get_row,
+    .pfunc[8].func_i = &vga_get_column,
+    .pfunc[9].func_v_i_i = &vga_set_position,
+    .pfunc[10].func_v = &vga_update_cursor,
+    .pfunc[11].func_v_i_i = &vga_set_cursor,
+    .pfunc[12].func_v = &vga_enable_cursor,
+    .pfunc[13].func_v = &vga_disable_cursor,
+};
+
+
+void vga_send() {
+    print_raw("Number of functions: ");
+    printf(stringFromInt(vga_api.datai.number_of_functions));
+    print_raw("Priority: ");
+    printf(stringFromInt(vga_api.datai.driver_priority));
+    printf(vga_api.datai.driver_description);
+}
+
+
+void vga_use(const int func) {
+    
+    
+    
+    
+}
+
