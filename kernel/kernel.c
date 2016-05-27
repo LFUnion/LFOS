@@ -89,7 +89,7 @@ void kmain(void) {
     
     printf("[..] Initializing PIC");
     pic_init();
-    pit_init(50, 0);
+    pit_init(500, 0);
     cpu_sti();
     printf("[OK] PIC initialized");
 
@@ -104,6 +104,7 @@ void kmain(void) {
     } else {
         printw("[!!] Could not initialize keyboard");
     }
+    kbd_flush_buffer();
 
     printf("[..] Refreshing system time");
     rtc_refresh();
@@ -122,7 +123,7 @@ void kmain(void) {
 }
 
 void kmain_task(void) {
-    //task_init((void*)idle);
+    task_init((void*)idle);
     
     printf("");
     printw("Welcome to LFOS!");
@@ -269,5 +270,6 @@ printf("along with this program.  If not, see <http://www.gnu.org/licenses/>.");
 void idle() {
     while (1) {
         //cpu_halt();
+        asm volatile("int $0x20");
     }
 }
