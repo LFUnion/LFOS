@@ -1,16 +1,16 @@
-#include "stdint.h"
+#include "irq.h"
 #include "klib.h"
 #include "pic.h"
-
-typedef struct {
-    uint32_t irq;
-    uint32_t edi, esi, ebp, esp, ebx, edx, ecx, eax;
-    uint32_t eip, cs, eflags, useresp, ss;
-} reg_state;
+#include "tasks.h"
 
 void irq_handler(reg_state regs) {
     /*print_raw((char*)itoa(regs.irq));
     print_raw(" ");*/
+    
+    if (regs.irq == 0) {
+        task_scheduler(&regs);
+    }
+    
     pic_eoi((int)regs.irq);
     return;
 }

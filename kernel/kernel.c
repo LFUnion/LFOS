@@ -34,6 +34,7 @@
 /* Misc */
 #include "exceptionhandler.h"
 #include "pic.h"
+#include "tasks.h"
 
 #include "stdint.h"
 
@@ -88,7 +89,7 @@ void kmain(void) {
     
     printf("[..] Initializing PIC");
     pic_init();
-    pit_init(1000, 0);
+    pit_init(50, 0);
     cpu_sti();
     printf("[OK] PIC initialized");
 
@@ -115,7 +116,12 @@ void kmain(void) {
     send(0x4E); // N
     send(0x47); // G
     printf("[OK] COM1 ready");
+    
+    task_init((void*)kmain_task);
+    while (1) {}
+}
 
+void kmain_task(void) {
     printf("");
     printw("Welcome to LFOS!");
     printw("Copyright (C) 2015-2016  LFUnion");
@@ -185,6 +191,7 @@ void kmain(void) {
  * @param msg The error message to be displayed
  */
 void abort(char* msg) {
+    cpu_cli();
     register int eax asm("eax");
     register int ebx asm("ebx");
     register int ecx asm("ecx");
@@ -217,7 +224,6 @@ void abort(char* msg) {
 
     print_raw("ESP: ");
     printf(stringFromInt(esp));
-    cpu_cli();
     cpu_halt();
 }
 

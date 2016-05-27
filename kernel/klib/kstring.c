@@ -8,16 +8,15 @@
 #include "kstring.h"
 #include "stddef.h"
 
-void* memcpy(void* str1_ptr, void* str2_ptr, size_t n) {
+void* memcpy(void* ptr1, void* ptr2, size_t n) {
 
-    unsigned char* str1 = (unsigned char*) str1_ptr;
-    unsigned char* str2 = (unsigned char*) str2_ptr;
-
-    for(unsigned int i=0; i < n; i++) {
-        str2[n] = str1[n];
+    for(unsigned int i = 0; i < n; i++) {
+        *(int*)ptr2 = *(int*)ptr1;
+        ptr1++;
+        ptr2++;
     }
 
-    return str2_ptr;
+    return ptr2;
 }
 
 void* memset(void* ptr, int value, size_t n) {
