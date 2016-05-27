@@ -122,6 +122,8 @@ void kmain(void) {
 }
 
 void kmain_task(void) {
+    //task_init((void*)idle);
+    
     printf("");
     printw("Welcome to LFOS!");
     printw("Copyright (C) 2015-2016  LFUnion");
@@ -262,4 +264,10 @@ printf("GNU General Public License for more details.");
 printf("");
 printf("You should have received a copy of the GNU General Public License");
 printf("along with this program.  If not, see <http://www.gnu.org/licenses/>.");
+}
+
+void idle() {
+    while (1) {
+        //cpu_halt();
+    }
 }

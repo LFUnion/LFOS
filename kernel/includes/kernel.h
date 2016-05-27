@@ -3,5 +3,6 @@
 
 void kmain_task(void);
 void abort(char* msg);
+void idle();
 
 #endif /* KERNEL_H */

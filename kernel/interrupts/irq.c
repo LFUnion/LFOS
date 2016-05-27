@@ -11,6 +11,8 @@ void irq_handler(reg_state regs) {
         task_scheduler(&regs);
     }
     
+    task_signal_irq(regs.irq);
+    
     pic_eoi((int)regs.irq);
     return;
 }
