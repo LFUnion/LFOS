@@ -1,7 +1,8 @@
 def get_config():
 
     choices = [
-        ("Memory Management", "Configure the memory manager")
+        ("Memory Management", "Configure the memory manager"),
+        ("Scheduler", "Configure the multitasking scheduler")
     ]
     
     global dialog
@@ -12,8 +13,10 @@ def get_config():
          file = "back"
     elif chosen == "Memory Management":
          file = "./config/memory/kconfig.py"
+    elif chosen == "Scheduler":
+         file = "./config/scheduler/kconfig.py"
 
     return ["menu", file]
 
 def get_defaults():
-    return ["menu", ["./config/memory/kconfig.py"]]
+    return ["menu", ["./config/memory/kconfig.py", "./config/scheduler/kconfig.py"]]

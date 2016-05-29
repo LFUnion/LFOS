@@ -73,6 +73,11 @@ void task_wait(int irq) {
     asm volatile("int $0x20");
 }
 
+void task_stop(uint32_t id) {
+    tasks[id]->enabled = 0;
+    asm volatile("int $0x20");
+}
+
 void task_signal_irq(int irq) {
     if (request_count == 0)
         return;

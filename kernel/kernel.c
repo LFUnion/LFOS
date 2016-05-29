@@ -89,7 +89,7 @@ void kmain(void) {
     
     printf("[..] Initializing PIC");
     pic_init();
-    pit_init(500, 0);
+    pit_init(PIT_FREQUENCY, 0);
     cpu_sti();
     printf("[OK] PIC initialized");
 
