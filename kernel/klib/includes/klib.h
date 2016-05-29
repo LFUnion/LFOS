@@ -32,5 +32,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #include "kcom.h"
 #include "kfs.h"
 #include "process.h"
+#include "kmath.h"
+
 
 #endif /* KLIB_H */

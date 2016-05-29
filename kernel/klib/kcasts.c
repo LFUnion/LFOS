@@ -8,6 +8,87 @@
 #include "kcasts.h"
 #include "klib.h"
 
+#define OFFSETNUMBERS 48
+
+/*
+ * casts a double or float in a string (character) list
+ *  
+ */
+ 
+char * stringFromDouble(const double input, int8_t after){
+
+	if(input == 0){
+	    return "0.0";
+    }
+    
+	if(after>15){
+        after = 15;
+    }
+    else if(after<1){
+        after = 1;
+    }
+    
+    char * rstr = malloc((sizeof(char))*(100 + after));
+    uint8_t write = 0;
+    const double input_abs = abs(input);
+    int64_t i = (int64_t) input_abs; 
+    double tail = input_abs - (double) i;
+    
+    if(input_abs != input){
+        rstr[write] = '-';
+        ++write;
+    }
+    
+    if(i == 0){
+        rstr[write] = OFFSETNUMBERS;
+        ++write;
+    }
+    
+    while (i!=0){
+        rstr[write] = OFFSETNUMBERS + (i%10);
+        i /= 10;
+        ++write;
+    }
+    
+    
+    rstr[write] = '.';
+    ++write;
+    
+    const uint8_t afterwrite = write + after;
+    
+    
+    for (write; write<afterwrite; ++write){
+        tail *= 10;
+        i = tail;
+        tail = tail - i;
+        rstr[write] = OFFSETNUMBERS + i;
+        
+    }
+    tail *= 10;
+    i = tail;
+
+    if(i>4){
+		uint8_t write2 = write -1;
+		
+        if(rstr[write2] != (OFFSETNUMBERS +9)){
+             rstr[write2] = rstr[write2] +1;
+        }
+        
+        else{
+
+             while(rstr[write2] == (OFFSETNUMBERS +9)){
+                 rstr[write2] = OFFSETNUMBERS;
+                 --write2;
+             }
+             rstr[write2] = rstr[write2] +1;    
+        }
+    }
+    
+    rstr[write] = '\0';
+    return rstr;
+    
+}
+
 /*!
  * \brief int -> string
  *
