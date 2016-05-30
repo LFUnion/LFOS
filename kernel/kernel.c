@@ -97,7 +97,7 @@ void kmain(void) {
     scan_pci();
     print_raw("[OK] PCI checked --> Number of PCI devices: ");
     printf(stringFromInt(get_number_pci()));
-    
+        
     printf("[..] Initializing keyboard");
     if(kbd_detect() == 1 && kbd_init() == 1) {
         printf("[OK] Keyboard initialized");

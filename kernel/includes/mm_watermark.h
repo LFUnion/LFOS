@@ -2,8 +2,11 @@
 #define WATERMARK_H
 
 #include <stddef.h>
+#include <stdint.h>
 
 void* watermark_malloc (size_t n);
+
+void* watermark_calloc (const size_t n);
 
 /*
 // new code
