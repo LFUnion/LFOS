@@ -1,6 +1,8 @@
 #include "tasks.h"
 #include "klib.h"
 
+#define TASK_STACK_SIZE 4096
+
 static uint32_t task_count = 0;
 static uint32_t current_task = 0;
 static task_t*  tasks[100];
@@ -10,13 +12,13 @@ static void*    first_request;
 
 task_t* task_init(void* entry) {
     task_t* task = (task_t*)malloc(sizeof(task_t));
-    uint8_t* stack = (uint8_t*)malloc(4096*sizeof(uint8_t));
+    uint8_t* stack = (uint8_t*)malloc(TASK_STACK_SIZE*sizeof(uint8_t));
     
     task->registers = (reg_state*)malloc(sizeof(reg_state));
     task->registers->eip = (uint32_t)entry;
     task->registers->cs = 0x08;
     task->registers->ss = 0x10;
-    task->registers->esp = (uint32_t)stack;
+    task->registers->esp = (uint32_t)(stack+TASK_STACK_SIZE-1);
     task->registers->eflags = 0x202;
     
     task->stack = stack;
