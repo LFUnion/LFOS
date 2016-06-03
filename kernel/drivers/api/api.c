@@ -15,8 +15,127 @@ const char const * pcidevicelist [0x11]={
 };
 
 
-const char const * pcidevicelistall [0x11][0x0A][0x05] = {
+const char const * pci_vga [0x02] = {
+    "VGA-Compatible device (excepted)", "VGA-Compatible device"
+};
 
+const char const * pci_mass_storage [0x09] = {
+    "SCSI Bus Controller", "IDE Controller", "Floppy Disk Controller",
+    "IPI Bus Controller ", "RAID Controller ", "ATA Controller",
+    "Serial ATA", "Serial Attached SCSI", "Other Mass Storage Controller "
+};
+
+const char const * pci_network [0x08] = {
+    "Ethernet Controller", "Token Ring Controller", "FDDI Controller",
+    "ATM Controller", "ISDN Controller", "WorldFip Controller",
+    "PICMG 2.14 Multi Computing", "Other Network Controller"
+};
+
+const char const * pci_display [0x04] = {
+    "VGA-Compatible Controller", "XGA Controller",
+    "3D Controller (Not VGA-Compatible)", "Other Display Controller"
+};
+
+const char const * pci_multimedia [0x04] = {
+    "Video Device", "Audio Device", "Computer Telephony Device",
+    "Other Multimedia Device"
+};
+
+const char const * pci_ram_flash [0x03] = {
+    "RAM Controller", "FLASH Controller", "Other mempry Controller"
+};
+
+const char const * pci_bridge_network [0x0C] = {
+    "Host Bridge", "ISA Bridge", "EISA Bridge",
+    "MCA Bridge", "PCI-to-PCI Bridge", "PCMCIA Bridge",
+    "NuBus Bridge", "CardBus Bridge", "RACEway Bridge",
+    "PCI-to-PCI Bridge (Semi-Transparent)", "InfiniBrand-to-PCI Host Bridge", "Other Bridge Device"
+};
+
+const char const * pci_communication [0x07] = {
+    "Generic XT-Compatible Serial Controller", "Parallel Port", "Multiport Serial Controller",
+    "Generic Modem", "IEEE 488.1/2 (GPIB) Controller", "Smart Card",
+    "Other Communications Device"
+};
+
+const char const * pci_system_peripheral [0x06] = {
+    "Generic 8259 PIC", "Generic 8237 DMA Controller", "Generic 8254 System Timer",
+    "Generic RTC Controller", "Generic PCI Hot-Plug Controller", "Other System Peripheral"
+    
+};
+
+const char const * pci_input_device [0x06] = {
+    "Keyboard Controller", "Digitizer", "Mouse Controller",
+    "Scanner Controller", "Gameport Controller", "Other Input Controller"
+};
+
+const char const * pci_docking_station [0x02] = {
+    "Generic Docking Station", "Other Docking Station"
+};
+
+const char const * pci_co_processor [0x07] = {
+    "386 Processor", "486 Processor", "Pentium Processor",
+    "Alpha Processor", "PowerPC Processor", "MIPS Processor",
+    "Co-Processor"
+};
+
+const char const * pci_bus [0x0A] = {
+    "IEEE 1394 Controller", "ACCESS.bus", "SSA",
+    "USB", "Fibre Channel", "SMBus",
+    "InfiniBand", "IPMI SMIC Interface", "SERCOS Interface Standard (IEC 61491)",
+    "CANbus"
+};
+
+const char const * pci_wireless [0x08] = {
+    "iRDA Compatible Controller", "Consumer IR Controller", "RF Controller",
+    "Bluetooth Controller", "Broadband Controller", "Ethernet Controller (802.11a)",
+    "Ethernet Controller (802.11b)", "Other Wireless Controller"
+};
+
+const char const * pci_fifo [0x02] = {
+    "I20 Architecture", "Message FIFO"
+};
+
+const char const * pci_controller [0x04] = {
+    "TV Controller", "Audio Controller", "Voice Controller",
+    "Data Controller"
+};
+
+const char const * pci_enc_dec [0x03] = {
+    "Network and Computing Encrpytion/Decryption", "Entertainment Encryption/Decryption", "Other Encryption/Decryption"
+    
+};
+
+const char const * pci_signal_processing_controller [0x05] = {
+    "DPIO Modules", "Performance Counters", 
+    "Communications Syncrhonization Plus Time and Frequency Test/Measurment", 
+    "Management Card",
+    "Other Data Acquisition/Signal Processing Controller"
+};
+
+const char const * pci_device_sub[0x11] = {
+    pci_vga, pci_mass_storage, 
+    pci_network, pci_display,
+    pci_multimedia, pci_ram_flash,
+    pci_bridge_network, pci_communication,
+    pci_system_peripheral, pci_input_device,
+    pci_docking_station, pci_co_processor,
+    pci_bus, pci_wireless, 
+    pci_fifo, pci_controller,
+    pci_enc_dec, pci_signal_processing_controller
+    
+};
+
+const uint8_t length_pci_device_list[0x11] = {
+   0x02, 0x09,
+   0x08, 0x04,
+   0x04, 0x03,
+   0x0C, 0x07,
+   0x06, 0x06,
+   0x02, 0x07,
+   0x0A, 0x08,
+   0x02, 0x04,
+   0x03, 0x05
 };
 
 // A simple driver api
@@ -61,38 +180,160 @@ void printdata(int input){
 
 }
 
-void driverfunctions (int input){
+void driverfunctions (const int input){
 
     if (input == 0){
         printf("ATA");
-        ata_use(0);
+        print_raw("Function: ");
+        char * input = scanf();
+        int input_i = intFromString(input); 
+        if(input_i>0 && input_i<16){       
+            ata_use(input_i);
+        }
         
     } else if (input == 1){
         printf("ATA");
-        keyboard_use(0);
+        print_raw("Function: ");
+        char * input = scanf();
+        int input_i = intFromString(input); 
+        if(input_i>0 && input_i<8){       
+            keyboard_use(input_i);
+        }
+        
     
     } else if (input == 2){
         printf("ATA");
-        vga_use(0);
+        print_raw("Function: ");
+        char * input = scanf();
+        int input_i = intFromString(input); 
+        if(input_i>0 && input_i<15){       
+            vga_use(input_i);
+        }
+
     
     } else if (input == 3){
         
+    }
+    else{
+        printf("Not in driver list");
     }
 
 }
 
 
 void pci_device(){
+	
     uint8_t max = get_number_pci();
+    
     for(int c = 0; c<max; ++c){
         struct pci_header* pci_c = pci_api_data_return(c);
-        readable_pci_device_names(max, max, max);
+        readable_pci_device_names(pci_c->classcode, pci_c->subclass, pci_c->progif);
     }    
 }
 
-inline void readable_pci_device_names(uint8_t classcode, int8_t subclass, int8_t progif){
+inline void readable_pci_device_names(const uint8_t classcode, int8_t subclass, const int8_t progif){
+	
+	if(classcode>0x11){
+        printf("Undefined PCI device group");
+    }
+    
     print_raw("device functions: ");
     printf(pcidevicelist[classcode]);
+    uint8_t length = length_pci_device_list[classcode-1];
+    
+    if(subclass>length){
+        subclass = length - 1;
+    }
+    
+    //char * pci_list_c = pci_device_sub[classcode];
+    //printf(pci_list_c[subclass]);
+    
+    char * pci_list_s;
+    
+    if(subclass==0x00){
+        pci_list_s = pci_vga[subclass];
+    }
+    
+    else if(subclass==0x01){
+        pci_list_s = pci_mass_storage[subclass];
+    }
+
+    else if(subclass==0x02){
+        pci_list_s = pci_network[subclass];
+    }    
+    
+    else if(subclass==0x03){
+        pci_list_s = pci_display[subclass];
+    }
+        
+    else if(subclass==0x04){
+        pci_list_s = pci_multimedia[subclass];
+    }    
+
+    else if(subclass==0x05){
+        pci_list_s = pci_ram_flash[subclass];
+    }    
+
+    else if(subclass==0x06){
+        pci_list_s = pci_bridge_network[subclass];
+    }    
+
+    else if(subclass==0x07){
+        pci_list_s = pci_communication[subclass];
+    }    
+
+    else if(subclass==0x08){
+        pci_list_s = pci_system_peripheral[subclass];
+    }    
+
+    else if(subclass==0x09){
+        pci_list_s = pci_input_device[subclass];
+    }    
+
+    else if(subclass==0x0A){
+        pci_list_s = pci_docking_station[subclass];
+    }    
+
+    else if(subclass==0x0B){
+        pci_list_s = pci_co_processor[subclass];
+    }
+        
+    else if(subclass==0x0C){
+        pci_list_s = pci_bus[subclass];
+    }    
+
+    else if(subclass==0x0D){
+        pci_list_s = pci_wireless[subclass];
+    }    
+
+    else if(subclass==0x0E){
+        pci_list_s = pci_fifo[subclass];
+    }    
+
+    else if(subclass==0x0F){
+        pci_list_s = pci_controller[subclass];
+    }    
+    
+    else if(subclass==0x10){
+        pci_list_s = pci_enc_dec[subclass];
+    }    
+
+    else if(subclass==0x11){
+        pci_list_s = pci_signal_processing_controller[subclass];
+    }    
+    
+    printf(pci_list_s[subclass]);
+    
+    print_raw("Number: ");
+    
+    print_raw(stringFromInt(classcode));
+    print_raw(" ");
+    print_raw(stringFromInt(subclass));
+    print_raw(" ");
+    printf(stringFromInt(progif));
+    
+    printf("");
+        
 }
 
 
@@ -131,6 +372,7 @@ int apiloop() {
                 printf("Not found");
             }
         }
+        
         else if (strcmp(input, "DATA")){
             print_raw("Driver: ");
             char * input = scanf();
@@ -146,14 +388,17 @@ int apiloop() {
             } else{
                 printf("Not found");
             }
-        }    
+        }
+            
         else if (strcmp(input, "PCI")){
             pci_device();
         
         }
+        
         else if (strcmp(input, "EXIT")){
             break;
-        } else{
+        }
+        else{
             printf("Wrong input");
         }
     }

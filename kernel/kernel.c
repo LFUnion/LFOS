@@ -136,7 +136,7 @@ void kmain_task(void) {
     print_raw(__DATE__);
     print_raw(" at ");
     printf(__TIME__);
-
+    
     printf("");
     printw("[##] Press any key to continue");
     kbd_flush_buffer();

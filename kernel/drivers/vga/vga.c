@@ -245,10 +245,165 @@ void vga_send() {
 }
 
 
+
 void vga_use(const int func) {
+
+    if (func == 1){
+
+        print_raw("Character: ");
+        char * character = scanf();
+        uint8_t character_i = uintFromString(character);
+
+        print_raw("Color: ");
+        char * color = scanf();
+        uint8_t color_i = uintFromString(color);
+
+        print_raw("Position: ");
+        char * position = scanf();
+        uint8_t position_i = uintFromString(position);
+
+        print_raw("Line: ");
+        char * line = scanf();
+        uint8_t line_i = uintFromString(line);
+
+        vga_api.pfunc[0].func_v_8_8_8_8 (character_i, color_i, line_i, position_i);
+
+        free(character);
+        free(color);
+        free(position);
+        free(line);
+    }
     
+    else if (func == 2){
+
+        print_raw("Character: ");
+        char * character = scanf();
+        uint8_t character_i = uintFromString(character);
+
+        print_raw("Color: ");
+        char * color = scanf();
+        uint8_t color_i = uintFromString(color);
+
+        print_raw("Position: ");
+        char * position = scanf();
+        uint8_t position_i = uintFromString(position);
+
+        print_raw("Line: ");
+        char * line = scanf();
+        uint8_t line_i = uintFromString(line);
+
+        vga_api.pfunc[1].func_v_8_8_8_8 (character_i, color_i, line_i, position_i);
+
+        free(character);
+        free(color);
+        free(position);
+        free(line);
+    }
     
+    else if (func == 3){
+        
+        print_raw("Input output: ");
+        char * text = scanf();
+        vga_api.pfunc[2].func_v_cp (text);
+        free(text);
+        
+    }    
+
+    else if (func == 4){
+        
+        print_raw("Input normal output: ");
+        char * text = scanf();
+        vga_api.pfunc[3].func_v_cp (text);
+        free(text);
+        
+    }    
+
+    else if (func == 5){
+        
+        print_raw("Input highlighted output: ");
+        char * text = scanf();
+        vga_api.pfunc[4].func_v_cp (text);
+        free(text);
+        
+    }
+
+    else if (func == 6){
+        
+        printf("Clear screen");
+        vga_api.pfunc[5].func_v ();
+        
+    }
+
+    else if (func == 7){
+        
+        printf("Scroll lines");
+        vga_api.pfunc[6].func_v ();
+        
+    }
+
+    else if (func == 8){
+        
+        print_raw("Row number: ");
+        int i = vga_api.pfunc[7].func_i ();
+        printf(stringFromInt(i));
+        
+    }
+
+    else if (func == 9){
+        
+        print_raw("Print line position: ");
+        int i = vga_api.pfunc[8].func_i ();
+        printf(stringFromInt(i));
+        
+    }
+
+    else if (func == 10){
+        print_raw("Position: ");
+        char * position = scanf();
+        uint8_t position_i = uintFromString(position);
+
+        print_raw("Line: ");
+        char * line = scanf();
+        uint8_t line_i = uintFromString(line);
+
+        vga_api.pfunc[9].func_v_i_i (line_i, position_i);
+        
+        free(position);
+        free(line);       
+    }
+
+    else if (func == 11){
+        printf("Set cursor");
+
+        vga_api.pfunc[10].func_v ();
+        
+    }
     
+    else if (func == 12){
+        print_raw("Position of cursor: ");
+        char * position = scanf();
+        uint8_t position_i = uintFromString(position);
+
+        print_raw("Line of cursor: ");
+        char * line = scanf();
+        uint8_t line_i = uintFromString(line);
+
+        vga_api.pfunc[11].func_v_i_i (line_i, position_i);
+        free(position);        
+    }
+
+    else if (func == 13){
+        printf("Enable cursor");
+
+        vga_api.pfunc[12].func_v ();
+        
+    }
+
+    else if (func == 14){
+        printf("Disable cursor");
+
+        vga_api.pfunc[13].func_v ();
+        
+    }
     
 }
-

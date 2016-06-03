@@ -76,7 +76,12 @@ char * stringFromDouble(const double input, int8_t after){
         
         else{
 
-             while(rstr[write2] == (OFFSETNUMBERS +9)){
+             while(rstr[write2] == (OFFSETNUMBERS +9) || rstr[write2] == '.'){
+				 if (rstr[write2] == '.'){
+                     --write2;
+                     continue;
+                 }    
+                 
                  rstr[write2] = OFFSETNUMBERS;
                  --write2;
              }
@@ -87,6 +92,49 @@ char * stringFromDouble(const double input, int8_t after){
     rstr[write] = '\0';
     return rstr;
     
+}
+
+unsigned int uintFromString(char* restrict input){
+    unsigned int rnumber = 0 ;
+    int stringlength = strlen(input)-1;
+    int factor = 1 , test;
+
+    for(stringlength; stringlength>-1; --stringlength){
+		test = input[stringlength]-OFFSETNUMBERS;
+		if(!(test>-1 && test<10)){
+		    return 0;
+	    }
+        rnumber += (test)*factor;
+        factor *= 10;
+    }
+    
+    return rnumber;
+
+}
+
+int intFromString(char* restrict input){
+    int rnumber = 0;
+    int stringlength = strlen(input)-1;
+    int factor = 1, test;
+    
+    for(stringlength; stringlength>-1; --stringlength){
+		test = input[stringlength]-OFFSETNUMBERS;
+		if(!(test>-1 && test<10)){
+		    if((test == '-'-OFFSETNUMBERS) && stringlength == 0){
+                rnumber = -rnumber;
+                break;
+            }
+            
+            else{
+		        return 0;
+            }
+	    }
+        rnumber += (test)*factor;
+        factor *= 10;
+    }
+    
+    return rnumber;
+
 }
 
 /*!

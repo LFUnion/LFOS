@@ -272,10 +272,10 @@ void ata_send() {
 }
 
 void ata_use(const int func) {
-    int count = 0;
-    if (func ==0) {
-        printf("Read Ports:");
-        
+
+    if (func ==1) {
+        printf("Read Ports: ");
+        int count = 0;        
         while (count<8) {
             int ret = (*ata_api.pfunc[0].func_8_8) (count);
             print_raw("ATA-Port ");
@@ -285,5 +285,192 @@ void ata_use(const int func) {
             ++count;
         }
     }
-}
+    
+    else if (func ==2) {
+        print_raw("Write Ports: ");
+        char* port = scanf();
+        int port_i = uintFromString(port);
+        char* value = scanf();
+        int value_i = uintFromString(value);
+        (*ata_api.pfunc[1].func_v_8_8) (port, value);
+        free(port);
+        free(value);
+    }
+    
+    else if (func ==3) {
+         print_raw("Print status byte: ");
+         int i = (*ata_api.pfunc[2].func_8) ();
+         printf(stringFromInt(i));
+    }
 
+    else if (func ==4) {
+         printf("Read status");
+         print_raw("Input Bit: ");
+         char* value = scanf();
+         int value_i = uintFromString(value);         
+         int i = ata_api.pfunc[3].func_i_i (value_i);
+         printf(stringFromInt(i));
+         free(value);
+    }
+    
+    else if(func == 5) {
+         printf("Disabble Interrupts");
+         ata_api.pfunc[4].func_v ();
+    }
+    
+    else if(func == 6) {
+         print_raw("Select drive: ");
+         char * value = scanf();
+         int value_i = uintFromString(value);
+         uint8_t i = ata_api.pfunc[5].func_8_i (value_i);
+         printf(stringFromInt(i));
+         free(value);
+    }
+    
+    else if(func == 7){
+        printf("ATA reset"); 
+        ata_api.pfunc[6].func_v ();    
+    } 
+    
+    else if(func == 8){
+        printf("Flush Cache");
+        print_raw("Select Drive: ");
+        char * value = scanf();
+        int value_i = uintFromString(value);
+        ata_api.pfunc[7].func_v_i (value_i);
+        free(value);
+    }
+    
+    else if(func == 9){
+        print_raw("Select Drive: ");
+        char * value = scanf();
+        int value_i = uintFromString(value);
+        ata_api.pfunc[8].func_v_i (value_i);
+        free(value);
+    }
+        
+    else if (func == 10){
+        char * command = scanf();
+        int command_i = uintFromString(command);
+        char * drive = scanf();
+        int drive_i = uintFromString(drive);
+        ata_api.pfunc[9].func_v_8_i (command_i, drive_i);
+        free(command);
+        free(drive);
+    }
+    
+    else if (func == 11){
+        printf("ATA init");
+        ata_api.pfunc[10].func_v ();
+    }
+    
+    else if (func == 12){
+		print_raw("Select Drive: ");
+        char * drive = scanf();
+        int drive_i = uintFromString(drive);
+        
+        print_raw("Select sector: ");
+        char * sector = scanf();
+        int sector_i = uintFromString(sector);
+        
+
+        
+        uint16_t* startadress = ata_api.pfunc[11].func_16_i_32 (drive_i, sector_i);
+        const uint16_t* endadress = startadress + 256;
+        
+        while(endadress>startadress){
+            printf(stringFromInt(*startadress));
+            ++startadress;
+	    }
+        
+        free(drive);
+        free(drive);
+    }
+    
+    else if (func == 13){
+		print_raw("Select Drive: ");
+        char * drive = scanf();
+        int drive_i = uintFromString(drive);
+        
+        print_raw("Select (start) sector: ");
+        char * sector = scanf();
+        int sector_i = uintFromString(sector);
+        
+        
+        print_raw("Data: ");
+		char * data = malloc(sizeof(char)*16);
+        scanf_new_prot(data, 16);
+        uint16_t data_i[256];
+        
+        for(unsigned int c = 0; c<256; ++c ){
+                char * data = malloc(sizeof(char)*16);
+                scanf_new_prot(data, 16);
+                data_i[c] = uintFromString(data);
+                free(data);
+        }
+        
+        ata_api.pfunc[12].func_v_i_32_16p (drive_i, sector_i, data_i);
+        
+        free(sector);
+        free(drive);
+    }        
+
+    else if (func == 14){
+		print_raw("Select Drive: ");
+        char * drive = scanf();
+        int drive_i = uintFromString(drive);
+        
+        print_raw("Select sector: ");
+        char * sector = scanf();
+        int sector_i = uintFromString(sector);
+        
+        print_raw("Number of sectors: ");
+        char * count = scanf();
+        int count_i = uintFromString(count);
+
+        
+        uint16_t* startadress = ata_api.pfunc[13].func_16_i_32_i (drive_i, sector_i, count_i);
+        const uint16_t* endadress = startadress + count_i*256;
+        
+        while(startadress < endadress){
+            printf(stringFromInt(*startadress));
+            ++startadress;
+        }
+        free(count);
+        free(sector);
+        free(drive);
+    }
+    
+    else if (func == 15){
+		print_raw("Select Drive: ");
+        char * drive = scanf();
+        int drive_i = uintFromString(drive);
+        
+        print_raw("Select (start) sector: ");
+        char * sector = scanf();
+        int sector_i = uintFromString(sector);
+        
+        print_raw("Number of sectors: ");
+        char * count = scanf();
+        int count_i = uintFromString(count);
+        
+        uint16_t data_i[count_i*256];
+                
+        printf("Data:");
+        for (int i = 0; i<count_i; ++i){
+            for(unsigned int c = 0; c<256; ++c ){
+                char * data = malloc(sizeof(char)*16);
+                scanf_new_prot(data, 16);
+                data_i[(i *256) +c] = uintFromString(data);
+                free(data);
+		    }
+        }
+        
+        ata_api.pfunc[14].func_v_i_32_i_16p (drive_i, sector_i, count_i, data_i);
+        
+        free(count);
+        free(sector);
+        free(drive);
+    }        
+
+}
