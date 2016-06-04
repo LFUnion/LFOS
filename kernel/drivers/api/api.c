@@ -113,6 +113,7 @@ const char const * pci_signal_processing_controller [0x05] = {
     "Other Data Acquisition/Signal Processing Controller"
 };
 
+/*
 const char const * pci_device_sub[0x11] = {
     pci_vga, pci_mass_storage, 
     pci_network, pci_display,
@@ -125,6 +126,7 @@ const char const * pci_device_sub[0x11] = {
     pci_enc_dec, pci_signal_processing_controller
     
 };
+*/
 
 const uint8_t length_pci_device_list[0x11] = {
    0x02, 0x09,
@@ -248,81 +250,81 @@ inline void readable_pci_device_names(const uint8_t classcode, int8_t subclass, 
     //char * pci_list_c = pci_device_sub[classcode];
     //printf(pci_list_c[subclass]);
     
-    char * pci_list_s;
+    printf(stringFromInt(subclass));
     
-    if(subclass==0x00){
-        pci_list_s = pci_vga[subclass];
+    //char * pci_list_s;
+    
+    if(classcode==0x00){
+        printf(pci_vga[subclass]);
     }
     
-    else if(subclass==0x01){
-        pci_list_s = pci_mass_storage[subclass];
+    else if(classcode==0x01){
+        printf(pci_mass_storage[subclass]);
     }
 
-    else if(subclass==0x02){
-        pci_list_s = pci_network[subclass];
+    else if(classcode==0x02){
+        printf(pci_network[subclass]);
     }    
     
-    else if(subclass==0x03){
-        pci_list_s = pci_display[subclass];
-    }
-        
-    else if(subclass==0x04){
-        pci_list_s = pci_multimedia[subclass];
-    }    
-
-    else if(subclass==0x05){
-        pci_list_s = pci_ram_flash[subclass];
-    }    
-
-    else if(subclass==0x06){
-        pci_list_s = pci_bridge_network[subclass];
-    }    
-
-    else if(subclass==0x07){
-        pci_list_s = pci_communication[subclass];
-    }    
-
-    else if(subclass==0x08){
-        pci_list_s = pci_system_peripheral[subclass];
-    }    
-
-    else if(subclass==0x09){
-        pci_list_s = pci_input_device[subclass];
-    }    
-
-    else if(subclass==0x0A){
-        pci_list_s = pci_docking_station[subclass];
-    }    
-
-    else if(subclass==0x0B){
-        pci_list_s = pci_co_processor[subclass];
+    else if(classcode==0x03){
+        printf(pci_display[subclass]);
     }
         
-    else if(subclass==0x0C){
-        pci_list_s = pci_bus[subclass];
+    else if(classcode==0x04){
+        printf(pci_multimedia[subclass]);
     }    
 
-    else if(subclass==0x0D){
-        pci_list_s = pci_wireless[subclass];
+    else if(classcode==0x05){
+        printf(pci_ram_flash[subclass]);
     }    
 
-    else if(subclass==0x0E){
-        pci_list_s = pci_fifo[subclass];
+    else if(classcode==0x06){
+        printf(pci_bridge_network[subclass]);
     }    
 
-    else if(subclass==0x0F){
-        pci_list_s = pci_controller[subclass];
+    else if(classcode==0x07){
+        printf(pci_communication[subclass]);
+    }    
+
+    else if(classcode==0x08){
+        printf(pci_system_peripheral[subclass]);
+    }    
+
+    else if(classcode==0x09){
+        printf(pci_input_device[subclass]);
+    }    
+
+    else if(classcode==0x0A){
+        printf(pci_docking_station[subclass]);
+    }    
+
+    else if(classcode==0x0B){
+        printf(pci_co_processor[subclass]);
+    }
+        
+    else if(classcode==0x0C){
+        printf(pci_bus[subclass]);
+    }    
+
+    else if(classcode==0x0D){
+        printf(pci_wireless[subclass]);
+    }    
+
+    else if(classcode==0x0E){
+        printf(pci_fifo[subclass]);
+    }    
+
+    else if(classcode==0x0F){
+        printf(pci_controller[subclass]);
     }    
     
-    else if(subclass==0x10){
-        pci_list_s = pci_enc_dec[subclass];
+    else if(classcode==0x10){
+        printf(pci_enc_dec[subclass]);
     }    
 
-    else if(subclass==0x11){
-        pci_list_s = pci_signal_processing_controller[subclass];
+    else if(classcode==0x11){
+        printf(pci_signal_processing_controller[subclass]);
     }    
-    
-    printf(pci_list_s[subclass]);
     
     print_raw("Number: ");
     

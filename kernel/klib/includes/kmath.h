@@ -43,15 +43,15 @@ double pow_exp (const double base, const double exponent);
 
 // extern and inline
 
-extern inline uint64_t round (const double value);
-extern inline uint64_t factorial(const int32_t value);
-extern inline double pow_i(const double base, const int64_t exponent);
+uint64_t round (const double value);
+uint64_t factorial(const int32_t value);
+double pow_i(const double base, const int64_t exponent);
 
 
 // static
 
-static inline uint64_t abs_i(int64_t value);
-static double continuous_fraction_root(double minus, const double radicant, uint8_t max);
+uint64_t abs_i(int64_t value);
+double continuous_fraction_root(double minus, const double radicant, uint8_t max);
 
 
 #endif 

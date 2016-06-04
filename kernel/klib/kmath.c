@@ -36,7 +36,7 @@ double abs(const double value){
     return rvalue;
 }
 
-static inline uint64_t abs_i(int64_t value){
+uint64_t abs_i(int64_t value){
     return (value>0? value : -value);
 }
 
@@ -47,14 +47,14 @@ double pow( const double base, const double exponent){
     
     if(exponent > 0){
         if (exponent_long == exponent){
-            for (uint64_t c = 0; c<exponent_long ;++c){
+            for (int64_t c = 0; c<exponent_long ;++c){
                 end_value = base * end_value;
             }
             return end_value;
         }
         else{
             const double rroot = 1.0 / (exponent -(double) exponent_long);
-            for (uint64_t c = 0; c<exponent_long ;++c){
+            for (int64_t c = 0; c<exponent_long ;++c){
                 end_value = base * end_value;
             }
             end_value = root(base, rroot) * end_value;
@@ -83,7 +83,7 @@ double pow( const double base, const double exponent){
     return end_value;	
 }
 
-extern inline double pow_i(const double base, const int64_t exponent){
+double pow_i(const double base, const int64_t exponent){
 	
     double end_value = 1;
     
@@ -119,7 +119,7 @@ double secondroot (const double radicand){
     return end_value;
 }
 
-static double continuous_fraction_root(const double minus, const double radicand, uint8_t max){
+double continuous_fraction_root(const double minus, const double radicand, uint8_t max){
     if(max ==0){
         return 1;
     }
@@ -157,7 +157,8 @@ double root (const double radicand, double exponent){
     return rvalue;
 }
 
-extern inline uint64_t round (const double value){
+// extern inline
+uint64_t round (const double value){
     uint64_t rvalue = (uint64_t) value;
     const double compare = value - rvalue;
     
@@ -172,7 +173,8 @@ extern inline uint64_t round (const double value){
 
 }
 
-extern inline uint64_t factorial(const int32_t value){
+// extern inline
+uint64_t factorial(const int32_t value){
     
     if(value<2){
 		if (value<0){
@@ -222,7 +224,7 @@ double pow_exp(const double base, const double exponent){
     if(exponent > 0){
 
         if (exponent_long_check == exponent){
-            for (uint64_t c = 0; c<exponent_long ;++c){
+            for (int64_t c = 0; c<exponent_long ;++c){
                 end_value = newbase * end_value;
             }
             
@@ -232,7 +234,7 @@ double pow_exp(const double base, const double exponent){
         else{
             const double rroot = 1.0 / (exponent -(double) exponent_long_check);
             
-            for (uint64_t c = 0; c<exponent_long ;++c){
+            for (int64_t c = 0; c<exponent_long ;++c){
                 end_value = newbase * end_value;
             }
             end_value = root(base, rroot) * end_value;
