@@ -8,6 +8,7 @@
  * responsible for outgoing values.
  */
 
+// ports
 #include "inb.h"
 #include "outb.h"
 
@@ -16,6 +17,10 @@
 
 #include "indw.h"
 #include "outdw.h"
+
+// machinespecficregister
+
+#include "machinespecficregister.h"
 
 
 #endif /* PORTIO_H */

@@ -206,7 +206,69 @@ void keyboard_send() {
 
 
 void keyboard_use(const int func){
-    ;
+
+    if (func == 1){
+        print_raw("Input a Command as a number: ");
+        char * command = scanf();
+        uint8_t command_i = uintFromString(command);
+        
+        uint8_t rvalue = key_api.pfunc[0].func_8_8 (command_i);
+        print_raw("Return Value: ");
+        printf(stringFromInt(rvalue));
+        
+    }
     
+    else if (func == 2){
+
+        uint8_t rvalue = key_api.pfunc[1].func_8 ();
+        print_raw("Key number: ");
+        printf(stringFromInt(rvalue));
+
+    }
+
+    else if (func == 3){
+
+        int rvalue = key_api.pfunc[2].func_i ();
+        printf("Reset Keyboard");
+
+    }
+    
+    else if (func == 4){
+
+        int rvalue = key_api.pfunc[3].func_i ();
+        printf("Flushed Buffer");
+
+    }
+
+    else if (func == 5){
+
+        int rvalue = key_api.pfunc[4].func_i ();
+        if (rvalue == 0){
+            printf("Failed to reset");
+	    }
+	    else{
+            printf("Keyboard is init");
+        }
+    }
+
+    else if (func == 6){
+
+        int rvalue = key_api.pfunc[5].func_i ();
+        if (rvalue == 0){
+            printf("Failed to detect keyboard");
+	    }
+	    else{
+            printf("Keyboard detected");
+        }
+    }
+
+    else if (func == 7){
+		
+        char rchar = (char) key_api.pfunc[6].func_c ();
+        
+        char rchararr[] = {rchar, '\0'};
+        printf(rchararr);
+        
+    }
     
 }
