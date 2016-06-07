@@ -36,6 +36,9 @@
 #include "pic.h"
 #include "tasks.h"
 
+// detections
+#include "acpi.h"
+
 #include "stdint.h"
 
 /*
@@ -86,6 +89,8 @@ void kmain(void) {
     printf("[..] Loading IDT");
     init_idt();
     printf("[OK] IDT loaded");
+    
+    find_acpi();
     
     printf("[..] Initializing PIC");
     pic_init();

@@ -1,6 +1,6 @@
 #include "api.h"
 
-const char const * pcidevicelist [0x11]={
+const char const * pcidevicelist [0x12]={
 "VGA-Compatible Device", "Mass Storage Controller", "Network Controller", "Display Controller",
 
 "Multimedia Device", "Memory Controller", "Bridge Device", "Communications Device",
@@ -128,7 +128,7 @@ const char const * pci_device_sub[0x11] = {
 };
 */
 
-const uint8_t length_pci_device_list[0x11] = {
+const uint8_t length_pci_device_list[0x12] = {
    0x02, 0x09,
    0x08, 0x04,
    0x04, 0x03,
@@ -233,7 +233,7 @@ void pci_device(){
     }    
 }
 
-inline void readable_pci_device_names(const uint8_t classcode, int8_t subclass, const int8_t progif){
+void readable_pci_device_names(const uint8_t classcode, int8_t subclass, const int8_t progif){
 	
 	if(classcode>0x11){
         printf("Undefined PCI device group");

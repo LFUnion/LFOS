@@ -188,7 +188,7 @@ uint64_t factorial(const int32_t value){
     
     uint64_t rvalue = 1;
     
-    for(int32_t c = 2; c<cvalue; ++c){
+    for(uint32_t c = 2; c<cvalue; ++c){
         rvalue *= c;
 
     }
