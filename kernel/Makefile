@@ -32,6 +32,8 @@ build:
 	$(GCC) -c interrupts/irq.c -o build/irq.o $(GCC_INCLUDES) $(GCC_FLAGS)
 	echo "Compiling PIC"
 	$(GCC) -c interrupts/pic.c -o build/pic.o $(GCC_INCLUDES) $(GCC_FLAGS)
+	echo "Compiling APIC"
+	$(GCC) -c interrupts/apic/apic.c -o build/apic.o $(GCC_INCLUDES) $(GCC_FLAGS)
 	echo "Compiling watermark memory manager"
 	$(GCC) -c memory/mm_watermark.c -o build/mm_watermark.o $(GCC_INCLUDES) $(GCC_FLAGS)
 	echo "Compiling segmentation memory manager"
@@ -102,6 +104,8 @@ build:
 	$(GCC) -c ports/machineregister/machinespecficregister.c -o build/machinespecficregister.o $(GCC_INCLUDES) $(GCC_FLAGS)
 	echo "Compiling ACPI"
 	$(GCC) -c detection/acpi.c -o build/acpi.o $(GCC_INCLUDES) $(GCC_FLAGS)
+	echo "Compiling CPU data"
+	$(GCC) -c detection/cpudata.c -o build/cpudata.o $(GCC_INCLUDES) $(GCC_FLAGS)
 	echo "Compiling kernel ..."
 	$(GCC) -c kernel.c -o build/kernel.o $(GCC_INCLUDES) $(GCC_FLAGS)
 	echo "Linking ..."

@@ -143,7 +143,7 @@ const uint8_t length_pci_device_list[0x12] = {
 // A simple driver api
 
 void alldriver(){
-    printf("All available Driver");
+    printf("All available drivers");
     printf("ATA");
     printf("KEYBOARD");
     printf("RFC");
@@ -250,7 +250,7 @@ void readable_pci_device_names(const uint8_t classcode, int8_t subclass, const i
     //char * pci_list_c = pci_device_sub[classcode];
     //printf(pci_list_c[subclass]);
     
-    printf(stringFromInt(subclass));
+    
     
     //char * pci_list_s;
     
@@ -344,7 +344,7 @@ int apiloop() {
     clear();
     
     alldriver();
-    printf("Driver API Menu: Version 0.1");
+    printf("Driver API Menu: Version 0.2");
     printf("For help: HELP");
     printf("To exit the API input EXIT\n");
     

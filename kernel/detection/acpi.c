@@ -97,7 +97,7 @@ uint8_t search_table(uint8_t i, uint32_t* first_digit){
                
             if (boolean == 1){
 				    
-                    *first_digit = count;
+                    *first_digit = (uint32_t) count;
                     
                     return 1;
             }  
@@ -118,7 +118,7 @@ void configuration_of_tables(uint8_t i, uint32_t first_digit){
     
     if(i == RSD_PTR){
         uint8_t checksum = 0;
-        uint8_t* point_to_first_digit = first_digit;
+        uint8_t* point_to_first_digit = (uint8_t*) first_digit;
         
         for(int c = 0; c<20; ++c){
             checksum += *point_to_first_digit;

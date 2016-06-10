@@ -80,6 +80,8 @@ struct data_racp{
 
 };
 
+struct data_madt* first_digit_of_madt;
+uint8_t acpi_flags;
 
 void find_acpi();
 uint8_t search_table(uint8_t i, uint32_t* first_digit);
