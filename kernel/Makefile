@@ -5,7 +5,7 @@
 VERSION = $(shell cat VERSION)
 GCC = i686-elf-gcc
 GCC_INCLUDES = -I./includes/ -I./klib/includes/ -I./kshell/includes/ -include lfos_config.h
-GCC_FLAGS = -O2 -ffreestanding -std=gnu99 -Wall -Wextra -g -DLFOS_VERSION=\"$(VERSION)\"
+GCC_FLAGS = -O2 -ffreestanding -finline-functions -std=gnu99 -Wall -Wextra -g -DLFOS_VERSION=\"$(VERSION)\"
 
 build:
 	echo "Cleaning ..."
