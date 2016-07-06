@@ -29,6 +29,11 @@
 *.x86_64
 *.hex
 
+# Eclipse stuff
+.project
+.cproject
+.settings/
+
 # Debug files
 *.dSYM/
 
