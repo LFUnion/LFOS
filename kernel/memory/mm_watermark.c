@@ -28,17 +28,3 @@ void* watermark_malloc (size_t n) {
     crnt_addr += n;
     return return_addr;
 }
-
-void* watermark_calloc (const size_t n){
-    void* return_addr = crnt_addr;
-    uint8_t* count_addr = (uint8_t*)crnt_addr;
-    crnt_addr += n;
-    
-    while(count_addr < crnt_addr){
-        *count_addr = 0;
-        ++count_addr;
-    }
-    
-    return return_addr;
-
-}
