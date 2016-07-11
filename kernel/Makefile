@@ -55,7 +55,7 @@ build:
 	echo "Compiling serial driver"
 	$(GCC) -c drivers/serial/serial.c -o build/drivers/serial.o $(GCC_INCLUDES) $(GCC_FLAGS)
 	echo "Compiling keyboard driver ..."
-	$(GCC) -c drivers/keyboard/keyboard.c -o build/drivers/keyboard.o $(GCC_INCLUDES) $(GCC_FLAGS)´
+	$(GCC) -c drivers/keyboard/keyboard.c -o build/drivers/keyboard.o $(GCC_INCLUDES) $(GCC_FLAGS)��
 	echo "Compiling PIT driver"
 	$(GCC) -c drivers/pit/pit.c -o build/drivers/pit.o $(GCC_INCLUDES) $(GCC_FLAGS)
 	echo "Compiling beeper driver"
@@ -82,6 +82,8 @@ build:
 	$(GCC) -c multitasking/process.c -o build/process.o $(GCC_INCLUDES) $(GCC_FLAGS)
 	echo "Compiling tasks"
 	$(GCC) -c multitasking/tasks.c -o build/tasks.o $(GCC_INCLUDES) $(GCC_FLAGS)
+	echo "Compiling kcalls"
+	$(GCC) -c multitasking/kcall.c -o build/kcall.o $(GCC_INCLUDES) $(GCC_FLAGS)
 	echo "Compiling driver_api"
 	$(GCC) -c drivers/api/driver_api.c -o build/driver_api.o $(GCC_INCLUDES) $(GCC_FLAGS)	
 	echo "Compiling api"
@@ -110,7 +112,7 @@ build:
 	$(GCC) -c kernel.c -o build/kernel.o $(GCC_INCLUDES) $(GCC_FLAGS)
 	echo "Linking ..."
 	
-	$(GCC) -T linker.ld -o build/lfos.bin -ffreestanding -O2 -nostdlib -Wall build/bootloader.o build/kernel.o build/drivers/vga.o build/drivers/ata.o build/drivers/serial.o build/drivers/keyboard.o build/drivers/beeper.o build/drivers/pit.o build/drivers/rtc.o build/drivers/cmos.o build/klib/kio.o build/klib/kcom.o build/klib/kfs.o build/klib/kcasts.o build/klib/kstring.o build/klib/kmem.o build/klib/ktime.o build/kshell/kshell.o build/ufs.o build/mm_watermark.o build/mm_segmentation.o build/outb.o build/inb.o build/segments.o build/gdt.o build/idt.o build/exceptionhandler.o build/pic.o build/exceptions.o build/irqs.o build/irq.o build/cpu.o build/process.o build/tasks.o build/api.o build/driver_api.o build/inw.o build/outw.o build/outdw.o build/indw.o build/pciio.o build/pci.o build/kmath.o build/machinespecficregister.o build/acpi.o -lgcc -Wl,-Map=build/memory.map
+	$(GCC) -T linker.ld -o build/lfos.bin -ffreestanding -O2 -nostdlib -Wall build/bootloader.o build/kernel.o build/drivers/vga.o build/drivers/ata.o build/drivers/serial.o build/drivers/keyboard.o build/drivers/beeper.o build/drivers/pit.o build/drivers/rtc.o build/drivers/cmos.o build/klib/kio.o build/klib/kcom.o build/klib/kfs.o build/klib/kcasts.o build/klib/kstring.o build/klib/kmem.o build/klib/ktime.o build/kshell/kshell.o build/ufs.o build/mm_watermark.o build/mm_segmentation.o build/outb.o build/inb.o build/segments.o build/gdt.o build/idt.o build/exceptionhandler.o build/pic.o build/exceptions.o build/irqs.o build/irq.o build/cpu.o build/process.o build/tasks.o build/kcall.o build/api.o build/driver_api.o build/inw.o build/outw.o build/outdw.o build/indw.o build/pciio.o build/pci.o build/kmath.o build/machinespecficregister.o build/acpi.o -lgcc -Wl,-Map=build/memory.map
 	
 	echo "Stripping debug symbols from kernel ..."
 	objcopy --only-keep-debug build/lfos.bin build/lfos.sym
