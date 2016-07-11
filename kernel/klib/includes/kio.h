@@ -4,8 +4,7 @@
 #include <stdint.h>
 
 void printf(const char text[], ...);
-char * scanf();
-void scanf_new_prot(char * content, uint16_t size);
+char* scanf();
 void printw(const char text[], ...);
 void print_raw(const char text[]);
 void printd(const int digit);

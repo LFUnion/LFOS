@@ -398,13 +398,11 @@ void ata_use(const int func) {
         
         
         print_raw("Data: ");
-		char * data = malloc(sizeof(char)*16);
-        scanf_new_prot(data, 16);
+		char * data = scanf();
         uint16_t data_i[256];
         
         for(unsigned int c = 0; c<256; ++c ){
-                char * data = malloc(sizeof(char)*16);
-                scanf_new_prot(data, 16);
+                char * data = scanf();
                 data_i[c] = uintFromString(data);
                 free(data);
         }
@@ -459,8 +457,7 @@ void ata_use(const int func) {
         printf("Data:");
         for (int i = 0; i<count_i; ++i){
             for(unsigned int c = 0; c<256; ++c ){
-                char * data = malloc(sizeof(char)*16);
-                scanf_new_prot(data, 16);
+                char * data = scanf();
                 data_i[(i *256) +c] = uintFromString(data);
                 free(data);
 		    }
