@@ -70,10 +70,13 @@ void print_copyright();
  * and tries to detect a keyboard.
  */
 
+const tar_header_t* tarhead;
+
 /* Kernel entry point, called from boot/bootloader.asm */
 void kmain(multiboot_info_t* mb_info) {
 	const int mods_count = mb_info->mods_count;
 	const multiboot_module_t* mod_start = (multiboot_module_t*)mb_info->mods_addr;
+	tarhead = (tar_header_t*)mod_start->mod_start;
 
     clear();
     vga_disable_cursor();
@@ -128,14 +131,12 @@ void kmain(multiboot_info_t* mb_info) {
     send(0x4E); // N
     send(0x47); // G
     printf("[OK] COM1 ready");
-    
+
     printf("[..] Checking initrd ...");
     if (mods_count < 1) {
     	printw("[!!] No initrd loaded");
     } else {
-    	tar_header_t* first = (tar_header_t*)mod_start->mod_start;
-
-    	if (tar_get_header("lfos-initrd-version.txt", first) == 0)
+    	if (tar_get_header("lfos-initrd-version.txt", tarhead) == 0)
     		printw("[!!] Initrd corrupt");
     	else
     		printf("[OK] Initrd found");
