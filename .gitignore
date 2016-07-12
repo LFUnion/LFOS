@@ -43,6 +43,9 @@ build/
 # Built ISOs
 *.iso
 
+# Initrd
+*.tar
+
 # Doxygen output
 doc/html/
 doc/latex/
