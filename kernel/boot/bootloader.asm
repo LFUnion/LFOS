@@ -17,6 +17,7 @@ dd CHECKSUM
 global _start
 _start:
     mov esp, stack_end ; Stack setup
+    push ebx ; Push the multiboot info address
     extern kmain ; Defined in kernel/kernel.c
     call kmain
     cli

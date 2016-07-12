@@ -22,6 +22,7 @@
 #include "pit.h"
 #include "beeper.h"
 #include "ata.h"
+#include "acpi.h"
 
 //PCI and PCI Drivers
 #include "pciio.h"
@@ -35,9 +36,7 @@
 #include "exceptionhandler.h"
 #include "pic.h"
 #include "tasks.h"
-
-// detections
-#include "acpi.h"
+#include "external/multiboot.h"
 
 #include "stdint.h"
 
@@ -71,11 +70,15 @@ void print_copyright();
  */
 
 /* Kernel entry point, called from boot/bootloader.asm */
-void kmain(void) {
+void kmain(multiboot_info_t* mb_info) {
     
     clear();
     vga_disable_cursor();
     vga_set_position(0, 0);
+
+    print_raw("[OK] Bootloader loaded ");
+    print_raw(itoa(mb_info->mods_count));
+    printf(" modules");
 
     print_raw("[OK] Detected ");
     print_raw(cpu_getVendor());
