@@ -1,5 +1,5 @@
-.SILENT: build
-.PHONY: build
+.SILENT: buildelf
+.PHONY: buildelf
 .PHONY: clean
 
 VERSION = $(shell cat VERSION)
@@ -8,6 +8,9 @@ GCC_INCLUDES = -I./includes/ -I./klib/includes/ -I./kshell/includes/ -include lf
 GCC_FLAGS = -O2 -ffreestanding -finline-functions -std=gnu99 -Wall -Wextra -g -DLFOS_VERSION=\"$(VERSION)\"
 
 build:
+	cd ../iso/; make
+
+buildelf:
 	echo "Cleaning ..."
 	make clean
 	echo "Assembling bootloader ..."
@@ -62,6 +65,8 @@ build:
 	$(GCC) -c drivers/sound/beeper.c -o build/drivers/beeper.o $(GCC_INCLUDES) $(GCC_FLAGS)
 	echo "Compiling uFS"
 	$(GCC) -c fs/ufs.c -o build/ufs.o $(GCC_INCLUDES) $(GCC_FLAGS)
+	echo "Compiling tar fs"
+	$(GCC) -c fs/tar.c -o build/tar.o $(GCC_INCLUDES) $(GCC_FLAGS)
 	echo "Compiling KIO"
 	$(GCC) -c klib/kio.c -o build/klib/kio.o $(GCC_INCLUDES) $(GCC_FLAGS)
 	echo "Compiling kcom"
@@ -112,7 +117,7 @@ build:
 	$(GCC) -c kernel.c -o build/kernel.o $(GCC_INCLUDES) $(GCC_FLAGS)
 	echo "Linking ..."
 	
-	$(GCC) -T linker.ld -o build/lfos.bin -ffreestanding -O2 -nostdlib -Wall build/bootloader.o build/kernel.o build/drivers/vga.o build/drivers/ata.o build/drivers/serial.o build/drivers/keyboard.o build/drivers/beeper.o build/drivers/pit.o build/drivers/rtc.o build/drivers/cmos.o build/klib/kio.o build/klib/kcom.o build/klib/kfs.o build/klib/kcasts.o build/klib/kstring.o build/klib/kmem.o build/klib/ktime.o build/kshell/kshell.o build/ufs.o build/mm_watermark.o build/mm_segmentation.o build/outb.o build/inb.o build/segments.o build/gdt.o build/idt.o build/exceptionhandler.o build/pic.o build/exceptions.o build/irqs.o build/irq.o build/cpu.o build/process.o build/tasks.o build/kcall.o build/api.o build/driver_api.o build/inw.o build/outw.o build/outdw.o build/indw.o build/pciio.o build/pci.o build/kmath.o build/machinespecficregister.o build/acpi.o -lgcc -Wl,-Map=build/memory.map
+	$(GCC) -T linker.ld -o build/lfos.bin -ffreestanding -O2 -nostdlib -Wall build/bootloader.o build/kernel.o build/drivers/vga.o build/drivers/ata.o build/drivers/serial.o build/drivers/keyboard.o build/drivers/beeper.o build/drivers/pit.o build/drivers/rtc.o build/drivers/cmos.o build/klib/kio.o build/klib/kcom.o build/klib/kfs.o build/klib/kcasts.o build/klib/kstring.o build/klib/kmem.o build/klib/ktime.o build/kshell/kshell.o build/ufs.o build/tar.o build/mm_watermark.o build/mm_segmentation.o build/outb.o build/inb.o build/segments.o build/gdt.o build/idt.o build/exceptionhandler.o build/pic.o build/exceptions.o build/irqs.o build/irq.o build/cpu.o build/process.o build/tasks.o build/kcall.o build/api.o build/driver_api.o build/inw.o build/outw.o build/outdw.o build/indw.o build/pciio.o build/pci.o build/kmath.o build/machinespecficregister.o build/acpi.o -lgcc -Wl,-Map=build/memory.map
 	
 	echo "Stripping debug symbols from kernel ..."
 	objcopy --only-keep-debug build/lfos.bin build/lfos.sym
@@ -122,13 +127,13 @@ clean:
 	rm -rf build/
 	
 test:
-	qemu-system-i386 -serial stdio -kernel build/lfos.bin
+	qemu-system-i386 -serial stdio -cdrom ../iso/lfos.iso
 
 testATA:
 	dd if=/dev/zero of=build/hdd.img count=4096
-	qemu-system-i386 -smp cpus=2,cores=2 -kernel build/lfos.bin -serial stdio -drive file=build/hdd.img,if=ide
+	qemu-system-i386 -smp cpus=2,cores=2 -cdrom ../iso/lfos.iso -serial stdio -drive file=build/hdd.img,if=ide
 
 debug:
-	qemu-system-i386 -serial stdio -kernel build/lfos.bin -s -S &
+	qemu-system-i386 -serial stdio -cdrom ../iso/lfos.iso -s -S &
 	gdb --symbols=build/lfos.sym --eval-command="target remote localhost:1234"
 	killall qemu-system-i386

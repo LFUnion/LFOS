@@ -37,6 +37,7 @@
 #include "pic.h"
 #include "tasks.h"
 #include "external/multiboot.h"
+#include "tar.h"
 
 #include "stdint.h"
 
@@ -71,13 +72,15 @@ void print_copyright();
 
 /* Kernel entry point, called from boot/bootloader.asm */
 void kmain(multiboot_info_t* mb_info) {
-    
+	const int mods_count = mb_info->mods_count;
+	const multiboot_module_t* mod_start = (multiboot_module_t*)mb_info->mods_addr;
+
     clear();
     vga_disable_cursor();
     vga_set_position(0, 0);
 
     print_raw("[OK] Bootloader loaded ");
-    print_raw(itoa(mb_info->mods_count));
+    print_raw(itoa(mods_count));
     printf(" modules");
 
     print_raw("[OK] Detected ");
@@ -114,9 +117,9 @@ void kmain(multiboot_info_t* mb_info) {
     }
     kbd_flush_buffer();
 
-    printf("[..] Refreshing system time");
+    //printf("[..] Refreshing system time");
     rtc_refresh();
-    printf("[OK] Time set");
+    //printf("[OK] Time set");
 
     printf("[..] Initializing serial COM1");
     serial_init();
@@ -126,6 +129,18 @@ void kmain(multiboot_info_t* mb_info) {
     send(0x47); // G
     printf("[OK] COM1 ready");
     
+    printf("[..] Checking initrd ...");
+    if (mods_count < 1) {
+    	printw("[!!] No initrd loaded");
+    } else {
+    	tar_header_t* first = (tar_header_t*)mod_start->mod_start;
+
+    	if (tar_get_header("lfos-initrd-version.txt", first) == 0)
+    		printw("[!!] Initrd corrupt");
+    	else
+    		printf("[OK] Initrd found");
+    }
+
     task_init((void*)kmain_task);
     while (1) {}
 }

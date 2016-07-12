@@ -4,7 +4,7 @@ all:
 	make build
 
 build:
-	cd kernel; make
+	cd iso; make
 
 test:
 	cd kernel; make test

@@ -184,6 +184,15 @@ const char * stringFromInt(int input) {
     return itoa(input);
 }
 
+int atoi(char* string) {
+	int ret = 0;
+	int str_len = strlen(string)-1;
+	for (int i = str_len; i >= 0; i--) {
+		ret += (string[i] - 48) * pow(10, str_len-i);
+	}
+	return ret;
+}
+
 /*!
  * \brief int -> char
  *
