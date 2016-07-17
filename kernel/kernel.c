@@ -233,24 +233,29 @@ void abort(char* msg) {
     printf(msg);
     printf("\n");
     printw("Debug information: \n");
+
+    print_raw("Task: ");
+    print_raw(itoa(task_get_id()));
+    print_raw("\n\n");
+
     print_raw("EAX: ");
-    printf(stringFromInt(eax));
+    printf(itoa(eax));
 
 
     print_raw("EBX: ");
-    printf(stringFromInt(ebx));
+    printf(itoa(ebx));
 
 
     print_raw("ECX: ");
-    printf(stringFromInt(ecx));
+    printf(itoa(ecx));
 
 
     print_raw("EDX: ");
-    printf(stringFromInt(edx));
+    printf(itoa(edx));
 
 
     print_raw("ESP: ");
-    printf(stringFromInt(esp));
+    printf(itoa(esp));
     cpu_halt();
 }
 
