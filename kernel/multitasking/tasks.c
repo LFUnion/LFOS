@@ -13,40 +13,35 @@ static void*    first_request;
 task_t* task_init(void* entry) {
     task_t* task = (task_t*)malloc(sizeof(task_t));
     uint8_t* stack = (uint8_t*)malloc(TASK_STACK_SIZE*sizeof(uint8_t));
-    
     task->registers = (reg_state*)malloc(sizeof(reg_state));
     task->registers->eip = (uint32_t)entry;
     task->registers->cs = 0x08;
     task->registers->ss = 0x10;
     task->registers->esp = (uint32_t)(stack+TASK_STACK_SIZE-1);
     task->registers->eflags = 0x202;
-    
     task->stack = stack;
     task->task_id = task_count + 1;
     task->enabled = 1;
-
     task_count++;
     tasks[task_count] = task;
-    
     return task;
 }
 
 void task_scheduler(reg_state* regs) {
     if (!task_count)
         return;
-    
-    if (current_task != 0) {
+
+    if (current_task != 0)
         memcpy(regs, tasks[current_task]->registers, sizeof(reg_state));
-    }
-    
+
     do {
         current_task++;
+
         if (current_task > task_count)
             current_task = 1;
     } while (tasks[current_task]->enabled == 0);
-    
+
     memcpy(tasks[current_task]->registers, regs, sizeof(reg_state));
-    
     return;
 }
 
@@ -58,7 +53,7 @@ void task_wait(int irq) {
     irq_request_t* request = (irq_request_t*)malloc(sizeof(irq_request_t));
     request->task_id = current_task;
     request->irq = irq;
-    
+
     if (request_count == 0) {
         request->prev = request;
         first_request = request;
@@ -67,10 +62,9 @@ void task_wait(int irq) {
         request->prev = prev;
         prev->next    = request;
     }
-    
+
     request->next = request;
     request_count++;
-    
     tasks[current_task]->enabled = 0;
     asm volatile("int $0x20");
 }
@@ -83,23 +77,23 @@ void task_stop(uint32_t id) {
 void task_signal_irq(int irq) {
     if (request_count == 0)
         return;
-    
+
     irq_request_t* request = 0x0;
+
     for (uint32_t i = 0; i < request_count; i++) {
         if (task_get_request(i)->irq == (uint32_t)irq) {
             request = task_get_request(i);
             break;
         }
     }
-    
+
     if (request == 0x0)
         return;
-    
+
     irq_request_t* prev = request->prev;
     irq_request_t* next = request->next;
     prev->next = next;
     next->prev = prev;
-    
     tasks[request->task_id]->enabled = 1;
     free(request);
     request_count--;
@@ -108,11 +102,11 @@ void task_signal_irq(int irq) {
 irq_request_t* task_get_request(uint32_t number) {
     if (request_count <= number)
         return 0x0;
-    
+
     irq_request_t* current = first_request;
-    for (uint32_t i = 0; i < number; i++) {
+
+    for (uint32_t i = 0; i < number; i++)
         current = current->next;
-    }
-    
+
     return current;
 }

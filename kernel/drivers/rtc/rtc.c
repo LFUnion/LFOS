@@ -5,11 +5,11 @@
 #include "stdint.h"
 
 /*
- *  NOTE: 
+ *  NOTE:
  *  This code is experimental.
  *  The functions are probably not stable
  *  on some machines.
- * 
+ *
  */
 
 /* Register definitions */
@@ -23,20 +23,17 @@ extern uint8_t rtc_minute;
 extern uint8_t rtc_hour;
 
 /* Returns 0 if not currently updating */
-static inline uint8_t read_update_flag()
-{
+static inline uint8_t read_update_flag() {
     return cmos_read_register(0x0A) & 0x80;
 }
 
 /* Refreshes the gloabl variables */
-void rtc_refresh()
-{
+void rtc_refresh() {
     rtc_second = cmos_read_register(reg_sec);
     rtc_minute = cmos_read_register(reg_min);
     rtc_hour   = cmos_read_register(reg_hor);
-        
-    while(read_update_flag())
-    {
+
+    while(read_update_flag()) {
         rtc_second = cmos_read_register(reg_sec);
         rtc_minute = cmos_read_register(reg_min);
         rtc_hour   = cmos_read_register(reg_hor);

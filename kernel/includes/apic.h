@@ -6,8 +6,7 @@
 #include "portio.h"
 #include "acpi.h"
 
-struct data_lapic
-{
+struct data_lapic {
     uint8_t type;
     uint8_t length;
     uint8_t id;
@@ -15,8 +14,7 @@ struct data_lapic
     uint32_t flags;
 } ;
 
-struct data_ioapic
-{
+struct data_ioapic {
     uint8_t type;
     uint8_t length;
     uint8_t ioapicid;
@@ -25,8 +23,7 @@ struct data_ioapic
     uint32_t globalsysteminterruptbase;
 } ;
 
-struct data_iapic
-{
+struct data_iapic {
     uint8_t type;
     uint8_t length;
     uint8_t bus;
@@ -45,4 +42,4 @@ void writeapicreghex (uint8_t registern, uint32_t hex);
 uint32_t readapicreg (uint8_t registern);
 void pic_dis();
 
-#endif 
+#endif

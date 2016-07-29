@@ -26,7 +26,8 @@ typedef struct gdt_ptr gdt_ptr_t;
 
 extern void flush_gdt(uint32_t pointer);
 
-void add_gdt_entry(int i, uint32_t base, uint32_t limit, uint8_t access, uint8_t gran);
+void add_gdt_entry(int i, uint32_t base, uint32_t limit, uint8_t access,
+                   uint8_t gran);
 void load_gdt();
 
 #endif /* GDT_H */

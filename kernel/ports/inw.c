@@ -19,8 +19,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 #include "inw.h"
 
-uint16_t inw(uint16_t port)
-{
+uint16_t inw(uint16_t port) {
     uint16_t hex;
     asm volatile ("inw %w1, %w0\n" : "=a" (hex) : "d" (port));
     return hex;

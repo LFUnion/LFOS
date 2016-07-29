@@ -5,12 +5,12 @@
 
 /* General configuration */
 
-    /* Memory Management */
-        //#define MM_WATERMARK
-        #define MM_SEGMENTATION
-        
-    /* Scheduler */
-        #define PIT_FREQUENCY 500
-        
+/* Memory Management */
+//#define MM_WATERMARK
+#define MM_SEGMENTATION
+
+/* Scheduler */
+#define PIT_FREQUENCY 500
+
 
 #endif /* LFOS_CONFIG_H */

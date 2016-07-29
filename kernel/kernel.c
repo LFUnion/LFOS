@@ -74,56 +74,46 @@ const tar_header_t* tarhead;
 
 /* Kernel entry point, called from boot/bootloader.asm */
 void kmain(multiboot_info_t* mb_info) {
-	const int mods_count = mb_info->mods_count;
-	const multiboot_module_t* mod_start = (multiboot_module_t*)mb_info->mods_addr;
-	tarhead = (tar_header_t*)mod_start->mod_start;
-
+    const int mods_count = mb_info->mods_count;
+    const multiboot_module_t* mod_start = (multiboot_module_t*)mb_info->mods_addr;
+    tarhead = (tar_header_t*)mod_start->mod_start;
     clear();
     vga_disable_cursor();
     vga_set_position(0, 0);
-
     print_raw("[OK] Bootloader loaded ");
     print_raw(itoa(mods_count));
     printf(" modules");
-
     print_raw("[OK] Detected ");
     print_raw(cpu_getVendor());
     print_raw(" processor --> Number of Cores: ");
     printf(stringFromInt(get_number_of_cores()));
-    
     printf("[..] Loading GDT");
     load_gdt();
     printf("[OK] GDT loaded");
-
     printf("[..] Loading IDT");
     init_idt();
     printf("[OK] IDT loaded");
-    
     find_acpi();
-    
     printf("[..] Initializing PIC");
     pic_init();
     pit_init(PIT_FREQUENCY, 0);
     cpu_sti();
     printf("[OK] PIC initialized");
-
     printf("[..] Checking PCI");
     scan_pci();
     print_raw("[OK] PCI checked --> Number of PCI devices: ");
     printf(stringFromInt(get_number_pci()));
-        
     printf("[..] Initializing keyboard");
-    if(kbd_detect() == 1 && kbd_init() == 1) {
-        printf("[OK] Keyboard initialized");
-    } else {
-        printw("[!!] Could not initialize keyboard");
-    }
-    kbd_flush_buffer();
 
+    if(kbd_detect() == 1 && kbd_init() == 1)
+        printf("[OK] Keyboard initialized");
+    else
+        printw("[!!] Could not initialize keyboard");
+
+    kbd_flush_buffer();
     //printf("[..] Refreshing system time");
     rtc_refresh();
     //printf("[OK] Time set");
-
     printf("[..] Initializing serial COM1");
     serial_init();
     send(0x50); // P
@@ -131,28 +121,27 @@ void kmain(multiboot_info_t* mb_info) {
     send(0x4E); // N
     send(0x47); // G
     printf("[OK] COM1 ready");
-
     printf("[..] Checking initrd ...");
-    if (mods_count < 1) {
-    	printw("[!!] No initrd loaded");
-    } else {
-    	if (tar_get_header("lfos-initrd-version.txt", tarhead) == 0)
-    		printw("[!!] Initrd corrupt");
-    	else
-    		printf("[OK] Initrd found");
+
+    if (mods_count < 1)
+        printw("[!!] No initrd loaded");
+    else {
+        if (tar_get_header("lfos-initrd-version.txt", tarhead) == 0)
+            printw("[!!] Initrd corrupt");
+        else
+            printf("[OK] Initrd found");
     }
 
     task_init((void*)kmain_task);
+
     while (1) {}
 }
 
 void kmain_task(void) {
     task_init((void*)idle);
-    
     printf("");
     printw("Welcome to LFOS!");
     printw("Copyright (C) 2015-2016  LFUnion");
-
     printf("");
     print_raw("You are using LFOS ");
     print_raw(LFOS_VERSION);
@@ -160,53 +149,54 @@ void kmain_task(void) {
     print_raw(__DATE__);
     print_raw(" at ");
     printf(__TIME__);
-    
     printf("");
     printw("[##] Press any key to continue");
     kbd_flush_buffer();
     kbd_pull_key();
     clear();
-
     print_help();
+
     while (1) {
+        kbd_flush_buffer();
+        char resp = kbd_pull_char();
+        char line[4] = "> ";
+        line[2] = resp;
+        line[3] = 0;
+        printf(line);
 
-    kbd_flush_buffer();
-    char resp = kbd_pull_char();
-    char line[4] = "> ";
-    line[2] = resp;
-    line[3] = 0;
-    printf(line);
+        if (resp == 'R') {
+            printf("[..] Rebooting");
+            cpu_reset();
+            printw("COULD NOT RESET CPU");
+        } else if (resp == 'H') {
+            printw("[!!] Halting CPU");
+            cpu_cli();
+            cpu_halt();
+            printw("COULD NOT HALT CPU");
+        } else if (resp == 'C')
+            clear();
+        else if (resp == 'S')
+            kshell_main();
+        else if (resp == 'A') {
+            ata_init();
+            printf("ATA: Initialized");
+        } else if (resp == 'F') {
+            ufs_init();
+            ufs_format(0);
+            uint16_t* data = (uint16_t*)malloc(216 * sizeof(uint16_t));
 
-    if (resp == 'R') {
-        printf("[..] Rebooting");
-        cpu_reset();
-        printw("COULD NOT RESET CPU");
-    } else if (resp == 'H') {
-        printw("[!!] Halting CPU");
-        cpu_cli();
-        cpu_halt();
-        printw("COULD NOT HALT CPU");
-    } else if (resp == 'C') {
-        clear();
-    } else if (resp == 'S') {
-        kshell_main();
-    } else if (resp == 'A') {
-        ata_init();
-        printf("ATA: Initialized");
-    } else if (resp == 'F') {
-        ufs_init();
-        ufs_format(0);
-        uint16_t* data = (uint16_t*)malloc(216 * sizeof(uint16_t));
-        for (int i=0; i <= 216; i++) {data[i] = 1;}
+            for (int i=0; i <= 216; i++)
+                data[i] = 1;
 
-        writeb("test.txt", data);
-        const uint16_t* op = readb("test.txt");
-        for (int i=0; i <= 216; i++) {print_raw((char*)stringFromInt(op[i]));}
-    } else if (resp == '-') {
-        print_help();
-    } else if (resp == 'G') {
-        print_copyright();
-    }
+            writeb("test.txt", data);
+            const uint16_t* op = readb("test.txt");
+
+            for (int i=0; i <= 216; i++)
+                print_raw((char*)stringFromInt(op[i]));
+        } else if (resp == '-')
+            print_help();
+        else if (resp == 'G')
+            print_copyright();
     }
 }
 
@@ -224,7 +214,6 @@ void abort(char* msg) {
     register int ecx asm("ecx");
     register int edx asm("edx");
     register int esp asm("esp");
-
     clear();
     printw("LFOS kernel panic");
     printw("-----------------\n");
@@ -233,27 +222,17 @@ void abort(char* msg) {
     printf(msg);
     printf("\n");
     printw("Debug information: \n");
-
     print_raw("Task: ");
     print_raw(itoa(task_get_id()));
     print_raw("\n\n");
-
     print_raw("EAX: ");
     printf(itoa(eax));
-
-
     print_raw("EBX: ");
     printf(itoa(ebx));
-
-
     print_raw("ECX: ");
     printf(itoa(ecx));
-
-
     print_raw("EDX: ");
     printf(itoa(edx));
-
-
     print_raw("ESP: ");
     printf(itoa(esp));
     cpu_halt();
@@ -279,21 +258,21 @@ void print_help() {
 }
 
 void print_copyright() {
-printf("LFOS, a simple operating system.");
-printf("Copyright (C) 2015-2016 LFUnion");
-printf("");
-printf("This program is free software: you can redistribute it and/or modify");
-printf("it under the terms of the GNU General Public License as published by");
-printf("the Free Software Foundation, either version 3 of the License, or");
-printf("(at your option) any later version.");
-printf("");
-printf("This program is distributed in the hope that it will be useful,");
-printf("but WITHOUT ANY WARRANTY; without even the implied warranty of");
-printf("MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the");
-printf("GNU General Public License for more details.");
-printf("");
-printf("You should have received a copy of the GNU General Public License");
-printf("along with this program.  If not, see <http://www.gnu.org/licenses/>.");
+    printf("LFOS, a simple operating system.");
+    printf("Copyright (C) 2015-2016 LFUnion");
+    printf("");
+    printf("This program is free software: you can redistribute it and/or modify");
+    printf("it under the terms of the GNU General Public License as published by");
+    printf("the Free Software Foundation, either version 3 of the License, or");
+    printf("(at your option) any later version.");
+    printf("");
+    printf("This program is distributed in the hope that it will be useful,");
+    printf("but WITHOUT ANY WARRANTY; without even the implied warranty of");
+    printf("MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the");
+    printf("GNU General Public License for more details.");
+    printf("");
+    printf("You should have received a copy of the GNU General Public License");
+    printf("along with this program.  If not, see <http://www.gnu.org/licenses/>.");
 }
 
 void idle() {

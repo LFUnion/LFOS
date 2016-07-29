@@ -26,10 +26,12 @@ static int send_buffer() {
 
 void send (uint8_t chr) {
     while(send_buffer() == 0);
+
     outb(com1, (uint8_t)chr);
 }
 
 uint8_t recv () {
     while(recv_buffer() == 0);
+
     return inb(com1);
 }

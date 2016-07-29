@@ -7,22 +7,18 @@
 idt_ptr_t   idt_ptr2;
 idt_entry_t idt_entrys[NUM_OF_IDT_ENTRYS];
 
-void add_idt_gate(int i, uint32_t base_addr, uint32_t selector, uint16_t flags)
-{
+void add_idt_gate(int i, uint32_t base_addr, uint32_t selector,
+                  uint16_t flags) {
     idt_entrys[i].base_low = base_addr & 0xFFFF;
     idt_entrys[i].base_high = (base_addr >> 16) & 0xFFFF;
-
     idt_entrys[i].selector = selector;
     idt_entrys[i].zero     = 0;
-
     idt_entrys[i].flags    = flags;
 }
 
 void init_idt() {
-
     idt_ptr2.limit = sizeof(idt_entry_t) * 256 -1;
     idt_ptr2.base  = (uint32_t)&idt_entrys;
-
     // Exceptions
     add_idt_gate(0, (uint32_t)exc0, 0x08, 0x8E);
     add_idt_gate(1, (uint32_t)exc1, 0x08, 0x8E);
@@ -56,7 +52,6 @@ void init_idt() {
     add_idt_gate(29, (uint32_t)exc29, 0x08, 0x8E);
     add_idt_gate(30, (uint32_t)exc30, 0x08, 0x8E);
     add_idt_gate(31, (uint32_t)exc31, 0x08, 0x8E);
-    
     // IRQs
     add_idt_gate(32, (uint32_t)irq0 , 0x08, 0x8E);
     add_idt_gate(33, (uint32_t)irq1 , 0x08, 0x8E);
@@ -74,7 +69,5 @@ void init_idt() {
     add_idt_gate(45, (uint32_t)irq13, 0x08, 0x8E);
     add_idt_gate(46, (uint32_t)irq14, 0x08, 0x8E);
     add_idt_gate(47, (uint32_t)irq15, 0x08, 0x8E);
-    
-    
     flush_idt((uint32_t)&idt_ptr2);
 }

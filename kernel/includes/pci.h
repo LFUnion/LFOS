@@ -25,7 +25,7 @@
 
 // Unions and Structures
 
-struct pci_header{
+struct pci_header {
     uint32_t PciID;
     uint16_t VendorID;
     uint16_t DeviceID;
@@ -44,4 +44,4 @@ uint8_t pci_test(uint8_t bus, uint8_t device, uint8_t functions);
 // Do not declare inline else (linking error if you do so)
 int8_t get_number_pci();
 
-#endif 
+#endif

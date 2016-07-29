@@ -22,7 +22,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 #include <stdint.h>
 
-// Defines 
+// Defines
 #define PI 3.14159265
 #define E 2.71828183
 
@@ -51,7 +51,8 @@ double pow_i(const double base, const int64_t exponent);
 // static
 
 uint64_t abs_i(int64_t value);
-double continuous_fraction_root(double minus, const double radicant, uint8_t max);
+double continuous_fraction_root(double minus, const double radicant,
+                                uint8_t max);
 
 
-#endif 
+#endif

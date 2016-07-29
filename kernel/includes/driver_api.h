@@ -14,17 +14,17 @@
 // Variables
 
 /*
-enum drivertypes = 
+enum drivertypes =
 {
     ATA,
     KEYBOARD,
-    RTC, 
-    SERIAL, 
+    RTC,
+    SERIAL,
     VGA
 };
 */
 
-union function_data{
+union function_data {
     // uint8_t functions
     uint8_t (*func_8)          ();
     uint8_t (*func_8_8)        (uint8_t);
@@ -87,4 +87,4 @@ struct pci_header* pci_api_data_return(uint8_t number);
 
 
 
-#endif 
+#endif

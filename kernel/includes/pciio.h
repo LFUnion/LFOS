@@ -7,7 +7,7 @@
 
 // DEFINES AND MAKROS
 #define ENABLEBIT (uint32_t)0x80000000
- 
+
 
 //#define CONFIG_PCIADDR(BUS, HEADER) (ENABLEBIT | BUS | (HEADER & 0xFC))
 
@@ -26,4 +26,4 @@ void out_pci_32 (uint32_t deviceAndVendorID, uint8_t pciRegister, uint32_t hex);
 uint32_t in_pci_32 (uint32_t deviceAndVendorID, uint8_t pciRegister);
 
 
-#endif 
+#endif

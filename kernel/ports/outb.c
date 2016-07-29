@@ -32,7 +32,6 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
  * @param port (16 bit) Adress of the port
  * @param value (8 bit)  The data to be sent
  */
-void outb(uint16_t port, uint8_t value)
-{
+void outb(uint16_t port, uint8_t value) {
     asm volatile ("outb %0, %1" : : "a"(value), "Nd"(port));
 }

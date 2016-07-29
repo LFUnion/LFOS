@@ -13,7 +13,7 @@ enum eax0d {name3 = 0};
 
 /*
  * missimg
- *  
+ *
  */
 
 
@@ -21,7 +21,7 @@ enum eax1b {brandindex = 0, cachelinesize = (1<<8), numberoflogical = (1<<16), l
 
 /*
  * missimg
- *  
+ *
  */
 
 /*
@@ -37,7 +37,8 @@ enum eax5a {};
 
 
 void use_cpu_id();
-uint32_t interpret_cpu_id_data(const uint8_t number_eax, uint8_t register_number);
+uint32_t interpret_cpu_id_data(const uint8_t number_eax,
+                               uint8_t register_number);
 
 
-#endif 
+#endif

@@ -27,42 +27,35 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 const uint16_t pci_base = 0xCF8;
 
 
-void out_pci_8 (uint32_t deviceAndVendorID, uint8_t pciRegister, uint8_t hex){
+void out_pci_8 (uint32_t deviceAndVendorID, uint8_t pciRegister, uint8_t hex) {
     outdw(pci_base,(ENABLEBIT | deviceAndVendorID | (pciRegister & 0xFC)));
     outb(pci_base+4+(pciRegister & 0x03), hex);
-    
-    
 }
 
-uint8_t in_pci_8 (uint32_t deviceAndVendorID, uint8_t pciRegister){
+uint8_t in_pci_8 (uint32_t deviceAndVendorID, uint8_t pciRegister) {
     outdw(pci_base,(ENABLEBIT | deviceAndVendorID | (pciRegister & 0xFC)));
     return (uint8_t)(inb(pci_base+4+(pciRegister & 0x03)));
-    
 }
 
 
-void out_pci_16 (uint32_t deviceAndVendorID, uint8_t pciRegister, uint16_t hex){
-    
+void out_pci_16 (uint32_t deviceAndVendorID, uint8_t pciRegister,
+                 uint16_t hex) {
     outdw(pci_base,(ENABLEBIT | deviceAndVendorID | (pciRegister & 0xFC)));
     outw(pci_base+4+(pciRegister & 0x02), hex);
-    
 }
 
-uint16_t in_pci_16 (uint32_t deviceAndVendorID, uint8_t pciRegister){
+uint16_t in_pci_16 (uint32_t deviceAndVendorID, uint8_t pciRegister) {
     outdw(pci_base,(ENABLEBIT | deviceAndVendorID | (pciRegister & 0xFC)));
     return (uint16_t)(inw(pci_base+4+(pciRegister & 0x02)));
-     
 }
 
-void out_pci_32 (uint32_t deviceAndVendorID, uint8_t pciRegister, uint32_t hex){
-    
+void out_pci_32 (uint32_t deviceAndVendorID, uint8_t pciRegister,
+                 uint32_t hex) {
     outdw(pci_base,(ENABLEBIT | deviceAndVendorID | (pciRegister & 0xFC)));
     outb(pci_base+4, hex);
-    
 }
 
-uint32_t in_pci_32 (uint32_t deviceAndVendorID, uint8_t pciRegister){
+uint32_t in_pci_32 (uint32_t deviceAndVendorID, uint8_t pciRegister) {
     outdw(pci_base,(ENABLEBIT | deviceAndVendorID | (pciRegister & 0xFC)));
     return (uint32_t)(indw(pci_base+4));
-
 }

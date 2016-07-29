@@ -11,7 +11,7 @@
 #define FACP 4
 #define MADT2 5
 
-struct data_rsdp{
+struct data_rsdp {
     char signature[8];
     uint8_t checksum;
     uint8_t oemid[6];
@@ -20,11 +20,11 @@ struct data_rsdp{
     uint32_t length;
     uint64_t* ptrxsdt;
     uint8_t exchecksum;
-    uint8_t reserved[3]; 
+    uint8_t reserved[3];
 
 };
 
-struct data_rsdt{
+struct data_rsdt {
     char signature[4];
     uint32_t length;
     uint8_t revision;
@@ -37,7 +37,7 @@ struct data_rsdt{
     uint32_t othertable[5];
 };
 
-struct data_xsdt{
+struct data_xsdt {
     char signature[4];
     uint32_t length;
     uint8_t revision;
@@ -51,7 +51,7 @@ struct data_xsdt{
 
 };
 
-struct data_madt{
+struct data_madt {
     char signature[4];
     uint32_t length;
     uint8_t revision;
@@ -65,7 +65,7 @@ struct data_madt{
     uint32_t flags;
 };
 
-struct data_racp{
+struct data_racp {
     char signature[4];
     uint32_t length;
     uint8_t revision;
@@ -87,4 +87,4 @@ void find_acpi();
 uint8_t search_table(uint8_t i, uint32_t* first_digit);
 void configuration_of_tables(uint8_t c, uint32_t first_digit);
 
-#endif 
+#endif

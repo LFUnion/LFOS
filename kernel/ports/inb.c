@@ -32,8 +32,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
  * @param port (16 bit) Adress of the port
  * @return (8 bit) The data received
  */
-uint8_t inb(uint16_t port)
-{
+uint8_t inb(uint16_t port) {
     uint8_t value;
     asm volatile ("inb %1, %0" : "=a" (value) : "Nd" (port));
     return value;
