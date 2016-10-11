@@ -3,12 +3,10 @@
 
 #include <stdint.h>
 
-char * stringFromDouble(const double input, int8_t after);
-int intFromString(char* restrict input);
-unsigned int uintFromString(char* restrict input);
+char * dtoa(const double input, int8_t after);
+unsigned int atoui(char* restrict input);
 const char * itoa(int input);
-const char * stringFromInt(int input);
 int atoi(char* string);
-char charFromDigit(int digit);
+char dtoc(int digit);
 
 #endif /* KCASTS_H */

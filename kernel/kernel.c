@@ -86,7 +86,7 @@ void kmain(multiboot_info_t* mb_info) {
     print_raw("[OK] Detected ");
     print_raw(cpu_getVendor());
     print_raw(" processor --> Number of Cores: ");
-    printf(stringFromInt(get_number_of_cores()));
+    printf(itoa(get_number_of_cores()));
     printf("[..] Loading GDT");
     load_gdt();
     printf("[OK] GDT loaded");
@@ -102,7 +102,7 @@ void kmain(multiboot_info_t* mb_info) {
     printf("[..] Checking PCI");
     scan_pci();
     print_raw("[OK] PCI checked --> Number of PCI devices: ");
-    printf(stringFromInt(get_number_pci()));
+    printf(itoa(get_number_pci()));
     printf("[..] Initializing keyboard");
 
     if(kbd_detect() == 1 && kbd_init() == 1)
@@ -192,7 +192,7 @@ void kmain_task(void) {
             const uint16_t* op = readb("test.txt");
 
             for (int i=0; i <= 216; i++)
-                print_raw((char*)stringFromInt(op[i]));
+                print_raw((char*)itoa(op[i]));
         } else if (resp == '-')
             print_help();
         else if (resp == 'G')

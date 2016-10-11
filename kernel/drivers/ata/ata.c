@@ -285,9 +285,9 @@ const struct driver_data_ata ata_api = {
 
 void ata_send() {
     print_raw("Number of functions: ");
-    printf(stringFromInt(ata_api.datai.number_of_functions));
+    printf(itoa(ata_api.datai.number_of_functions));
     print_raw("Priority: ");
-    printf(stringFromInt(ata_api.datai.driver_priority));
+    printf(itoa(ata_api.datai.driver_priority));
     printf(ata_api.datai.driver_description);
 }
 
@@ -299,31 +299,31 @@ void ata_use(const int func) {
         while (count<8) {
             int ret = (*ata_api.pfunc[0].func_8_8) (count);
             print_raw("ATA-Port ");
-            print_raw(stringFromInt(count));
+            print_raw(itoa(count));
             print_raw(": ");
-            printf(stringFromInt(ret));
+            printf(itoa(ret));
             ++count;
         }
     } else if (func ==2) {
         print_raw("Write Ports: ");
         char* port = scanf();
-        int port_i = uintFromString(port);
+        int port_i = atoui(port);
         char* value = scanf();
-        int value_i = uintFromString(value);
+        int value_i = atoui(value);
         (*ata_api.pfunc[1].func_v_8_8) (port, value);
         free(port);
         free(value);
     } else if (func ==3) {
         print_raw("Print status byte: ");
         int i = (*ata_api.pfunc[2].func_8) ();
-        printf(stringFromInt(i));
+        printf(itoa(i));
     } else if (func ==4) {
         printf("Read status");
         print_raw("Input Bit: ");
         char* value = scanf();
-        int value_i = uintFromString(value);
+        int value_i = atoui(value);
         int i = ata_api.pfunc[3].func_i_i (value_i);
-        printf(stringFromInt(i));
+        printf(itoa(i));
         free(value);
     } else if(func == 5) {
         printf("Disabble Interrupts");
@@ -331,9 +331,9 @@ void ata_use(const int func) {
     } else if(func == 6) {
         print_raw("Select drive: ");
         char * value = scanf();
-        int value_i = uintFromString(value);
+        int value_i = atoui(value);
         uint8_t i = ata_api.pfunc[5].func_8_i (value_i);
-        printf(stringFromInt(i));
+        printf(itoa(i));
         free(value);
     } else if(func == 7) {
         printf("ATA reset");
@@ -342,20 +342,20 @@ void ata_use(const int func) {
         printf("Flush Cache");
         print_raw("Select Drive: ");
         char * value = scanf();
-        int value_i = uintFromString(value);
+        int value_i = atoui(value);
         ata_api.pfunc[7].func_v_i (value_i);
         free(value);
     } else if(func == 9) {
         print_raw("Select Drive: ");
         char * value = scanf();
-        int value_i = uintFromString(value);
+        int value_i = atoui(value);
         ata_api.pfunc[8].func_v_i (value_i);
         free(value);
     } else if (func == 10) {
         char * command = scanf();
-        int command_i = uintFromString(command);
+        int command_i = atoui(command);
         char * drive = scanf();
-        int drive_i = uintFromString(drive);
+        int drive_i = atoui(drive);
         ata_api.pfunc[9].func_v_8_i (command_i, drive_i);
         free(command);
         free(drive);
@@ -365,15 +365,15 @@ void ata_use(const int func) {
     } else if (func == 12) {
         print_raw("Select Drive: ");
         char * drive = scanf();
-        int drive_i = uintFromString(drive);
+        int drive_i = atoui(drive);
         print_raw("Select sector: ");
         char * sector = scanf();
-        int sector_i = uintFromString(sector);
+        int sector_i = atoui(sector);
         uint16_t* startadress = ata_api.pfunc[11].func_16_i_32 (drive_i, sector_i);
         const uint16_t* endadress = startadress + 256;
 
         while(endadress>startadress) {
-            printf(stringFromInt(*startadress));
+            printf(itoa(*startadress));
             ++startadress;
         }
 
@@ -382,17 +382,17 @@ void ata_use(const int func) {
     } else if (func == 13) {
         print_raw("Select Drive: ");
         char * drive = scanf();
-        int drive_i = uintFromString(drive);
+        int drive_i = atoui(drive);
         print_raw("Select (start) sector: ");
         char * sector = scanf();
-        int sector_i = uintFromString(sector);
+        int sector_i = atoui(sector);
         print_raw("Data: ");
         char * data = scanf();
         uint16_t data_i[256];
 
         for(unsigned int c = 0; c<256; ++c ) {
             char * data = scanf();
-            data_i[c] = uintFromString(data);
+            data_i[c] = atoui(data);
             free(data);
         }
 
@@ -402,19 +402,19 @@ void ata_use(const int func) {
     } else if (func == 14) {
         print_raw("Select Drive: ");
         char * drive = scanf();
-        int drive_i = uintFromString(drive);
+        int drive_i = atoui(drive);
         print_raw("Select sector: ");
         char * sector = scanf();
-        int sector_i = uintFromString(sector);
+        int sector_i = atoui(sector);
         print_raw("Number of sectors: ");
         char * count = scanf();
-        int count_i = uintFromString(count);
+        int count_i = atoui(count);
         uint16_t* startadress = ata_api.pfunc[13].func_16_i_32_i (drive_i, sector_i,
                                 count_i);
         const uint16_t* endadress = startadress + count_i*256;
 
         while(startadress < endadress) {
-            printf(stringFromInt(*startadress));
+            printf(itoa(*startadress));
             ++startadress;
         }
 
@@ -424,20 +424,20 @@ void ata_use(const int func) {
     } else if (func == 15) {
         print_raw("Select Drive: ");
         char * drive = scanf();
-        int drive_i = uintFromString(drive);
+        int drive_i = atoui(drive);
         print_raw("Select (start) sector: ");
         char * sector = scanf();
-        int sector_i = uintFromString(sector);
+        int sector_i = atoui(sector);
         print_raw("Number of sectors: ");
         char * count = scanf();
-        int count_i = uintFromString(count);
+        int count_i = atoui(count);
         uint16_t data_i[count_i*256];
         printf("Data:");
 
         for (int i = 0; i<count_i; ++i) {
             for(unsigned int c = 0; c<256; ++c ) {
                 char * data = scanf();
-                data_i[(i *256) +c] = uintFromString(data);
+                data_i[(i *256) +c] = atoui(data);
                 free(data);
             }
         }

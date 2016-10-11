@@ -15,7 +15,7 @@
  *
  */
 
-char * stringFromDouble(const double input, int8_t after) {
+char * dtoa(const double input, int8_t after) {
     if(input == 0)
         return "0.0";
 
@@ -84,7 +84,7 @@ char * stringFromDouble(const double input, int8_t after) {
     return rstr;
 }
 
-unsigned int uintFromString(char* restrict input) {
+unsigned int atoui(char* restrict input) {
     unsigned int rnumber = 0 ;
     int stringlength = strlen(input)-1;
     int factor = 1 , test;
@@ -94,29 +94,6 @@ unsigned int uintFromString(char* restrict input) {
 
         if(!(test>-1 && test<10))
             return 0;
-
-        rnumber += (test)*factor;
-        factor *= 10;
-    }
-
-    return rnumber;
-}
-
-int intFromString(char* restrict input) {
-    int rnumber = 0;
-    int stringlength = strlen(input)-1;
-    int factor = 1, test;
-
-    for(stringlength; stringlength>-1; --stringlength) {
-        test = input[stringlength]-OFFSETNUMBERS;
-
-        if(!(test>-1 && test<10)) {
-            if((test == '-'-OFFSETNUMBERS) && stringlength == 0) {
-                rnumber = -rnumber;
-                break;
-            } else
-                return 0;
-        }
 
         rnumber += (test)*factor;
         factor *= 10;
@@ -149,7 +126,7 @@ const char * itoa(int input) {
     int i = 0;
 
     while(input) {
-        tmp[i] = charFromDigit(input % 10);
+        tmp[i] = dtoc(input % 10);
         i++;
         input /= 10;
     }
@@ -166,10 +143,6 @@ const char * itoa(int input) {
 
     ret[i] = '\0';
     return ret;
-}
-
-const char * stringFromInt(int input) {
-    return itoa(input);
 }
 
 int atoi(char* string) {
@@ -189,7 +162,7 @@ int atoi(char* string) {
  * @param digit The digit to get converted
  * @return The char
  */
-char charFromDigit(int digit) {
+char dtoc(int digit) {
     if (digit >= 0 && digit <= 9)
         return 48 + digit;
     else

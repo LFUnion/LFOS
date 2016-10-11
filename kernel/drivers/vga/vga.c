@@ -231,9 +231,9 @@ const struct driver_data_vga vga_api = {
 
 void vga_send() {
     print_raw("Number of functions: ");
-    printf(stringFromInt(vga_api.datai.number_of_functions));
+    printf(itoa(vga_api.datai.number_of_functions));
     print_raw("Priority: ");
-    printf(stringFromInt(vga_api.datai.driver_priority));
+    printf(itoa(vga_api.datai.driver_priority));
     printf(vga_api.datai.driver_description);
 }
 
@@ -243,16 +243,16 @@ void vga_use(const int func) {
     if (func == 1) {
         print_raw("Character: ");
         char * character = scanf();
-        uint8_t character_i = uintFromString(character);
+        uint8_t character_i = atoui(character);
         print_raw("Color: ");
         char * color = scanf();
-        uint8_t color_i = uintFromString(color);
+        uint8_t color_i = atoui(color);
         print_raw("Position: ");
         char * position = scanf();
-        uint8_t position_i = uintFromString(position);
+        uint8_t position_i = atoui(position);
         print_raw("Line: ");
         char * line = scanf();
-        uint8_t line_i = uintFromString(line);
+        uint8_t line_i = atoui(line);
         vga_api.pfunc[0].func_v_8_8_8_8 (character_i, color_i, line_i, position_i);
         free(character);
         free(color);
@@ -261,16 +261,16 @@ void vga_use(const int func) {
     } else if (func == 2) {
         print_raw("Character: ");
         char * character = scanf();
-        uint8_t character_i = uintFromString(character);
+        uint8_t character_i = atoui(character);
         print_raw("Color: ");
         char * color = scanf();
-        uint8_t color_i = uintFromString(color);
+        uint8_t color_i = atoui(color);
         print_raw("Position: ");
         char * position = scanf();
-        uint8_t position_i = uintFromString(position);
+        uint8_t position_i = atoui(position);
         print_raw("Line: ");
         char * line = scanf();
-        uint8_t line_i = uintFromString(line);
+        uint8_t line_i = atoui(line);
         vga_api.pfunc[1].func_v_8_8_8_8 (character_i, color_i, line_i, position_i);
         free(character);
         free(color);
@@ -300,18 +300,18 @@ void vga_use(const int func) {
     } else if (func == 8) {
         print_raw("Row number: ");
         int i = vga_api.pfunc[7].func_i ();
-        printf(stringFromInt(i));
+        printf(itoa(i));
     } else if (func == 9) {
         print_raw("Print line position: ");
         int i = vga_api.pfunc[8].func_i ();
-        printf(stringFromInt(i));
+        printf(itoa(i));
     } else if (func == 10) {
         print_raw("Position: ");
         char * position = scanf();
-        uint8_t position_i = uintFromString(position);
+        uint8_t position_i = atoui(position);
         print_raw("Line: ");
         char * line = scanf();
-        uint8_t line_i = uintFromString(line);
+        uint8_t line_i = atoui(line);
         vga_api.pfunc[9].func_v_i_i (line_i, position_i);
         free(position);
         free(line);
@@ -321,10 +321,10 @@ void vga_use(const int func) {
     } else if (func == 12) {
         print_raw("Position of cursor: ");
         char * position = scanf();
-        uint8_t position_i = uintFromString(position);
+        uint8_t position_i = atoui(position);
         print_raw("Line of cursor: ");
         char * line = scanf();
-        uint8_t line_i = uintFromString(line);
+        uint8_t line_i = atoui(line);
         vga_api.pfunc[11].func_v_i_i (line_i, position_i);
         free(position);
     } else if (func == 13) {

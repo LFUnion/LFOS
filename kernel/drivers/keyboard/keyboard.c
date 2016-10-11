@@ -201,9 +201,9 @@ const struct driver_data_keyboard key_api = {
 
 void keyboard_send() {
     print_raw("Number of functions: ");
-    printf(stringFromInt(key_api.datai.number_of_functions));
+    printf(itoa(key_api.datai.number_of_functions));
     print_raw("Priority: ");
-    printf(stringFromInt(key_api.datai.driver_priority));
+    printf(itoa(key_api.datai.driver_priority));
     printf(key_api.datai.driver_description);
 }
 
@@ -212,14 +212,14 @@ void keyboard_use(const int func) {
     if (func == 1) {
         print_raw("Input a Command as a number: ");
         char * command = scanf();
-        uint8_t command_i = uintFromString(command);
+        uint8_t command_i = atoui(command);
         uint8_t rvalue = key_api.pfunc[0].func_8_8 (command_i);
         print_raw("Return Value: ");
-        printf(stringFromInt(rvalue));
+        printf(itoa(rvalue));
     } else if (func == 2) {
         uint8_t rvalue = key_api.pfunc[1].func_8 ();
         print_raw("Key number: ");
-        printf(stringFromInt(rvalue));
+        printf(itoa(rvalue));
     } else if (func == 3) {
         int rvalue = key_api.pfunc[2].func_i ();
         printf("Reset Keyboard");

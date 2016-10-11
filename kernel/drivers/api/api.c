@@ -181,7 +181,7 @@ void driverfunctions (const int input) {
         printf("ATA");
         print_raw("Function: ");
         char * input = scanf();
-        int input_i = intFromString(input);
+        int input_i = atoi(input);
 
         if(input_i>0 && input_i<16)
             ata_use(input_i);
@@ -189,7 +189,7 @@ void driverfunctions (const int input) {
         printf("ATA");
         print_raw("Function: ");
         char * input = scanf();
-        int input_i = intFromString(input);
+        int input_i = atoi(input);
 
         if(input_i>0 && input_i<8)
             keyboard_use(input_i);
@@ -197,7 +197,7 @@ void driverfunctions (const int input) {
         printf("ATA");
         print_raw("Function: ");
         char * input = scanf();
-        int input_i = intFromString(input);
+        int input_i = atoi(input);
 
         if(input_i>0 && input_i<15)
             vga_use(input_i);
@@ -271,11 +271,11 @@ void readable_pci_device_names(const uint8_t classcode, int8_t subclass,
         printf(pci_signal_processing_controller[subclass]);
 
     print_raw("Number: ");
-    print_raw(stringFromInt(classcode));
+    print_raw(itoa(classcode));
     print_raw(" ");
-    print_raw(stringFromInt(subclass));
+    print_raw(itoa(subclass));
     print_raw(" ");
-    printf(stringFromInt(progif));
+    printf(itoa(progif));
     printf("");
 }
 
