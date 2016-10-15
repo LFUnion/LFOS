@@ -11,6 +11,6 @@ void c_handler (registers_t r) {
     memset(msg, '\0', 100*(sizeof(char)));
     strcat(msg, "Unhandled exception. Error code: ");
     strcat(msg, (char*)itoa(r.int_no));
-    abort(msg);
+    abort(msg, &r);
     return;
 }

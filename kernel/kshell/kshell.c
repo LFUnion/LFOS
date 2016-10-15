@@ -47,7 +47,7 @@ void kshell_main(void) {
         } else if (strcmp(inp, "REBOOT"))
             cpu_reset();
         else if (strcmp(inp, "ABORT"))
-            abort("Issued 'ABORT' in kshell_main");
+            abort("Issued 'ABORT' in kshell_main", NULL);
         else if (strcmp(inp, "CLEAR"))
             clear();
         else if (strcmp(inp, "SETUNAME")) {

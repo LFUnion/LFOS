@@ -115,13 +115,13 @@ void ata_send_command(uint8_t command, int drive) {
 
 void ata_init() {
     if(ata_read_status_byte() == 0xFF)   // Floating bus
-        abort("ATA: No drive connected to bus0");
+        abort("ATA: No drive connected to bus0", NULL);
 
     ata_master_avail = ata_identify(0);
     ata_slave_avail  = ata_identify(1);
 
     if(ata_master_avail + ata_slave_avail == 0)   // No ATA drive
-        abort("ATA: No ATA drive connected to bus0");
+        abort("ATA: No ATA drive connected to bus0", NULL);
 
     if(ata_master_avail)  {
         ata_select_drive(0);

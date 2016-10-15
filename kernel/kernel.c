@@ -208,19 +208,26 @@ void kmain_task(void) {
  *
  * @param msg The error message to be displayed
  */
-void abort(char* msg) {
+void abort(char* msg, registers_t* regs) {
     cpu_cli();
-    register int eax asm("eax");
-    register int ebx asm("ebx");
-    register int ecx asm("ecx");
-    register int edx asm("edx");
-    register int esp asm("esp");
+
+    int eax, ebx, ecx, edx, esp, eip;
+
+    if (regs == NULL) {
+        eax = ebx = ecx = edx = esp = eip = 0;
+    } else {
+        eax = regs->eax;
+        ebx = regs->ebx;
+        ecx = regs->ecx;
+        edx = regs->edx;
+        esp = regs->esp;
+        eip = regs->eip;
+    }
+
     clear();
     printw("LFOS kernel panic");
     printw("-----------------\n");
-    printw("Reason: abort() has been called");
-    print_raw("Message: ");
-    printf(msg);
+    printw(msg);
     printf("\n");
     printw("Debug information: \n");
     print_raw("Task: ");
@@ -229,16 +236,21 @@ void abort(char* msg) {
     print_raw(task_get_name(task_get_id()));
     print_raw(")");
     printf("\n");
-    print_raw("EAX: ");
-    printf(itoa(eax));
-    print_raw("EBX: ");
-    printf(itoa(ebx));
-    print_raw("ECX: ");
-    printf(itoa(ecx));
-    print_raw("EDX: ");
-    printf(itoa(edx));
-    print_raw("ESP: ");
-    printf(itoa(esp));
+
+    if (regs != NULL) {
+        print_raw("EAX: ");
+        printf(itoa(eax));
+        print_raw("EBX: ");
+        printf(itoa(ebx));
+        print_raw("ECX: ");
+        printf(itoa(ecx));
+        print_raw("EDX: ");
+        printf(itoa(edx));
+        print_raw("ESP: ");
+        printf(itoa(esp));
+        print_raw("EIP: ");
+        printf(itoa(eip));
+    }
     cpu_halt();
 }
 
