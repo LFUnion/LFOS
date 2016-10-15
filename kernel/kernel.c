@@ -225,7 +225,10 @@ void abort(char* msg) {
     printw("Debug information: \n");
     print_raw("Task: ");
     print_raw(itoa(task_get_id()));
-    print_raw("\n\n");
+    print_raw(" (");
+    print_raw(task_get_name(task_get_id()));
+    print_raw(")");
+    printf("\n");
     print_raw("EAX: ");
     printf(itoa(eax));
     print_raw("EBX: ");
