@@ -10,7 +10,7 @@ static task_t*  tasks[100];
 static uint32_t request_count = 0;
 static void*    first_request;
 
-task_t* task_init(void* entry) {
+task_t* task_init(void* entry, char* name) {
     task_t* task = (task_t*)malloc(sizeof(task_t));
     uint8_t* stack = (uint8_t*)malloc(TASK_STACK_SIZE*sizeof(uint8_t));
     task->registers = (reg_state*)malloc(sizeof(reg_state));
@@ -21,6 +21,7 @@ task_t* task_init(void* entry) {
     task->registers->eflags = 0x202;
     task->stack = stack;
     task->task_id = task_count + 1;
+    strcpy(task->task_name, name);
     task->enabled = 1;
     task_count++;
     tasks[task_count] = task;
@@ -47,6 +48,10 @@ void task_scheduler(reg_state* regs) {
 
 uint32_t task_get_id() {
     return current_task;
+}
+
+char* task_get_name(uint32_t id) {
+    return tasks[id]->task_name;
 }
 
 void task_wait(int irq) {

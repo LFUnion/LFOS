@@ -68,9 +68,7 @@ int strcmp (const char* s1, const char* s2) {
 }
 
 char* strcpy (char* dest, char* src) {
-    int i = 0;
-
-    while (src[i] != 0) {
+    for (int i = 0; src[i] != '\0'; i++) {
         dest[i] = src[i];
     }
 

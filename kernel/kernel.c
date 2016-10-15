@@ -23,6 +23,7 @@
 #include "beeper.h"
 #include "ata.h"
 #include "acpi.h"
+#include "vga.h"
 
 //PCI and PCI Drivers
 #include "pciio.h"
@@ -132,13 +133,13 @@ void kmain(multiboot_info_t* mb_info) {
             printf("[OK] Initrd found");
     }
 
-    task_init((void*)kmain_task);
+    task_init((void*)kmain_task, "kernel");
 
     while (1) {}
 }
 
 void kmain_task(void) {
-    task_init((void*)idle);
+    task_init((void*)idle, "idle");
     printf("");
     printw("Welcome to LFOS!");
     printw("Copyright (C) 2015-2016  LFUnion");
