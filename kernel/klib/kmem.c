@@ -26,3 +26,14 @@ void* calloc (size_t n) {
     memset(ptr, 0, n);
     return ptr;
 }
+
+void* realloc (void* ptr, size_t n) {
+    if (ptr == NULL)
+        return malloc(n);
+
+    void* newptr = malloc(n);
+    memcpy(ptr, newptr, n);
+
+    free(ptr);
+    return newptr;
+}
