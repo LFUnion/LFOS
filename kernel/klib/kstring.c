@@ -67,6 +67,16 @@ int strcmp (const char* s1, const char* s2) {
         return 0;
 }
 
+char* strcpy (char* dest, char* src) {
+    int i = 0;
+
+    while (src[i] != 0) {
+        dest[i] = src[i];
+    }
+
+    return dest;
+}
+
 char* strcat(char* dst, char* src) {
     const int len = strlen(dst);
     int i = len;
