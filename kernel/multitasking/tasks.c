@@ -1,9 +1,11 @@
 #include "tasks.h"
 #include "klib.h"
+#include "kernel.h"
 
 #define TASK_STACK_SIZE 4096
 
 static uint32_t task_count = 0;
+static uint32_t tasks_enabled = 0;
 static uint32_t current_task = 0;
 static task_t*  tasks[100];
 
@@ -14,7 +16,7 @@ task_t* task_init(void* entry, char* name) {
     task_t* task = (task_t*)malloc(sizeof(task_t));
     uint8_t* stack = (uint8_t*)malloc(TASK_STACK_SIZE*sizeof(uint8_t));
     task->registers = (reg_state*)malloc(sizeof(reg_state));
-    task->registers->eip = (uint32_t)entry;
+    task->registers->eip = (uint32_t)task_crt0;
     task->registers->cs = 0x08;
     task->registers->ss = 0x10;
     task->registers->esp = (uint32_t)(stack+TASK_STACK_SIZE-1);
@@ -22,7 +24,9 @@ task_t* task_init(void* entry, char* name) {
     task->stack = stack;
     task->task_id = task_count + 1;
     strcpy(task->task_name, name);
+    task->entry = entry;
     task->enabled = 1;
+    tasks_enabled++;
     task_count++;
     tasks[task_count] = task;
     return task;
@@ -40,6 +44,9 @@ void task_scheduler(reg_state* regs) {
 
         if (current_task > task_count)
             current_task = 1;
+
+        if (!tasks_enabled)
+            abort("Scheduler: Deadlock detected! (No tasks are running)", 0);
     } while (tasks[current_task]->enabled == 0);
 
     memcpy(tasks[current_task]->registers, regs, sizeof(reg_state));
@@ -71,6 +78,7 @@ void task_wait(int irq) {
     request->next = request;
     request_count++;
     tasks[current_task]->enabled = 0;
+    tasks_enabled--;
     asm volatile("int $0x20");
 }
 
@@ -100,6 +108,7 @@ void task_signal_irq(int irq) {
     prev->next = next;
     next->prev = prev;
     tasks[request->task_id]->enabled = 1;
+    tasks_enabled++;
     free(request);
     request_count--;
 }
@@ -114,4 +123,13 @@ irq_request_t* task_get_request(uint32_t number) {
         current = current->next;
 
     return current;
+}
+
+void task_crt0() {
+    task_t* current_task = tasks[task_get_id()];
+
+    void* mainfunc = current_task->entry;
+    goto* mainfunc;
+
+    task_stop(task_get_id());
 }

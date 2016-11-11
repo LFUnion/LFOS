@@ -6,6 +6,7 @@
 typedef struct {
     uint32_t    task_id;
     char        task_name[30];
+    void*       entry;
     reg_state*  registers;
     uint8_t*    stack;
     uint8_t     enabled : 1;
@@ -27,5 +28,6 @@ void            task_wait(int irq);
 void            task_stop(uint32_t id);
 void            task_signal_irq(int irq);
 irq_request_t*  task_get_request(uint32_t number);
+void            task_crt0();
 
 #endif /* TASKS_H */
