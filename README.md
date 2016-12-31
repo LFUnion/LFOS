@@ -18,7 +18,7 @@ here:
 http://lfunion.bplaced.net/emulator/?profile=lfos
 
 ### Builds
-Builds are on the LFUnion jenkins server at https://b0939017.ngrok.io
+Builds are on the LFUnion jenkins server at a7318947.ngrok.io
 
 ### Documentation
 The documentation can be found at http://lfunion.bplaced.net/lfos/doc/html/
