@@ -28,6 +28,7 @@ void            task_wait(int irq);
 void            task_stop(uint32_t id);
 void            task_signal_irq(int irq);
 irq_request_t*  task_get_request(uint32_t number);
+uint32_t        task_get_count();
 void            task_crt0();
 
 #endif /* TASKS_H */

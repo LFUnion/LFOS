@@ -1,6 +1,7 @@
 #ifndef MM_SEGMENTATION_H
 #define MM_SEGMENTATION_H
 
+#include "mmap.h"
 #include "stddef.h"
 #include <stdint.h>
 
@@ -21,6 +22,7 @@ typedef struct {
     void* next;     // Next segment descriptor
 } segment_descriptor;
 
+void  segmentation_init();
 void* segmentation_malloc(size_t n);
 void  segmentation_free(void* ptr);
 void* segmentation_new_descriptor(segment_descriptor* desc,
@@ -31,5 +33,8 @@ void* segmentation_use_descriptor(segment_descriptor* desc,
 void* segmentation_calloc(size_t n);
 void* free_segment_calloc (segment_descriptor* cur_desc,
                            segment_descriptor* prev_desc, size_t n);
+
+uint32_t segmentation_available();
+uint32_t segmentation_used();
 
 #endif /* MM_SEGMENTATION_H */

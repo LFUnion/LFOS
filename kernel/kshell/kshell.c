@@ -7,6 +7,7 @@
 
 #include "kshell.h"
 #include "kernel.h"
+#include "tasks.h"
 #include "api.h"
 
 /*!
@@ -42,6 +43,9 @@ void kshell_main(void) {
             printf("EDIT:       Edit a file");
             printf("SETUNAME:   Sets the user name");
             printf("SETHNAME:   Sets the hostname");
+            printf("MMAP:       Print the memory map");
+            printf("FREE:       Display free and used memory");
+            printf("PS:         Display running processes");
             printf("EXIT:       Returns to the debugging interface");
             printf("");
         } else if (strcmp(inp, "REBOOT"))
@@ -79,9 +83,35 @@ void kshell_main(void) {
             write(fn, final);
             free(fn);
             free(final);
-        } else if (strcmp(inp, "API"))
+        } else if (strcmp(inp, "API")) {
             apiloop();
-        else if (strcmp(inp, "EXIT")) {
+        } else if (strcmp(inp, "MMAP")) {
+            for (int i = 0; i < (int)mmap_lenght; ++i) {
+                print_raw("Address: ");
+                print_raw(itoa(mmap[i].addr));
+                print_raw("; Size: ");
+                print_raw(itoa(mmap[i].len / 1024));
+                print_raw(" kiB; Type: ");
+                printf(itoa(mmap[i].type));
+            }
+        } else if (strcmp(inp, "FREE")) {
+            print_raw("Free: ");
+            print_raw(itoa(kmem_available() / 1024));
+            print_raw(" kiB\nUsed: ");
+            print_raw(itoa(kmem_used() / 1024));
+            printf(" kiB");
+        } else if (strcmp(inp, "PS")) {
+            for (int i = 1; i <= (int)task_get_count(); ++i) {
+                print_raw(itoa(i));
+                print_raw(": ");
+
+                if(task_get_id() == (uint32_t)i) {
+                    printw(task_get_name((uint32_t)i));
+                } else {
+                    printf(task_get_name((uint32_t)i));
+                }
+            }
+        } else if (strcmp(inp, "EXIT")) {
             loop = 0;
             break;
         } else {

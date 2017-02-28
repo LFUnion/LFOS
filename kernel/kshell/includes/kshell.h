@@ -4,6 +4,7 @@
 #include "klib.h"
 
 #include "cpu.h"
+#include "mmap.h"
 
 void kshell_main(void);
 

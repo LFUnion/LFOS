@@ -1,6 +1,36 @@
 #include "kmem.h"
 #include "kstring.h"
 
+void kmem_init() {
+#ifdef MM_WATERMARK
+    watermark_init();
+#elif defined MM_SEGMENTATION
+    segmentation_init();
+#else
+#error "Configuration error: A memory manager MUST be used!"
+#endif
+}
+
+uint32_t kmem_available() {
+#ifdef MM_WATERMARK
+    return watermark_available();
+#elif defined MM_SEGMENTATION
+    return segmentation_available();
+#else
+#error "Configuration error: A memory manager MUST be used!"
+#endif
+}
+
+uint32_t kmem_used() {
+#ifdef MM_WATERMARK
+    return watermark_used();
+#elif defined MM_SEGMENTATION
+    return segmentation_used();
+#else
+#error "Configuration error: A memory manager MUST be used!"
+#endif
+}
+
 void* malloc (size_t n) {
 #ifdef MM_WATERMARK
     return watermark_malloc(n);

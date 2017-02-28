@@ -39,6 +39,7 @@
 #include "tasks.h"
 #include "external/multiboot.h"
 #include "tar.h"
+#include "mmap.h"
 
 #include "stdint.h"
 
@@ -75,15 +76,23 @@ const tar_header_t* tarhead;
 
 /* Kernel entry point, called from boot/bootloader.asm */
 void kmain(multiboot_info_t* mb_info) {
+    multiboot_info = *mb_info;
     const int mods_count = mb_info->mods_count;
     const multiboot_module_t* mod_start = (multiboot_module_t*)mb_info->mods_addr;
     tarhead = (tar_header_t*)mod_start->mod_start;
+    initialize_mmap(mb_info);
+    kmem_init();
     clear();
     vga_disable_cursor();
     vga_set_position(0, 0);
-    print_raw("[OK] Bootloader loaded ");
+    print_raw("[OK] ");
+    print_raw(itoa(kmem_available() / 1024));
+    printf(" kiB of free memory detected");
+    print_raw("[OK] ");
+    print_raw((char*)mb_info->boot_loader_name);
+    print_raw(" loaded ");
     print_raw(itoa(mods_count));
-    printf(" modules");
+    printf(" module(s)");
     print_raw("[OK] Detected ");
     print_raw(cpu_getVendor());
     print_raw(" processor --> Number of Cores: ");
@@ -112,9 +121,7 @@ void kmain(multiboot_info_t* mb_info) {
         printw("[!!] Could not initialize keyboard");
 
     kbd_flush_buffer();
-    //printf("[..] Refreshing system time");
     rtc_refresh();
-    //printf("[OK] Time set");
     printf("[..] Initializing serial COM1");
     serial_init();
     send(0x50); // P
@@ -293,7 +300,7 @@ void print_copyright() {
 
 void idle() {
     while (1) {
-        //cpu_halt();
-        asm volatile("int $0x20");
+        cpu_sti();
+        cpu_halt();
     }
 }

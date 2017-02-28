@@ -19,7 +19,8 @@ task_t* task_init(void* entry, char* name) {
     task->registers->eip = (uint32_t)task_crt0;
     task->registers->cs = 0x08;
     task->registers->ss = 0x10;
-    task->registers->esp = (uint32_t)(stack+TASK_STACK_SIZE-1);
+    task->registers->esp = (uint32_t)(stack+TASK_STACK_SIZE);
+    task->registers->ebp = (uint32_t)(stack+TASK_STACK_SIZE);
     task->registers->eflags = 0x202;
     task->stack = stack;
     task->task_id = task_count + 1;
@@ -125,11 +126,17 @@ irq_request_t* task_get_request(uint32_t number) {
     return current;
 }
 
+uint32_t task_get_count() {
+    return task_count;
+}
+
 void task_crt0() {
     task_t* current_task = tasks[task_get_id()];
 
-    void* mainfunc = current_task->entry;
-    goto* mainfunc;
+    void (*mainfunc)() = (void(*)())current_task->entry;
+    mainfunc();
+    //void* mainfunc = current_task->entry;
+    //goto* mainfunc;
 
     task_stop(task_get_id());
 }

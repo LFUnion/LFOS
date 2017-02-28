@@ -1,12 +1,18 @@
 #ifndef WATERMARK_H
 #define WATERMARK_H
 
+#include "mmap.h"
+#include "kernel.h"
+
 #include <stddef.h>
 #include <stdint.h>
 
+void  watermark_init();
 void* watermark_malloc (size_t n);
-
 void* watermark_calloc (const size_t n);
+
+uint32_t watermark_available();
+uint32_t watermark_used();
 
 /*
 // new code
